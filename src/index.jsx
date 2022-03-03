@@ -6,7 +6,6 @@ import {BrowserRouter,Switch,Route,Redirect} from 'react-router-dom'
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import { Auth0Provider } from '@auth0/auth0-react'
-import store from './store'
 import App from './components/app'
 import { CSSTransition,TransitionGroup } from 'react-transition-group'
 import {routes} from './route';
@@ -46,6 +45,10 @@ import Maintenance from "./pages/maintenance"
 
 import Callback from './auth/callback'
 import { classes } from './data/layouts';
+import WizardSetupLayout from "./layout/WizardSetupLayout";
+import {persistor, store} from "./store";
+import {PersistGate} from "redux-persist/integration/react";
+import Loader from "./components/LoaderComponent";
 
 
 // setup fake backend
@@ -83,66 +86,70 @@ const Root = (props) =>  {
     return(
       <Fragment>
         <Provider store={store}>
-        <BrowserRouter basename={`/`}>
-        <Switch>
+            <PersistGate persistor={persistor}
+                         loading={<Loader />}>
+                <BrowserRouter basename={`/`}>
+                <Switch>
 
-          <Route  path={`${process.env.PUBLIC_URL}/login`} component={Signin} />
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/login`} component={Login}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg1`} component={LoginWithBgImage}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg2`} component={LoginWithBgVideo}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithValidation`} component={LoginWithValidation}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signup`} component={Register}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg1`} component={RegisterWithBgImage}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg2`} component={RegisterWithBgVideo}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/forgetPwd`} component={Forgetpwd}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/unlockUser`} component={UnlockUser}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/auth/resetPwd`} component={Resetpwd}></Route>
+                {/*          <Route  path={`${process.env.PUBLIC_URL}/login`} component={Signin} />
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/login`} component={Login}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg1`} component={LoginWithBgImage}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg2`} component={LoginWithBgVideo}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithValidation`} component={LoginWithValidation}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signup`} component={Register}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg1`} component={RegisterWithBgImage}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg2`} component={RegisterWithBgVideo}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/forgetPwd`} component={Forgetpwd}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/unlockUser`} component={UnlockUser}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/auth/resetPwd`} component={Resetpwd}></Route>
 
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error400`} component={Error400}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error401`} component={Error401}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error403`} component={Error403}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error404`} component={Error404}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error500`} component={Error500}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error503`} component={Error503}></Route>
-          
-          <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoon`} component={Comingsoon}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonImg`} component={ComingsoonImg}></Route>
-          <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonVideo`} component={ComingsoonVideo}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error400`} component={Error400}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error401`} component={Error401}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error403`} component={Error403}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error404`} component={Error404}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error500`} component={Error500}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error503`} component={Error503}></Route>
 
-          <Route  path={`${process.env.PUBLIC_URL}/pages/maintenance`} component={Maintenance}></Route>
-          
-          <Route  path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback/>} />
-          
-          {currentUser !== null || authenticated || jwt_token  ?
-          
-          <App>
-          <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
-              return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`} />)
-          }} /> 
-          <TransitionGroup>
-              {routes.map(({ path, Component }) => (
-                <Route key={path}  exact  path={`${process.env.PUBLIC_URL}${path}`}>
-                    {({ match }) => (
-                        <CSSTransition 
-                          in={match != null}
-                          timeout={100}
-                          classNames={anim} 
-                          unmountOnExit>
-                          <div>
-                              <Component/>
-                          </div>
-                        </CSSTransition> 
-                    )}
-                </Route>
-                ))}
-          </TransitionGroup> 
-          
-          </App>
-          :
-          <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-          }      
-        </Switch>
-        </BrowserRouter>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoon`} component={Comingsoon}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonImg`} component={ComingsoonImg}></Route>
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonVideo`} component={ComingsoonVideo}></Route>
+
+                  <Route  path={`${process.env.PUBLIC_URL}/pages/maintenance`} component={Maintenance}></Route>
+
+                  <Route  path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback/>} />*/}
+
+                  <WizardSetupLayout anim={anim} />
+                  {/*
+                      currentUser !== null || authenticated || jwt_token  ?
+                      <App>
+                      <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
+                          return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`} />)
+                      }} />
+                      <TransitionGroup>
+                          {routes.map(({ path, Component }) => (
+                            <Route key={path}  exact  path={`${process.env.PUBLIC_URL}${path}`}>
+                                {({ match }) => (
+                                    <CSSTransition
+                                      in={match != null}
+                                      timeout={100}
+                                      classNames={anim}
+                                      unmountOnExit>
+                                      <div>
+                                          <Component/>
+                                      </div>
+                                    </CSSTransition>
+                                )}
+                            </Route>
+                            ))}
+                      </TransitionGroup>
+
+                      </App>
+                      :
+                      <Redirect to={`${process.env.PUBLIC_URL}/login`} />
+                  */}
+                </Switch>
+                </BrowserRouter>
+            </PersistGate>
         </Provider>
       </Fragment>
       )

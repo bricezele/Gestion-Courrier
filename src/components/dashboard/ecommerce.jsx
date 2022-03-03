@@ -1,5 +1,5 @@
 import React, { Fragment,useState } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import ApexCharts from 'react-apexcharts'
 import Slider from "react-slick";
 import {Container,Row,Col,Card,CardBody,CardHeader,Table} from 'reactstrap' 

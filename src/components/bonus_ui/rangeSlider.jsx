@@ -1,5 +1,5 @@
 import React, { useState,Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import InputRange from "react-input-range";
 import {Container,Row,Col,Card,CardHeader,CardBody,Label,Form} from 'reactstrap'
 import {Default,BasicSlider,NegativeValues,FormatedLabel,DraggableRange,Disabled} from '../../constant'

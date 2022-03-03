@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, ListGroup } from 'reactstrap'
 import {Headings,Heading1,Heading2,Heading3,Heading4,Heading5,Heading6,SubHeading,VeryThin100,Thin300,Normal400,LightNormal600,DisplayHeadings,UnorderList,OrderList,FontawesomeList,ICOIconList,ThemfyList,Blockquotes,SourceTitle,TextColor,ExtraBold900,ListingTypography,Bold700} from '../../constant'
 const Typography = (props) => {

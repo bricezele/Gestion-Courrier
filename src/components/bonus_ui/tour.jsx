@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, Media } from 'reactstrap'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import Tour from 'reactour'

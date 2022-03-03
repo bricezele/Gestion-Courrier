@@ -4,7 +4,7 @@ import { FileText, LogIn, Mail, User, MessageSquare, Bell, Minimize, Search, Sho
 import { useHistory } from 'react-router-dom'
 import { firebase_app } from '../../data/config'
 import {useAuth0} from '@auth0/auth0-react'
-import Bookmark from "../../layout/bookmark"
+import Bookmark from "../bookmark"
 import {Link} from 'react-router-dom'
 import {
   setTranslations,

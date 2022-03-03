@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody } from 'reactstrap'
 import DatePicker from "react-datepicker";
 import ApexCharts from 'react-apexcharts'

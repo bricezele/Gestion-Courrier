@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,FormGroup,Label,Input} from 'reactstrap'
 import {CustomRadio,InlineCheckbox,CustomCheckbox, PrimaryState,BrandState,SuccessState,AnimatedCheckboxButtons,SquareCheckbox, Default,Disabled,Checked,RadioStates,CheckboxStates,SolidCheckbox,AnimatedRadioButtons,Option} from "../../../constant";
 const CheckboxandRadio = (props) =>  {

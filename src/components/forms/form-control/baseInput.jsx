@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,CardFooter,Button,Form,FormGroup,Label,Input} from 'reactstrap'
 import {BasicFormControl,BasicHTMLInputControl,EdgesInputStyle,FlatInputStyle,RaiseInputStyle,SolidInputStyle,InputSizing,CustomControls,
         EmailAddress,Password,ExampleSelect,ExampleMultipleSelect,ExampleTextarea,Submit,Cancel,SimpleInput,Placeholder,Date,Month, Time,ColorPicker,LargeInput,SmallInput,MaximumLength,CustomSelect,Disabled,Textarea,StaticText,UploadFile,Telephone,DateAndTime,Week,Number,  

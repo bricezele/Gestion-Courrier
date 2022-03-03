@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container, Row, Col, Card, CardBody, FormGroup, Progress, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
 import { Target, Info, CheckCircle, PlusCircle } from 'react-feather';
 import {Link} from 'react-router-dom'

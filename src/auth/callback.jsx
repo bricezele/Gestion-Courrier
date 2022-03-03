@@ -1,8 +1,8 @@
 import React,{useEffect} from 'react';
 import { withRouter } from 'react-router-dom';
-import Loader from '../layout/loader'
+import Loader from '../components/LoaderComponent'
 import {useAuth0} from '@auth0/auth0-react'
-import { DefaultLayout } from '../layout/theme-customizer';
+import { DefaultLayout } from '../components/theme-customizer';
 
 const Callback = (props) => {
   

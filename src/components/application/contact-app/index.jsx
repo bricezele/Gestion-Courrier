@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect,useRef } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {firebase_app} from '../../../data/config';
 import { Container, Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, TabContent, TabPane, Modal, ModalHeader, ModalBody, Label, Input, FormGroup, Form, Button } from 'reactstrap'
 import defaultuser from '../../../assets/images/user/user.png';

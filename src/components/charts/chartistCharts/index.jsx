@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import ChartistGraph from 'react-chartist';
 import {chart1 ,chart2, chart2Data,chart9Data,chart11Data, chart7Data,chart7Options, chart2Option ,chart3Data,chart3Options,chart6Data,chart6Options ,chart4Data ,chart4Options ,chart5Data ,chart5Options, chart10Data, chart10Options, chart11Options, chart12Data, chart12Options} from './chartistData';
 import {Container,Row,Col,Card,CardHeader,CardBody} from "reactstrap";

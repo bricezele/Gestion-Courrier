@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Button, Media, Form, Label, Input } from 'reactstrap'
 import { DefaultStyle,COD,Fast,NoBorder,OfferStyleBorder,InlineStyle,Free,Submit,Cancel,VerticalStyle,HorizontalStyle,SolidBorderStyle,Local,XYZSeller,ABCSeller,Standard,DeliveryOption,BuyingOption } from "../../../constant";
 const MegaOption = (props) => {

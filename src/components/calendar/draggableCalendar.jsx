@@ -1,5 +1,5 @@
 import React, { useEffect, Fragment, useState } from "react";
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";

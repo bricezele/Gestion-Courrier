@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import ImageUploader from 'react-images-upload';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody } from 'reactstrap'
 import {SelectSingleImageUpload,MultipleImageUpload} from '../../constant'
 

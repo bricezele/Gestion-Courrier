@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import JobFilter from './job-filter';
 import { Typeahead } from 'react-bootstrap-typeahead';
 import DatePicker from "react-datepicker";

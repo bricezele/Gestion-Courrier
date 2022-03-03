@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, Button } from 'reactstrap'
 import { SimplePricingCard,BecomeMember, Standard, LorumIpsum, Purchase, Business,Premium,Extra,SignUp } from '../../../constant';
 const Pricing = (props) => {

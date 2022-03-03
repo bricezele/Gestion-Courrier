@@ -1,5 +1,5 @@
 import React, { Fragment,useState,useRef,useCallback } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Card,CardHeader,CardBody} from 'reactstrap'
 import ReactCrop from 'react-image-crop';
 import {ImageCropper} from '../../constant'

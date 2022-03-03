@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,CardFooter,Button,Form,FormGroup,Label,Input,InputGroup,InputGroupAddon ,InputGroupText} from 'reactstrap'
 import {BasicInputGroups,LeftAddon,RightAddon,JointAddon,LeftRightAddon,SolidStyle,SquareStyle,FlatStyle,RaiseStyle,Submit,Cancel} from "../../../constant";
 

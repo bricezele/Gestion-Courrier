@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
 import { withGoogleMap, GoogleMap, withScriptjs, InfoWindow, Marker,Polygon,Polyline } from "react-google-maps";
 import { CurrentLocation,BasicDemo,MarkerMap,Polygons,Polylines } from "../../constant";

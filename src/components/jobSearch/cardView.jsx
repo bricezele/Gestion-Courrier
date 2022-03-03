@@ -1,5 +1,5 @@
 import React, {Fragment,useState,useEffect} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardBody,Media} from 'reactstrap'
 import JobFilter from './job-filter';
 import {Link}  from 'react-router-dom'

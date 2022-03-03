@@ -1,5 +1,5 @@
 import React,{Fragment,useEffect,useState} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Button} from 'reactstrap'
 import {X} from 'react-feather'
 import {NewOrder,ShippedOrders,CancelledOrders,Price} from '../../../constant'

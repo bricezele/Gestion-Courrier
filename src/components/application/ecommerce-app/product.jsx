@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, Form, FormGroup, Input, Media, Modal, ModalHeader, ModalBody, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap'
 import { SEARCH_BY, SORT_BY, ADD_TO_CART, ADD_TO_WISHLIST } from '../../../redux/actionTypes'

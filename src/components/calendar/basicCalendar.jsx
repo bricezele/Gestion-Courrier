@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Calendar, momentLocalizer,Views} from 'react-big-calendar'
 import moment from 'moment'
 import myEventsList from "./events";

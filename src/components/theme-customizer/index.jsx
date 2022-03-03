@@ -76,8 +76,10 @@ const Themecustomizer = (props) => {
     
     // fetch object by getting URL
     const layoutobj = classes.find(item=> Object.keys(item).pop() === id) ;   
-    const layout = id  ?layoutobj :defaultLayoutObj
-    DefaultLayout= defaultLayoutObj
+    const layout = defaultLayoutObj
+    DefaultLayout= defaultLayoutObj;
+
+    console.log('layout',layout);
 
         handlePageLayputs(layout);
         dispatch({ type: ADD_COSTOMIZER });
@@ -122,16 +124,16 @@ const Themecustomizer = (props) => {
        if (width <= 991 && configDB.settings.sidebar.type.split(' ').includes('horizontal-wrapper')) {
             document.querySelector(".page-wrapper").className = 'page-wrapper compact-wrapper'
             document.querySelector(".page-header").className = 'page-header close_icon';
-            document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper close_icon"
+            //document.querySelector(".sidebar-wrapper").className = "sidebar-wrapper close_icon"
         } else {
             document.querySelector(".page-wrapper").className = 'page-wrapper ' + configDB.settings.sidebar.type;
             document.querySelector(".page-header").className = 'page-header close_icon';
-            document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper close_icon';
+            //document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper close_icon';
         }
  
 
         //set sidebar setting
-        document.querySelector(".sidebar-wrapper").setAttribute('sidebar-layout', sidebar_setting);
+        //document.querySelector(".sidebar-wrapper").setAttribute('sidebar-layout', sidebar_setting);
         // eslint-disable-next-line
     }, [width]);
 
@@ -154,7 +156,7 @@ const Themecustomizer = (props) => {
         document.querySelector(".page-wrapper").className = 'page-wrapper ' + val;
         dispatch({ type: ADD_SIDEBAR_TYPES, payload: { type: val} })
         localStorage.setItem("layout",key)
-        history.push(key);
+        //history.push(key);
     }
 
     const closeCustomizer = () => {
@@ -181,7 +183,7 @@ const Themecustomizer = (props) => {
         if (width <= 991 && sidebar_type === "horizontal-wrapper" && layout === "box-layout") {
             document.querySelector(".page-wrapper").className = 'page-wrapper compact-wrapper'
             document.querySelector(".page-header").className = 'page-header ';
-            document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper ';
+            //document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper ';
         }
         dispatch({ type: ADD_LAYOUT, payload: layout });
     }
@@ -204,7 +206,7 @@ const Themecustomizer = (props) => {
         if (width <= 991 && type === "horizontal-wrapper") {
             document.querySelector(".page-wrapper").className = 'page-wrapper compact-wrapper'
             document.querySelector(".page-header").className = 'page-header close_icon';
-            document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper close_icon';
+            //document.querySelector(".sidebar-wrapper").className = 'sidebar-wrapper close_icon';
         }
         dispatch({ type: ADD_SIDEBAR_TYPES, payload: { type} })
     }

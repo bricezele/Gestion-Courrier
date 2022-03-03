@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
 import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
 import axios from 'axios'

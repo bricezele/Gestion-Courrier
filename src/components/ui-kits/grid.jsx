@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody, Table} from 'reactstrap'
 import {ColumnOrdering,GridColumn,NestingColumn,GridOptions,ExtraSmall,Small,Medium,Large,ExtraLarge,GridBehavior,GutterWidth,Nestable,Offsets,VerticalAlignment,HorizontalAlignment,Order} from '../../constant'
 const Grid = (props) => {

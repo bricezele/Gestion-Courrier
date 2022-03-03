@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Codepen, FileText, Youtube, BookOpen, Aperture, Archive, ArrowRight, Search } from 'react-feather';
 import two from '../../assets/images/faq/2.jpg';
 import one from '../../assets/images/faq/1.jpg';

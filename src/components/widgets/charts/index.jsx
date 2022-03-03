@@ -1,5 +1,5 @@
 import React,{Fragment,useState,useEffect} from 'react'
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container, Row, Col, Card, CardBody, CardHeader } from 'reactstrap'
 import {lineChart1, lineChart2, lineChart3, barChart, radialChart, radialChartLive, progress1, progress2, progress3, progress4, progress5, columnChart, browserUses, product, turnOver, monthlySale, uses} from './charts-data'
 import Chart from 'react-apexcharts'

@@ -1,5 +1,5 @@
 import React, { Fragment} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import LearningFilter from './learning-filter';
 import {Container,Row,Col,Media} from 'reactstrap'
 import { Comment,JolioMark } from "../../constant";

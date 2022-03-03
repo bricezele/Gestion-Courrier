@@ -205,7 +205,7 @@ import TodoFirebase from "../components/application/todo-firebase-app"
 
 export const routes = [
         { path:"/dashboard/default/:layout/", Component:Default},
-        { path:"/dashboard/ecommerce/:layout/", Component:Ecommerce},
+       /* { path:"/dashboard/ecommerce/:layout/", Component:Ecommerce},
 
         { path:"/widgets/general/:layout", Component:GeneralWidget},
         { path:"/widgets/chart/:layout", Component:ChartsWidget},
@@ -353,5 +353,5 @@ export const routes = [
         { path:"/app/contact/:layout", Component:ContactApp},
 
         { path:"/app/todo-app/todo/:layout", Component:Todo},
-        { path:"/app/todo-app/todo-firebase/:layout", Component:TodoFirebase},
+        { path:"/app/todo-app/todo-firebase/:layout", Component:TodoFirebase},*/
 ]

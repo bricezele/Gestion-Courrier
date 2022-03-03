@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, ListGroupItem } from 'reactstrap'
 import {DefaultColor,Primary,secondary,Warning,Danger,Grey,Info,Success,Pink,Color} from "../../constant"
 const Statecolor = (props) => {

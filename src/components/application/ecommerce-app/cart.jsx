@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Table,Button, InputGroup,Input} from 'reactstrap'
 import {useSelector,useDispatch} from 'react-redux' 
 import {getCartTotal} from '../../../services/ecommerce.service'

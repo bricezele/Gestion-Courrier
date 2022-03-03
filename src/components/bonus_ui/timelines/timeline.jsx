@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import Timeline1 from './timeline1';
 import VerticalTimelineComp from './verticalTimelineComp';
 import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'

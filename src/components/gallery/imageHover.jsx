@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
 import {HoverEffect} from "../../constant";
 const ImageHover = () => {

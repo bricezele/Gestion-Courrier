@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container,Row,Col,Card,CardBody,CardHeader} from 'reactstrap';
 import {MultiPopoverBasic,MultiPopoverDirection,MultiPopoverHtmlContent,MultiPopoverOffset} from './popoverComponent'
 import {BasicExamples,Direction,HTMLContent,OffsetToTooltip} from '../../../constant'

@@ -1,5 +1,5 @@
 import React,{useState,useEffect, Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import CKEditor from "react-ckeditor-component";
 import {Container,Row,Col,Card,CardBody,Media,Label,Input,Button,Form,FormGroup} from 'reactstrap'
 import {useDispatch,useSelector} from 'react-redux'

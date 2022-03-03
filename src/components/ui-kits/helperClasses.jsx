@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody } from 'reactstrap'
 import {Padding,Float,FontSize,Margins,PaddingLeft,PaddingRight,PaddingTop,PaddingBottom,MarginBottom,MarginLeft,MarginRight,MarginTop,VerticalAlign,ImageSizes,TextColor,BadgeColor,BackgroundColor,ButtonColor,BorderRadius,FontWeight,FontStyle,Overflow,AllBordersColor,BorderWidth,Position,ButtonOutline} from '../../constant'
 const HelperClasses = (props) => {

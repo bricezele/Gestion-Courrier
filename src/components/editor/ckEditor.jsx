@@ -1,5 +1,5 @@
 import React, { Fragment , useState } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import CKEditors from "react-ckeditor-component";
 import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
 import { CKEditorExample } from "../../constant";

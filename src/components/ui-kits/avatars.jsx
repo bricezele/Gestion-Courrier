@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
 import {Sizing,StatusIndicator,Initials,Shape,Ratio,Groups} from '../../constant'
 const Avatars = (props) => {

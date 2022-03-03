@@ -1,5 +1,5 @@
 import React, { useState,Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Button} from 'reactstrap'
 import SweetAlert from 'sweetalert2'
 import {BasicExamples,AdvancedState,AlertState,Success,Danger,Information,Warning,WithTitleAlert,SuccessAlert,InfoAlert,WarningAlert,Basic} from '../../constant'

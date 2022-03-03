@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Radar, Line, Bar, Doughnut, Polar } from 'react-chartjs-2';
 import { doughnutData, doughnutOption,barChartData, barChartOptions ,lineChartData,lineChartOptions,polarOption,polarData, lineChart2Data,lineChart2option ,data} from './chartsData';
 import {Container,Row,Col,Card,CardHeader,CardBody} from "reactstrap";

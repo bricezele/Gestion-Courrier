@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col} from 'reactstrap'
 import DefaultBoard from './defaultBoard'
 import CustomeBoard from './customeBoard'

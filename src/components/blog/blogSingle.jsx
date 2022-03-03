@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import blogSingle from "../../assets/images/blog/blog-single.jpg";
 import comment from "../../assets/images/blog/comment.jpg";
 import nine from "../../assets/images/blog/9.jpg";

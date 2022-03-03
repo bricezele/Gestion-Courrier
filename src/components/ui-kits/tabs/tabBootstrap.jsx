@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, Nav, NavItem, NavLink, Dropdown, DropdownMenu, DropdownItem, DropdownToggle, TabContent, TabPane } from 'reactstrap'
 import {BasicTabs,TabsBottomLeftAlign,TabsWithIcon,TabsRightAlign,TabsVertical,PillTabs,PillTabsWithIcon,PillDarkColor,PrimaryColor,SecondaryColor,SuccessColor,InfoColor,WarningColor,DangerColor,Hometxt,Action,Contact,Profile,Messages,Settings} from '../../../constant'
 

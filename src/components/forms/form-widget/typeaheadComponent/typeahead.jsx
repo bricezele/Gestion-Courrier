@@ -1,5 +1,5 @@
 import React, { Fragment, useState,useEffect } from 'react';
-import Breadcrumb from '../../../../layout/breadcrumb'
+import Breadcrumb from '../../../breadcrumb'
 import { Typeahead } from 'react-bootstrap-typeahead';
 import TypeaheadOne from './typeahead-one';
 import { Container, Row, Col, Card, CardHeader, CardBody, Form, FormGroup } from 'reactstrap'

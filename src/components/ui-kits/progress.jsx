@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, Progress } from 'reactstrap'
 import {BasicProgressBars,SmallProgressBars,LargeProgressBars,CustomHeightProgressBars,ProgressBarsAnimated,ProgressBarsStriped,MultipleBars,ProgressBarsStates} from '../../constant'
 const Progressbar = (props) => {

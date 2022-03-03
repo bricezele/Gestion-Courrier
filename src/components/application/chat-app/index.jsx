@@ -1,5 +1,5 @@
 import React,{useState,useEffect, Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardBody,Media,Form,FormGroup,Input,InputGroup,InputGroupAddon,Button,Nav,NavItem,NavLink,TabPane,TabContent} from 'reactstrap'
 import { SEND_MESSAGE_WATCHER,REPLY_MESSAGE_WATCHER, CREATE_CHAT_WATCHER} from '../../../redux/actionTypes'
 import { useSelector, useDispatch } from 'react-redux'; 

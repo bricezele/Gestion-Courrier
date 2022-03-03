@@ -1,5 +1,5 @@
 import React, { Fragment,useState,useCallback,useMemo} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import differenceBy from 'lodash/differenceBy';
 import { toast } from 'react-toastify';
 import DataTable from 'react-data-table-component'

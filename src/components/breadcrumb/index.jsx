@@ -12,13 +12,13 @@ const Breadcrumbs = (props) => {
             <Col xs="6">
               <h3>{props.title}</h3>
             </Col>
-            <Col xs="6">
+{/*            <Col xs="6">
               <Breadcrumb>
                 <BreadcrumbItem><Link to={`${process.env.PUBLIC_URL}/dashboard/default/`}><Home /></Link></BreadcrumbItem>
                 <BreadcrumbItem>{props.parent}</BreadcrumbItem>
                 <BreadcrumbItem active>{props.title}</BreadcrumbItem>
               </Breadcrumb>
-            </Col>
+            </Col>*/}
           </Row>
         </div>
       </Container>

@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,  Row, Col ,Card, CardHeader,CardBody,TabContent,TabPane,Nav,NavItem,NavLink} from 'reactstrap';
 import { SimpleTab,TabsWithIcon,ColorTab,ColorOption,MaterialTabWithColor,MaterialTabWithIcon,Hometxt,Profile,Contact } from "../../../constant";
 

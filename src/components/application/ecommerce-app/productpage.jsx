@@ -1,5 +1,5 @@
 import React,{Fragment, useState,useEffect,useRef} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,Button,Media, CardBody} from 'reactstrap'
 import Tablet from './tabsets';
 import Slider from 'react-slick';

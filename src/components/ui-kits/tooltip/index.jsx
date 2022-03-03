@@ -1,5 +1,5 @@
 import React,{useState, Fragment} from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import { Container,Row,Col,Card,CardBody,CardHeader,Button,Tooltip } from 'reactstrap';
 import {MultiTooltipDirection,MultiTooltipHtmlElement,MultiTooltipOffset} from './tooltipComponent'
 import {BasicTooltip,HoverMe,PopoverTitle,Direction,HTMLElements,Offsets} from '../../../constant'

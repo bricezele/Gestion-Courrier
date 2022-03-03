@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Pagination,PaginationItem,PaginationLink} from 'reactstrap'
 import {Pagi_Nations,PaginationWithIcons,PaginationAlignment,PaginationActiveDisabled,PaginationColor,PaginationSizing,Previous,Next} from '../../constant'
 

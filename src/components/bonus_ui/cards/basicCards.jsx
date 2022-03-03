@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,CardFooter} from "reactstrap";
 import {BasicCard,FlatCard,WithoutShadowCard,IconInHeading,CardSubTitle,CardWithFooter,Card_Footer,SuccessColorCard,PrimaryColorCard,SecondaryColorCard,PrimaryColorBody,PrimaryColorHeader,PrimaryColorFooter} from "../../../constant";
 

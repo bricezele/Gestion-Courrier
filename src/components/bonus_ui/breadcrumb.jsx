@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumbss from '../../layout/breadcrumb'
+import Breadcrumbss from '../breadcrumb'
 import {Container,Row,Col,Card,CardHeader,CardBody,Breadcrumb,BreadcrumbItem} from 'reactstrap'
 import { Hometxt,Library,Data,NavBreadcrumb,Bootstrap,ColoredBreadcrumb,DefaultBootstrapBreadcrumb } from '../../constant';
 const Breadcrumbs = (props) => {

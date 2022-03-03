@@ -1,5 +1,5 @@
 import React, { useState, Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container, Row, Col, Card, CardHeader, CardBody, ListGroup, ListGroupItem, TabContent, TabPane, Media } from 'reactstrap'
 import {DefaultList,LinksAndButtons,FlushStyle,ContextualClasses,WithBadges,WithIcon,WithImages,WithImageRounded,JavaScriptBehavior,CustomContent,Hometxt,Profile,Messages,Settings} from '../../constant'
 

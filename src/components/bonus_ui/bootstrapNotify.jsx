@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Container,Row,Col,Card,CardBody,CardHeader,Button} from 'reactstrap';
 import { toast } from 'react-toastify';
 import {BasicExamples,CustomDirections,CustomAutoclose,SuccessNotification,InfoNotification,WarningNotification,DangerNotification,BottomLeft,BottomCenter,RightBottom,AutoCloseIn1000Sec,AutoCloseIn15000Sec,AutoCloseIn500Sec,TopCenter,AutoCloseIn5000Sec} from '../../constant'

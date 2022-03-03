@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import { Mail,Bell,Settings,Music,AlertTriangle,AlertCircle,DollarSign,Headphones,Link,GitHub,Award,Activity,Heart} from 'react-feather'
 import {Container,Row,Col,Card,CardHeader,CardBody,Button,Badge} from 'reactstrap'
 import {ContextualVariations,PillsWithIcon,PillsWithNumber,TagsWithIcon,TagsWithNumber,New,Messages,Notification,BadgesExample,Primary,secondary,Success,Warning,Danger,Light,Info,Dark} from '../../constant'

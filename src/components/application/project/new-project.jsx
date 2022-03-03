@@ -1,5 +1,5 @@
 import React, { Fragment,useState } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import Dropzone from 'react-dropzone-uploader'
 import {Container,Row,Col,Card,CardBody,Form,FormGroup,Label,Input,Button} from 'reactstrap'
 import DatePicker from "react-datepicker";

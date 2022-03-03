@@ -1,5 +1,5 @@
 import React, { Fragment }  from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import {Container,Row,Col,Card,CardBody,CardHeader,Alert } from 'reactstrap'
 import {MultipleAlertWithDarkDismissing,MultipleAlertWithIcon,MultipleAlertWithLightDismissing,MultipleAlertWithIconOutline,MultipleAlertWithIconInverse} from './alertComponent'
 import {Dismissing,AlertWithIcon,LightAlerts,LinkColor,OutlineAlerts,OutlineDarkAlerts,AlertWithIconInverse,AlertWithIconOutline,TextAsAction,AdditionalContent} from '../../../constant'

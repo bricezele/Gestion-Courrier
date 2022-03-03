@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../../layout/breadcrumb'
+import Breadcrumb from '../../breadcrumb'
 import Board from '@lourenci/react-kanban'
 import { Container, Row, Col, Card, CardHeader, CardBody } from 'reactstrap'
 import {DragBothTitleCard,DragOnlyCard,DragOnlyContent} from "../../../constant";

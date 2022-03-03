@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Breadcrumb from '../../layout/breadcrumb'
+import Breadcrumb from '../breadcrumb'
 import {Container,Row,Col,Card,CardBody,Media} from 'reactstrap'
 import JobFilter from './job-filter';
 import { ReactandReact_Native_Developer,UIandUX_IT_Frontend_Developer,New,SeniorUXDesigner,FrontEndWebDeveloper,GraphicDesigner,DesignerCRM,UIDesigner_E_commerce } from "../../constant";
