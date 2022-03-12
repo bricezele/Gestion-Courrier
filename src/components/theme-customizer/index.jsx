@@ -72,10 +72,10 @@ const Themecustomizer = (props) => {
     // somecases taken static url so need to modified
     const modifyURL= process.env.PUBLIC_URL+"/dashboard/default/"+Object.keys(defaultLayoutObj).pop()
     // fetch id from URL
-    const  id  = window.location.pathname==='/'?history.push(modifyURL):window.location.pathname.split('/').pop()
+    //const  id  = window.location.pathname ==='/' ? history.push(modifyURL):window.location.pathname.split('/').pop()
     
     // fetch object by getting URL
-    const layoutobj = classes.find(item=> Object.keys(item).pop() === id) ;   
+    //const layoutobj = classes.find(item=> Object.keys(item).pop() === id) ;
     const layout = defaultLayoutObj
     DefaultLayout= defaultLayoutObj;
 

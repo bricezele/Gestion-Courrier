@@ -1,0 +1,25 @@
+/**
+ * Project gestion-courrier-native
+ * File styles
+ * Path src/pages/WizardSetupPage
+ * Created by BRICE ZELE
+ * Date: 12/03/2022
+ */
+.avatars {
+  .radio-img {
+    > input {
+      display: none;
+    }
+
+    > .image {
+      cursor: pointer;
+
+    }
+
+    > input:checked + .image {
+      border: 4px solid var(--theme-deafult) !important;
+    }
+
+  }
+
+}

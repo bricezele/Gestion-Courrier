@@ -6,52 +6,62 @@ import { firebase_app } from '../../data/config'
 import {useAuth0} from '@auth0/auth0-react'
 import Bookmark from "../bookmark"
 import {Link} from 'react-router-dom'
+
 import {
-  setTranslations,
-  setDefaultLanguage,
-  setLanguageCookie,
-  setLanguage,
-  translate,
-} from 'react-switch-lang';
+  English,
+  Deutsch,
+  Español,
+  Français,
+  Português,
+  简体中文,
+  Notification,
+  DeliveryProcessing,
+  OrderComplete,
+  TicketsGenerated,
+  DeliveryComplete,
+  CheckAllNotification,
+  ViewAll,
+  MessageBox,
+  EricaHughes,
+  KoriThomas,
+  Admin,
+  Account,
+  Inbox,
+  Taskboard,
+  LogOut,
+  AinChavez,
+  CheckOut,
+  ShopingBag,
+  OrderTotal,
+  GoToShopingBag,
+} from '../../constant'
 
-import {English,Deutsch,Español,Français,Português,简体中文,Notification,DeliveryProcessing,OrderComplete,TicketsGenerated,DeliveryComplete,CheckAllNotification,ViewAll,MessageBox,EricaHughes,KoriThomas,Admin,Account,Inbox,Taskboard,LogOut,AinChavez,CheckOut,ShopingBag,OrderTotal,GoToShopingBag} from '../../constant'
-
-import en from '../../assets/i18n/en.json';
-import es from '../../assets/i18n/es.json';
-import pt from '../../assets/i18n/pt.json';
-import fr from '../../assets/i18n/fr.json';
-import du from '../../assets/i18n/du.json';
-import cn from '../../assets/i18n/cn.json';
-import ae from '../../assets/i18n/ae.json';
 import { InputGroup, InputGroupAddon, Button } from 'reactstrap';
+import {useTranslation} from "react-i18next";
+import {Language} from "../../enum/Language.enum";
 
-setTranslations({ en, es, pt, fr, du, cn, ae });
-setDefaultLanguage('en');
-setLanguageCookie();
+const RightHeader = (props) => {
 
-const Rightbar = (props) => {    
 
-  
   const history = useHistory();
+  const [t, i18n] = useTranslation();
   const [profile, setProfile] = useState('');
   const [name, setName] = useState('')
   const [searchresponsive, setSearchresponsive] = useState(false)
   const [langdropdown, setLangdropdown] = useState(false)
   const [moonlight, setMoonlight] = useState(false)
-  const [selected, setSelected] = useState("en")
+  const [selected, setSelected] = useState(Language.FR)
   const [cartDropdown, setCartDropDown] = useState(false)
   const [notificationDropDown, setNotificationDropDown] = useState(false)
   const [chatDropDown, setChatDropDown] = useState(false)
-  
+
+  const [lang, setLang] = useState(Language.FR);
+
   // auth0 profile
   const {logout} = useAuth0()
   const authenticated = JSON.parse(localStorage.getItem("authenticated"));
   const auth0_profile = JSON.parse(localStorage.getItem("auth0_profile"))
 
-  const handleSetLanguage = (key) => {
-    setLanguage(key);
-    setSelected(key)
-  };
 
   useEffect(() => {
     setProfile(localStorage.getItem('profileURL') || man);
@@ -60,6 +70,24 @@ const Rightbar = (props) => {
       setMoonlight(true)
     }
   }, []);
+
+  useEffect(() => {
+    changeLanguage(lang);
+  }, [lang]);
+
+  const changeLanguage = (language) => {
+
+      switch (language) {
+      case Language.EN:
+        i18n.changeLanguage(Language.EN);
+        break;
+      case Language.FR:
+      default:
+        i18n.changeLanguage(Language.FR);
+        break;
+    }
+
+  }
 
   const Logout_From_Firebase = () => {
     localStorage.removeItem('profileURL')
@@ -153,13 +181,8 @@ const Rightbar = (props) => {
                 </div>
               </div>
               <div className={`more_lang ${langdropdown ? 'active' : ''}`}>
-                <div className="lang" onClick={() => handleSetLanguage('en')}><i className="flag-icon flag-icon-us"></i><span className="lang-txt">{English}<span> {"(US)"}</span></span></div>
-{/*                <div className="lang" onClick={() => handleSetLanguage('du')}><i className="flag-icon flag-icon-de"></i><span className="lang-txt">{Deutsch}</span></div>
-                <div className="lang" onClick={() => handleSetLanguage('es')}><i className="flag-icon flag-icon-es"></i><span className="lang-txt">{Español}</span></div>*/}
-                <div className="lang" onClick={() => handleSetLanguage('fr')}><i className="flag-icon flag-icon-fr"></i><span className="lang-txt">{Français}</span></div>
-{/*                <div className="lang" onClick={() => handleSetLanguage('pt')}><i className="flag-icon flag-icon-pt"></i><span className="lang-txt">{Português}<span> {"(BR)"}</span></span></div>
-                <div className="lang" onClick={() => handleSetLanguage('cn')}><i className="flag-icon flag-icon-cn"></i><span className="lang-txt">{简体中文}</span></div>
-                <div className="lang" onClick={() => handleSetLanguage('ae')}><i className="flag-icon flag-icon-ae"></i><span className="lang-txt">{"لعربية"}<span> {"(ae)"}</span></span></div>*/}
+                <div className="lang" onClick={() => setLang(Language.FR)}><i className="flag-icon flag-icon-fr"></i><span className="lang-txt">{Français}</span></div>
+                <div className="lang" onClick={() => setLang(Language.EN)}><i className="flag-icon flag-icon-us"></i><span className="lang-txt">{English}<span> {"(US)"}</span></span></div>
               </div>
             </div>
           </li>
@@ -306,4 +329,4 @@ const Rightbar = (props) => {
 
   );
 }
-export default translate(Rightbar);
+export default RightHeader;

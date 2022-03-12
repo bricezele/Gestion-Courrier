@@ -2,8 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import { useSelector } from 'react-redux'
 import { MENUITEMS } from './menu';
 import { ArrowRight, ArrowLeft, Grid } from 'react-feather';
-import { Link } from 'react-router-dom'
-import { translate } from 'react-switch-lang';
+import { Link } from 'react-router-dom';
 import configDB from '../../data/customizer/config';
 import { DefaultLayout } from '../theme-customizer';
 
@@ -306,4 +305,4 @@ const Sidebar = (props) => {
   );
 }
 
-export default translate(Sidebar);
+export default Sidebar;

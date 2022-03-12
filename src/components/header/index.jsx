@@ -1,14 +1,14 @@
 import React, { Fragment,useState,useEffect,useCallback } from 'react';
-import {Form,Row} from 'reactstrap'
+import {Col, Form, Row} from 'reactstrap'
 import {X} from 'react-feather'
 import {MENUITEMS} from '../sidebar/menu'
-import LeftHeader from './leftbar'
-import RightHeader from './rightbar'
+import LeftHeader from './Leftbar'
+import RightHeader from './RightHeader'
 import {Link} from 'react-router-dom'
 import {Loading} from '../../constant'
 import { useSelector } from 'react-redux'
 
-const Header = (props) => {
+const Header = ({displayLeft = true, displayRight = true}) => {
 
   // eslint-disable-next-line
   const [mainmenu, setMainMenu] = useState(MENUITEMS);
@@ -142,9 +142,9 @@ const Header = (props) => {
                 </div>
             </div>
           </div>
-      </Form> 
-      <LeftHeader/>
-      <RightHeader/>
+      </Form>
+          {displayLeft ? <LeftHeader/> : <Col className="left-header horizontal-wrapper pl-0"/>}
+          {displayRight && <RightHeader/>}
       </Row>
     </div>
     </Fragment>

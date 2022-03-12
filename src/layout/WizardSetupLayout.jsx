@@ -15,10 +15,9 @@ const WizardSetupLayout = ({anim = ''}) => {
 
     return (
         <Fragment>
-            <Loader/>
             <Taptop/>
             <div className="page-wrapper compact-wrapper" id="pageWrapper">
-                <Header/>
+                <Header displayLeft={false}/>
                 <div className="page-body-wrapper">
                     <div className="page-body">
                         <TransitionGroup>

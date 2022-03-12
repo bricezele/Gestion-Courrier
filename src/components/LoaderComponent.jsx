@@ -1,20 +1,20 @@
-import React, { Fragment,useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 
 
 const Loader = (props) => {
 
     const [show, setShow] = useState(true);
-    
+
     useEffect(() => {
         const timeout = setTimeout(() => {
             setShow(false)
-            }, 3000);
+        }, 1000);
 
         return () => {
             clearTimeout(timeout);
-            }
-       
-    },[show]);
+        }
+
+    }, [show]);
 
     return (
         <Fragment>
@@ -23,8 +23,9 @@ const Loader = (props) => {
                 <svg>
                     <defs></defs>
                     <filter id="goo">
-                    <fegaussianblur in="SourceGraphic" stdDeviation="11" result="blur"></fegaussianblur>
-                    <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9" result="goo">    </fecolormatrix>
+                        <fegaussianblur in="SourceGraphic" stdDeviation="11" result="blur"></fegaussianblur>
+                        <fecolormatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+                                       result="goo"></fecolormatrix>
                     </filter>
                 </svg>
             </div>
