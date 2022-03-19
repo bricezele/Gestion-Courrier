@@ -162,14 +162,14 @@
               background-color: lighten($primary-color, 25%);
               box-shadow: 0 0 37px rgba(8, 21, 66, 0.1);
             }
-        
+
             &:hover {
               &:after {
                 opacity: 1;
                 transform: scale(1);
                 transition: all 0.3s ease;
               }
-        
+
               span {
                 opacity: 1;
                 right: 56px;
@@ -190,7 +190,7 @@
         height: 458px;
       }
 
-      
+
       .border-tab {
         border-radius: 0;
         &.nav-tabs {
@@ -230,12 +230,12 @@
 
     &.show {
       &:before {
-        content: "show";
+        content: "Afficher";
       }
     }
 
     &:before {
-      content: "hide";
+      content: "Masquer";
     }
   }
 }

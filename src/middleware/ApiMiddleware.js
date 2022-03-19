@@ -7,6 +7,7 @@
  */
 import axios from 'axios';
 import {API} from '../redux';
+import ServerUrl from "../config/ServerUrl";
 
 const ApiMiddleware =
     ({dispatch}) =>
@@ -31,9 +32,10 @@ const ApiMiddleware =
             ? 'params'
             : 'data';
         // axios default configs
-        axios.defaults.baseURL = process.env.API_SERVER_URL || '';
+        axios.defaults.baseURL = ServerUrl.base|| '';
         // axios.defaults.baseURL = 'https://second.yoolearn.co:3001/api/v1/';
         axios.defaults.headers.common['Content-Type'] = 'application/json';
+        axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
         if (accessToken)
             axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 

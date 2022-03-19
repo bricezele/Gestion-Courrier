@@ -1,9 +1,8 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import StepZilla from "react-stepzilla";
 import {Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Media, Row} from 'reactstrap'
 import Breadcrumb from "../../components/breadcrumb";
 import {createStructuredSelector} from "reselect";
-import {bindActionCreators} from "redux";
 import {selectAppConfig} from "../../redux/config/config.selector";
 import {connect, useDispatch} from "react-redux";
 import {useTranslation} from "react-i18next";
@@ -11,41 +10,41 @@ import {disableBodyScroll, enableBodyScroll} from "body-scroll-lock";
 import Tour from "reactour";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
-import {useForm} from "react-hook-form";
 import {Images} from "../../assets/images/Images";
 import './styles.scss'
+import {selectSignUp} from "../../redux/user/user.selector";
+import {fetchSignUp, fetchSignUpReset} from "../../redux/user/user.action";
+import {toast} from "react-toastify";
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import {useHistory} from "react-router-dom";
+import * as Utils from "../../utils/Tools";
+import Header from "../../components/header";
+import {Role} from "../../enum/role.enum";
 
-
-const Index = () => {
+const WizardSetupPage = ({signUp, fetchSignUp}) => {
 
     const {t} = useTranslation();
-    const [selectedFile, setSelectedFile] = useState(null)   // Initially, no file is selected
-    const {register} = useForm();
-    const dispatch = useDispatch()
-    const [startDate, setstartDate] = useState(new Date());
-    const [endDate, setendDate] = useState(new Date());
+    const [picture, setPicture] = useState(1);
+    let history = useHistory();
+    const dispatch = useDispatch();
 
-    const handleStartDate = date => {
-        setstartDate(date);
-    };
 
-    const handleEndDate = date => {
-        setendDate(date);
-    };
+    useEffect(() => {
+        dispatch(fetchSignUpReset());
+    }, []);
 
-    const getUploadParams = ({meta}) => {
-        return {
-            url: 'https://httpbin.org/post'
+    useEffect(() => {
+        if (signUp.result !== null) {
+            history.push('/login');
+            toast.success(t('account_created_you_can_login'));
+            dispatch(fetchSignUpReset());
         }
-    }
-
-
-    // called every time a file's `status` changes
-    const handleChangeStatus = ({meta, file}, status) => {
-    }
-
-    const AddProject = data => {
-    };
+        if (signUp.error !== null) {
+            toast.error(Utils.getErrorMsg(signUp));
+            dispatch(fetchSignUpReset());
+        }
+    }, [signUp]);
 
     const RegisterSchema = Yup.object().shape({
         firstname: Yup.string().required(t('name_required')),
@@ -60,15 +59,11 @@ const Index = () => {
                 t('your_password_must_match'),
             ),
         confirm_password: Yup.string()
-            .required(t('confirm_password_required'))
-            .matches(
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
-                t('your_password_must_match'),
-            ),
+            .oneOf([Yup.ref('password'), null], t('two_password_doesnt_match')),
         phone_number: Yup.number()
     });
 
-    const {handleChange, handleSubmit, handleBlur, values, errors, touched} =
+    const {handleChange, handleSubmit, handleBlur, values, errors, setFieldError, touched} =
         useFormik({
             validationSchema: RegisterSchema,
             initialValues: {
@@ -81,8 +76,13 @@ const Index = () => {
 
             },
             onSubmit: values => {
-                console.log(values);
-            },
+                delete values.confirm_password;
+                fetchSignUp({
+                    ...values,
+                    roles: Role.ADMIN,
+                    picture
+                });
+            }
         });
     const [stepIndex, setStepIndex] = useState(0);
     const steps =
@@ -145,11 +145,19 @@ const Index = () => {
                                     <Col sm="6">
                                         <FormGroup>
                                             <Label>{t('phone_number')}</Label>
-                                            <Input className="form-control" type="tel" name="phone_number"
+                                            {/*                                            <Input className="form-control" type="tel" name="phone_number"
                                                    placeholder={t('enter_phone_number')}
                                                    value={values.phone_number}
                                                    onChange={handleChange('phone_number')}
-                                                   onBlur={handleBlur('phone_number')}/>
+                                                   onBlur={handleBlur('phone_number')}/>*/}
+                                            <PhoneInput
+                                                country={'cm'}
+                                                inputStyle={{width: '100%'}}
+                                                placeholder={t('enter_phone_number')}
+                                                value={values.phone_number}
+                                                onChange={handleChange('phone_number')}
+                                                onBlur={handleBlur('phone_number')}
+                                            />
                                             <span
                                                 style={{color: "red"}}>{errors.phone_number !== '' && errors.phone_number}</span>
                                         </FormGroup>
@@ -189,31 +197,23 @@ const Index = () => {
                                                 <ul>
                                                     {Images.avatars.map((items, i) =>
                                                         <label className="avatar radio-img">
-                                                            <input type="radio" name="picture"
-                                                                   value={1}/>
+                                                            <input type="radio" onClick={() => setPicture(i + 1)}
+                                                                   name="picture"
+                                                                   value={i}/>
                                                             <Media className="image img-80 rounded-circle"
-                                                                   src={items}></Media>
+                                                                   src={items}/>
                                                         </label>
                                                     )}
                                                 </ul>
                                             </div>
                                         </FormGroup>
                                     </Col>
-                                    {/*                                    <div className="product-size">
-                                        <ul>
-                                            {Images.avatar.map((items,i) =>
-                                                <li key={i}>
-                                                    <Button color="outline-light">{items}</Button>
-                                                </li>
-                                            )}
-                                        </ul>
-                                    </div>*/}
                                 </Row>
                                 <Row>
                                     <Col className="m-t-10">
                                         <FormGroup className="mb-0">
-                                            <Button color="primary" onClick={handleSubmit}
-                                                    className="mr-3">{t('submit')}</Button>
+                                            <Button color="primary" onClick={handleSubmit} disabled={signUp.loading}
+                                                    className="mr-3">{signUp.loading ? t('loading_dots') : t('submit')}</Button>
                                         </FormGroup>
                                     </Col>
                                 </Row>
@@ -241,83 +241,62 @@ const Index = () => {
     const disableBody = target => disableBodyScroll(target);
     const enableBody = target => enableBodyScroll(target);
 
-    const getFile = () => {
-        document.getElementById("upfile").click();
-    }
-
-    const onFileChange = event => {
-        // Update the state
-        setSelectedFile(event.target.files[0]);
-    };
-
-    const onFileUpload = () => {
-        //let myfiles = [...myfile];
-
-        /*if (selectedFile !== null) {
-            myfiles.push({
-                id: myfile.length + 1,
-                name: selectedFile.name,
-                size: `${selectedFile.size}`,
-                modify: `${selectedFile.lastModifiedDate}`,
-                icon:"fa fa-file-text-o txt-info"
-            })
-            setMyFile(myfiles)
-            toast.success("File Upload Successfully !")
-        }else {
-            toast.error("Plese Select at least one file !")
-        }*/
-    };
-
     return (
         <Fragment>
-            <Breadcrumb parent="Forms" title={t('installation')}/>
-            <Tour
-                steps={stepsYour}
-                rounded={5}
-                isOpen={stepIndex === 1}
-                disableInteraction={true}
-                disableKeyboardNavigation={false}
-                onRequestClose={closeTour}
-                onAfterOpen={disableBody}
-                onBeforeClose={enableBody}/>
-            <Container fluid={true}>
-                <Row>
-                    <Col sm="12">
-                        <Card>
-                            <CardHeader>
-                                <h5>{t('software_installation')}</h5>
-                            </CardHeader>
-                            <CardBody>
-                                <StepZilla
-                                    steps={steps}
-                                    showSteps={true}
-                                    backButtonText={t('previous')}
-                                    showNavigation={true}
-                                    stepsNavigation={true}
-                                    prevBtnOnLastStep={false}
-                                    dontValidate={true}
-                                    nextButtonText={t('next')}
-                                    onStepChange={(step) => {
-                                        setStepIndex(step);
-                                    }}
-                                />
-                            </CardBody>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
-
+            <div className="page-wrapper compact-sidebar compact-small material-icon compact-wrapper" id="pageWrapper">
+                <Header displayLeft={false}/>
+                <div className="page-body-wrapper">
+                    <div className="page-body">
+                        <div>
+                            <Breadcrumb parent="Forms" title={t('installation')}/>
+                            <Tour
+                                steps={stepsYour}
+                                rounded={5}
+                                isOpen={stepIndex === 1}
+                                disableInteraction={true}
+                                disableKeyboardNavigation={false}
+                                onRequestClose={closeTour}
+                                onAfterOpen={disableBody}
+                                onBeforeClose={enableBody}/>
+                            <Container fluid={true}>
+                                <Row>
+                                    <Col sm="12">
+                                        <Card>
+                                            <CardHeader>
+                                                <h5>{t('software_installation')}</h5>
+                                            </CardHeader>
+                                            <CardBody>
+                                                <StepZilla
+                                                    steps={steps}
+                                                    showSteps={true}
+                                                    backButtonText={t('previous')}
+                                                    showNavigation={true}
+                                                    stepsNavigation={true}
+                                                    prevBtnOnLastStep={false}
+                                                    dontValidate={true}
+                                                    nextButtonText={t('next')}
+                                                    onStepChange={(step) => {
+                                                        setStepIndex(step);
+                                                    }}
+                                                />
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </Container>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </Fragment>
     )
         ;
 };
 
-const mapDispatchToProps = (dispatch) =>
-    bindActionCreators({}, dispatch);
-
 const mapStateToProps = createStructuredSelector({
     application: selectAppConfig,
+    signUp: selectSignUp
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Index);
+export default connect(mapStateToProps, {fetchSignUp})(WizardSetupPage);

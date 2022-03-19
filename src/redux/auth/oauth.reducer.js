@@ -6,6 +6,7 @@
  * Date: 13/09/2021
  */
 import AuthActions from "./oauth.types";
+import {REHYDRATE} from "redux-persist";
 
 
 const INITIAL_STATE = {
@@ -16,8 +17,8 @@ const INITIAL_STATE = {
 
 export const oauthReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        /*        case REHYDRATE:
-                    return !_.isNil(action.payload) ? action.payload.authKeyReducer : INITIAL_STATE;*/
+/*        case REHYDRATE:
+            return !_.isNil(action.payload) ? action.payload.authkey : INITIAL_STATE;*/
 
         case AuthActions.AUTH_KEY_PENDING:
             return {

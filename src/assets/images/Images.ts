@@ -20,6 +20,10 @@ import avatar12 from "./avatar/12.png";
 import avatar13 from "./avatar/13.png";
 import avatar14 from "./avatar/14.png";
 import avatar15 from "./avatar/15.png";
+import logo from "./logo/logo_fgt.jpeg";
+import loginBackground from './login/1.jpg';
+import login from './logo/login.png';
+import loginDark from './logo/logo_dark.png';
 
 export const Images = {
     avatars: [
@@ -38,5 +42,9 @@ export const Images = {
             avatar13,
             avatar14,
             avatar15,
-    ]
+    ],
+        logo,
+        loginBackground,
+        login,
+        loginDark
 }

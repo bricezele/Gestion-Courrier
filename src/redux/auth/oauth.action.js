@@ -12,6 +12,7 @@ import AuthActions from './oauth.types';
 import {ApiAction} from '../index';
 import ServerUrl from '../../config/ServerUrl';
 import {store} from '../../store';
+import {Constants} from "../../config/Constants";
 
 export const fetchAuthKeyPending = () => ({
     type: AuthActions.AUTH_KEY_PENDING,
@@ -38,8 +39,8 @@ export const fetchAuthKey = () =>
         url: ServerUrl.oauth,
         method: 'POST',
         auth: {
-            username: process.env.JWT_SECRET_LOGIN,
-            password: process.env.JWT_SECRET_KEY,
+            username: Constants.JWT_SECRET_LOGIN,
+            password: Constants.JWT_SECRET_KEY,
         },
         onLoading: fetchAuthKeyPending,
         // @ts-ignore

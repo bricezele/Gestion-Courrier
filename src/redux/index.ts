@@ -12,6 +12,7 @@ import Taskapp from './task-app/reducer'
 import Projectapp from './project-app/reducer'
 import {configReducer} from "./config/config.reducer";
 import {oauthReducer} from "./auth/oauth.reducer";
+import {checkUserExistReducer, getAllUserReducer, signUpReducer, updateUserReducer} from "./user/user.reducer";
 
 export const API = 'API';
 export const ApiAction = ({
@@ -59,6 +60,10 @@ const reducers = combineReducers({
     Projectapp,
     application: configReducer,
     authkey: oauthReducer,
+    signUp: signUpReducer,
+    checkUserExist: checkUserExistReducer,
+    getAllUser: getAllUserReducer,
+    updateUser: updateUserReducer
 
 });
 

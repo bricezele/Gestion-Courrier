@@ -9,14 +9,19 @@ import {persistor, store} from "./store";
 import * as serviceWorker from "./serviceWorker";
 import Loader from "./components/LoaderComponent";
 import {PersistGate} from "redux-persist/integration/react";
+import {QueryClient, QueryClientProvider} from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.render(
     <React.StrictMode>
         <Provider store={store}>
             <PersistGate persistor={persistor}
-                         loading={<Loader />}>
+                         loading={<Loader/>}>
                 <BrowserRouter>
-                    <App/>
+                    <QueryClientProvider client={queryClient}>
+                        <App/>
+                    </QueryClientProvider>
                 </BrowserRouter>
             </PersistGate>
         </Provider>

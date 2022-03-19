@@ -5,21 +5,21 @@ import Header from "../components/header";
 import Footer from "../components/footer";
 import Loader from "../components/LoaderComponent";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {layoutRoute} from "../route/layout-route";
+import {dashboardLayoutRoute, layoutRoute} from "../route/layout-route";
 import ConfigDB from "../data/customizer/config";
 import Taptop from "../components/tap-top";
 import ThemeCustomize from "../components/theme-customizer"
 import Sidebar from "../components/sidebar";
-const WizardSetupLayout = ({anim = ''}) => {
+const DashboardLayout = ({anim = ''}) => {
 
     return (
         <Fragment>
             <div className="page-wrapper compact-wrapper" id="pageWrapper">
-                <Header displayLeft={false}/>
+                <Header displayLeft={true} />
                 <div className="page-body-wrapper">
                     <div className="page-body">
                         <TransitionGroup>
-                            {layoutRoute.map(({ path, Component }) => (
+                            {dashboardLayoutRoute.map(({ path, Component }) => (
                                 <Route key={path}  exact  path={`${process.env.PUBLIC_URL}${path}`}>
                                     {({ match }) => (
                                         <CSSTransition
@@ -37,9 +37,11 @@ const WizardSetupLayout = ({anim = ''}) => {
                         </TransitionGroup>
                     </div>
                 </div>
+
             </div>
             <ThemeCustomize/>
+            <ToastContainer/>
         </Fragment>
     );
 }
-export default withRouter(WizardSetupLayout);
+export default withRouter(DashboardLayout);

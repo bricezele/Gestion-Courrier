@@ -7,12 +7,13 @@
  */
 
 const ServerUrl = {
+    base: 'http://localhost:3001/api/v1/',
     oauth: 'oauth/token',
     signin: 'oauth/signin',
     skills: 'skills',
     signup: 'users',
     findUserByMail: 'users/find-by-mail',
-    checkUserExist: 'users/check-user-exist',
+    checkUserExist: 'users/check-admin-exist',
     resendValidationCode: 'users/resend-validation-code',
     validateAccount: 'users/validate-account',
     singleFile: 'files/single-file',

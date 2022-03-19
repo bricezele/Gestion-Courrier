@@ -1,33 +1,30 @@
 import React, {Fragment, useEffect, useState} from "react";
 import "./index.scss";
-import {firebase_app} from "./data/config";
 import {Redirect, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
 import {Detector} from "react-detect-offline";
 import ConfigDB from "./data/customizer/config";
-import {authHeader, configureFakeBackend, handleResponse,} from "./services/fack.backend";
-
-// Signin page
-// Authentication
-import LoginWithValidation from "./pages/authentication/loginwithValidation";
-
-// Error page
-// Comming soo
-// Maintenanc
+import {configureFakeBackend,} from "./services/fack.backend";
+import LoginPage from "./pages/authentication/LoginPage";
 import {classes} from "./data/layouts";
 import WizardSetupLayout from "./layout/WizardSetupLayout";
 import Loader from "./components/LoaderComponent";
-import {bindActionCreators} from "redux";
 import {createStructuredSelector} from "reselect";
 import {selectAppConfig} from "./redux/config/config.selector";
-import {selectUser} from "./redux/auth/oauth.selector";
+import {selectAuthKey, selectUser} from "./redux/auth/oauth.selector";
 import useNetwork from "./hooks/UseNetwork";
 import {useTranslation} from "react-i18next";
+import {selectCheckUserExist} from "./redux/user/user.selector";
+import {fetchCheckUserExist} from "./redux/user/user.action";
+import SweetAlert from "sweetalert2";
+import DashboardLayout from "./layout/DashboardLayout";
+import WizardSetupPage from "./pages/WizardSetupPage/WizardSetupPage";
+import {ToastContainer} from "react-toastify";
 
 // setup fake backend
 configureFakeBackend();
 
-const App = ({application, user}) => {
+const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
 
     const {t} = useTranslation();
     const [anim, setAnim] = useState("");
@@ -56,29 +53,28 @@ const App = ({application, user}) => {
         type,
     } = useNetwork();
 
-    /*
-        useEffect(() => {
-            if (!online)
-                SweetAlert.fire({
-                    title: t('error'),
-                    text: t('no_connection_internet'),
-                    icon: "error",
-                    showCloseButton: false,
-                    showCancelButton: false,
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                });
-            else
-                SweetAlert.close();
-        }, [online]);
-    */
+
+/*    useEffect(() => {
+        if (!online)
+            SweetAlert.fire({
+                title: t('error'),
+                text: t('no_connection_internet'),
+                icon: "error",
+                showCloseButton: false,
+                showCancelButton: false,
+                allowOutsideClick: false,
+                showConfirmButton: false,
+            });
+        else
+            SweetAlert.close();
+    }, [online]);*/
 
     useEffect(() => {
-        const requestOptions = {method: "GET", headers: authHeader()};
-        fetch("/users", requestOptions).then(handleResponse);
         setAnim(animation);
-        firebase_app.auth().onAuthStateChanged(setCurrentUser);
-        setAuthenticated(JSON.parse(localStorage.getItem("authenticated")));
+        /*        const requestOptions = {method: "GET", headers: authHeader()};
+                fetch("/users", requestOptions).then(handleResponse);
+                firebase_app.auth().onAuthStateChanged(setCurrentUser);
+                setAuthenticated(JSON.parse(localStorage.getItem("authenticated")));*/
         console.ignoredYellowBox = ["Warning: Each", "Warning: Failed"];
         console.disableYellowBox = true;
         return function cleanup() {
@@ -99,102 +95,48 @@ const App = ({application, user}) => {
                     <Loader/>
 
                     <Switch>
-                        {/*          <Route  path={`${process.env.PUBLIC_URL}/login`} component={Signin} />
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/login`} component={Login}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg1`} component={LoginWithBgImage}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/loginWithBgImg2`} component={LoginWithBgVideo}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signup`} component={Register}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg1`} component={RegisterWithBgImage}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/signupWithImg2`} component={RegisterWithBgVideo}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/forgetPwd`} component={Forgetpwd}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/unlockUser`} component={UnlockUser}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/auth/resetPwd`} component={Resetpwd}></Route>
-
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error400`} component={Error400}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error401`} component={Error401}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error403`} component={Error403}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error404`} component={Error404}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error500`} component={Error500}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/errors/error503`} component={Error503}></Route>
-
-              <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoon`} component={Comingsoon}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonImg`} component={ComingsoonImg}></Route>
-              <Route  path={`${process.env.PUBLIC_URL}/pages/comingsoon/comingsoonVideo`} component={ComingsoonVideo}></Route>
-
-              <Route  path={`${process.env.PUBLIC_URL}/pages/maintenance`} component={Maintenance}></Route>
-
-              <Route  path={`${process.env.PUBLIC_URL}/callback`} render={() => <Callback/>} />*/}
-
                         <Route
-                            path={`${process.env.PUBLIC_URL}/pages/auth/login`}
-                            component={LoginWithValidation}
-                        ></Route>
+                            path={`${process.env.PUBLIC_URL}/login`}
+                            component={LoginPage} />
+                        <Route
+                            exact
+                            path={`${process.env.PUBLIC_URL}/wizard-setup`}
+                            component={WizardSetupPage} />
 
                         <Route
                             exact
                             path={`${process.env.PUBLIC_URL}/`}
                             render={() => {
 
-                                console.log("application", application.introSlidesShown === true);
-                                console.log("user", user);
-
-                                if (application.introSlidesShown)
-                                    return <Redirect to={`${process.env.PUBLIC_URL}/wizard-setup`}/>;
-                                else if (user) {
-                                    if (user.hasOwnProperty("firstname"))
+                                if (checkUserExist.result !== null) {
+                                    if (checkUserExist.result.count === 0)
+                                        return <Redirect to={`${process.env.PUBLIC_URL}/wizard-setup`}/>;
+                                    else if (user) {
+                                        if (user.hasOwnProperty("firstname"))
+                                            return (
+                                                <Redirect
+                                                    to={`${process.env.PUBLIC_URL}/dashboard`}
+                                                />
+                                            );
+                                        else
+                                            return (
+                                                <Redirect
+                                                    to={`${process.env.PUBLIC_URL}/login`}
+                                                />
+                                            );
+                                    } else
                                         return (
                                             <Redirect
-                                                to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`}
+                                                to={`${process.env.PUBLIC_URL}/login`}
                                             />
                                         );
-                                    else
-                                        return (
-                                            <Redirect
-                                                to={`${process.env.PUBLIC_URL}/pages/auth/login`}
-                                            />
-                                        );
-                                } else
-                                    return (
-                                        <Redirect
-                                            to={`${process.env.PUBLIC_URL}/pages/auth/login`}
-                                        />
-                                    );
+                                }
                             }}
                         />
 
-                        <WizardSetupLayout anim={anim}/>
-
-
-                        {/*
-                  currentUser !== null || authenticated || jwt_token  ?
-                  <App>
-                  <Route exact path={`${process.env.PUBLIC_URL}/`} render={() => {
-                      return (<Redirect to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`} />)
-                  }} />
-                  <TransitionGroup>
-                      {routes.map(({ path, Component }) => (
-                        <Route key={path}  exact  path={`${process.env.PUBLIC_URL}${path}`}>
-                            {({ match }) => (
-                                <CSSTransition
-                                  in={match != null}
-                                  timeout={100}
-                                  classNames={anim}
-                                  unmountOnExit>
-                                  <div>
-                                      <Component/>
-                                  </div>
-                                </CSSTransition>
-                            )}
-                        </Route>
-                        ))}
-                  </TransitionGroup>
-
-                  </App>
-                  :
-                  <Redirect to={`${process.env.PUBLIC_URL}/login`} />
-              */}
+                        <DashboardLayout anim={anim}/>
                     </Switch>
-
+                    <ToastContainer/>
                 </Fragment>
             )}>
 
@@ -202,11 +144,13 @@ const App = ({application, user}) => {
     );
 };
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({}, dispatch);
-
 const mapStateToProps = createStructuredSelector({
     application: selectAppConfig,
     user: selectUser,
+    checkUserExist: selectCheckUserExist,
+    authkey: selectAuthKey
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, {
+    fetchCheckUserExist
+})(App);
