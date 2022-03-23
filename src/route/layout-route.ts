@@ -1,5 +1,5 @@
 import WizardSetupPage from "../pages/WizardSetupPage/WizardSetupPage";
-import DashboardPage from "../pages/DashboardPage";
+import DashboardPageStandard from "../pages/DashboardPageStandard";
 import UserManagementPage from "../pages/UserManagementPage";
 
 export const layoutRoute = [
@@ -7,6 +7,6 @@ export const layoutRoute = [
 ];
 
 export const dashboardLayoutRoute = [
-    {path: "/dashboard", Component: DashboardPage},
+    {path: "/dashboard-standard", Component: DashboardPageStandard},
     {path: "/user-management", Component: UserManagementPage},
 ];

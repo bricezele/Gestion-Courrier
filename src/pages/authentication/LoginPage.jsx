@@ -12,6 +12,7 @@ import {toast} from "react-toastify";
 import * as Utils from "../../utils/Tools";
 import {classes} from "../../data/layouts";
 import {useHistory} from "react-router-dom";
+import {Role} from "../../enum/role.enum";
 
 const LoginPage = ({fetchSignIn, authkey, user}) => {
 
@@ -54,8 +55,22 @@ const LoginPage = ({fetchSignIn, authkey, user}) => {
     useEffect(() => {
         console.log("authkey", authkey);
         if (authkey.result !== null) {
-            if (authkey.result.user.hasOwnProperty("firstname"))
-                history.push(`/dashboard`);
+            if (authkey.result.user.hasOwnProperty("firstname")){
+                switch (user.roles) {
+                    case Role.ADMIN:
+                        history.push(`/dashboard-admin`);
+                        break;
+                        case Role.STANDARD:
+                        history.push(`/dashboard-standard`);
+                        break;
+                        case Role.ASSISTANTE_DG:
+                        history.push(`/dashboard-assistante-dg`);
+                        break;
+                        case Role.EDITOR:
+                        history.push(`/dashboard-editor`);
+                        break;
+                }
+            }
         }
 
         if (authkey.error) {

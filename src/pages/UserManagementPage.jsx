@@ -163,6 +163,7 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
             <ModalBody>
                 <Row>
                     <Col sm="12">
+
                         <Form className="theme-form needs-validation" noValidate="" onSubmit={handleSubmit}>
                             <Row>
                                 <Col sm="6">

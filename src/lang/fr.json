@@ -68,5 +68,13 @@
   "editor": "Editeur",
   "account_successfully_modified": "L'utilisateur a été modifié avec succès",
   "account_successfully_delete": "L'utilisateur a été supprimé avec succès",
-  "my_account": "Mon compte"
+  "my_account": "Mon compte",
+  "objet_required": "L'objet de la requête est requis",
+  "objet": "Objet",
+  "emetteur": "Emetteur",
+  "recepteur": "Récepteur",
+  "category": "Catégorie",
+  "cover_image": "Image de couverture",
+  "file_annexe": "Pièces jointes",
+  "direction": "Direction"
 }

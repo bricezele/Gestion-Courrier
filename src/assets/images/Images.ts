@@ -24,6 +24,7 @@ import logo from "./logo/logo_fgt.jpeg";
 import loginBackground from './login/1.jpg';
 import login from './logo/login.png';
 import loginDark from './logo/logo_dark.png';
+import  imagePlaceHolder from './placeholder-image.png';
 
 export const Images = {
     avatars: [
@@ -46,5 +47,6 @@ export const Images = {
         logo,
         loginBackground,
         login,
-        loginDark
+        loginDark,
+    imagePlaceHolder
 }
