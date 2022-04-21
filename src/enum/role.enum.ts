@@ -9,5 +9,7 @@ export enum Role {
     ADMIN = 'admin',
     STANDARD = 'standard',
     ASSISTANTE_DG = 'assistante_dg',
+    DGA = 'directeur_general_adjoint',
+    DG = 'directeur_departement',
     EDITOR = 'editor',
 }

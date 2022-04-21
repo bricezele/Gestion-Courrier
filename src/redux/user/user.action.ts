@@ -11,6 +11,7 @@ import UserActionsType from './user.types';
 import {ApiAction} from '../index';
 import {store} from '../../store';
 import ServerUrl from "../../config/ServerUrl";
+
 export const fetchSignUpPending = () => ({
     type: UserActionsType.SIGN_UP_PENDING,
 });
@@ -61,14 +62,13 @@ export const fetchGetAllUserError = (error: any) => ({
     type: UserActionsType.GET_ALL_USER_ERROR,
     payload: error,
 });
-export const fetchGetAllUser = (user) => {
+export const fetchGetAllUser = () => {
     const auth = store.getState().authkey;
     const authKey = auth !== null ? `${auth.result?.accessToken}` : '';
     return ApiAction({
         url: ServerUrl.signup,
         accessToken: authKey,
         method: 'GET',
-        data: user,
         onLoading: fetchGetAllUserPending,
         // @ts-ignore
         onSuccess: fetchGetAllUserSuccess,

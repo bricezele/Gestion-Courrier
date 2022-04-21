@@ -7,7 +7,6 @@ import ConfigDB from "./data/customizer/config";
 import {configureFakeBackend,} from "./services/fack.backend";
 import LoginPage from "./pages/authentication/LoginPage";
 import {classes} from "./data/layouts";
-import WizardSetupLayout from "./layout/WizardSetupLayout";
 import Loader from "./components/LoaderComponent";
 import {createStructuredSelector} from "reselect";
 import {selectAppConfig} from "./redux/config/config.selector";
@@ -16,10 +15,10 @@ import useNetwork from "./hooks/UseNetwork";
 import {useTranslation} from "react-i18next";
 import {selectCheckUserExist} from "./redux/user/user.selector";
 import {fetchCheckUserExist} from "./redux/user/user.action";
-import SweetAlert from "sweetalert2";
 import DashboardLayout from "./layout/DashboardLayout";
 import WizardSetupPage from "./pages/WizardSetupPage/WizardSetupPage";
 import {ToastContainer} from "react-toastify";
+import {Role} from "./enum/role.enum";
 
 // setup fake backend
 configureFakeBackend();
@@ -54,20 +53,20 @@ const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
     } = useNetwork();
 
 
-/*    useEffect(() => {
-        if (!online)
-            SweetAlert.fire({
-                title: t('error'),
-                text: t('no_connection_internet'),
-                icon: "error",
-                showCloseButton: false,
-                showCancelButton: false,
-                allowOutsideClick: false,
-                showConfirmButton: false,
-            });
-        else
-            SweetAlert.close();
-    }, [online]);*/
+    /*    useEffect(() => {
+            if (!online)
+                SweetAlert.fire({
+                    title: t('error'),
+                    text: t('no_connection_internet'),
+                    icon: "error",
+                    showCloseButton: false,
+                    showCancelButton: false,
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            else
+                SweetAlert.close();
+        }, [online]);*/
 
     useEffect(() => {
         setAnim(animation);
@@ -97,11 +96,11 @@ const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
                     <Switch>
                         <Route
                             path={`${process.env.PUBLIC_URL}/login`}
-                            component={LoginPage} />
+                            component={LoginPage}/>
                         <Route
                             exact
                             path={`${process.env.PUBLIC_URL}/wizard-setup`}
-                            component={WizardSetupPage} />
+                            component={WizardSetupPage}/>
 
                         <Route
                             exact
@@ -112,13 +111,40 @@ const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
                                     if (checkUserExist.result.count === 0)
                                         return <Redirect to={`${process.env.PUBLIC_URL}/wizard-setup`}/>;
                                     else if (user) {
-                                        if (user.hasOwnProperty("firstname"))
-                                            return (
-                                                <Redirect
-                                                    to={`${process.env.PUBLIC_URL}/dashboard`}
-                                                />
-                                            );
-                                        else
+                                        if (user.hasOwnProperty("firstname")) {
+                                            switch (user.roles) {
+                                                case Role.ADMIN:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-admin`}
+                                                        />
+                                                    );
+                                                case Role.STANDARD:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-standard`}
+                                                        />
+                                                    );
+                                                case Role.ASSISTANTE_DG:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-assistant-dg`}
+                                                        />
+                                                    );
+                                                case Role.DGA:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-dga`}
+                                                        />
+                                                    );
+                                                case Role.EDITOR:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-editor`}
+                                                        />
+                                                    );
+                                            }
+                                        } else
                                             return (
                                                 <Redirect
                                                     to={`${process.env.PUBLIC_URL}/login`}

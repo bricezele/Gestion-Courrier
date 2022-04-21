@@ -7,10 +7,6 @@ import {
     CardHeader,
     Col,
     Container,
-    Form,
-    FormGroup,
-    Input,
-    Label,
     Modal,
     ModalBody,
     ModalFooter,
@@ -27,14 +23,9 @@ import {connect, useDispatch} from "react-redux";
 import {Role} from "../enum/role.enum";
 import {toast} from "react-toastify";
 import * as Utils from "../utils/Tools";
-import * as Yup from "yup";
-import {useFormik} from "formik";
 import {Images} from "../assets/images/Images";
 import {createStructuredSelector} from "reselect";
 import {selectAppConfig} from "../redux/config/config.selector";
-import Dropzone from 'react-dropzone-uploader'
-import {Direction} from "../enum/direction.enum";
-import {CourrierCategory} from "../enum/courriercategory.enum";
 import './styles.scss';
 import {selectCreateCourrier, selectGetAllCourrier, selectUpdateCourrier} from "../redux/courrier/courrier.selector";
 import {
@@ -51,7 +42,6 @@ import {EntityType} from "../enum/entitytype.enum";
 import {FileType} from "../enum/filetype.enum";
 import {CourrierStatus} from "../enum/courrierstatus.enum";
 import {CourrierType} from "../enum/courriertype.enum";
-import ServerUrl from "../config/ServerUrl";
 import {selectFileUpload} from "../redux/common/common.selector";
 import {selectUser} from "../redux/auth/oauth.selector";
 
@@ -66,18 +56,18 @@ import 'moment/locale/fr';
 
 const moment = require('moment-timezone');
 
-const DashboardPageStandard = ({
-                                   user,
-                                   createCourrier,
-                                   fetchCreateCourrier,
-                                   getAllCourrier,
-                                   fetchGetAllCourrier,
-                                   updateCourrier,
-                                   fetchUpdateCourrier,
-                                   filesupload,
-                                   fetchUploadMedias,
-                                   fetchUploadMedia
-                               }) => {
+const DashboardPageAdmin = ({
+                                user,
+                                createCourrier,
+                                fetchCreateCourrier,
+                                getAllCourrier,
+                                fetchGetAllCourrier,
+                                updateCourrier,
+                                fetchUpdateCourrier,
+                                filesupload,
+                                fetchUploadMedias,
+                                fetchUploadMedia
+                            }) => {
 
     const {t} = useTranslation();
     let history = useHistory();
@@ -254,7 +244,6 @@ const DashboardPageStandard = ({
             toast.success(t('courrier_successfully_created'));
             //userToModify !== null ? toast.success(t('account_successfully_modified')) : toast.success(t('account_successfully_delete'));
             fetchGetAllCourrier();
-            window.location.reload(true);
             setOpenModal(false);
             dispatch(fetchCreateCourrierReset());
         }
@@ -265,248 +254,6 @@ const DashboardPageStandard = ({
         //if (userToModify !== null) setUserToModify(null);
 
     }, [createCourrier]);
-
-    const AddCourrierSchema = Yup.object().shape({
-        objet: Yup.string().required(t('objet_required')),
-        emetteur: Yup.string().required(t('required')),
-        recepteur: Yup.string(),
-        category: Yup.string(),
-        direction: Yup.string(),
-        code: Yup.string(),
-    });
-
-    const {handleChange, handleSubmit, handleBlur, values, errors, setFieldError, setFieldValue, resetForm, touched} =
-        useFormik({
-            validationSchema: AddCourrierSchema,
-            initialValues: {
-                objet: '',
-                emetteur: '',
-                recepteur: '',
-                category: CourrierCategory.COURRIER,
-                direction: Direction.FGT,
-                code: `${Utils.getKeyByValue(Direction, Direction.FGT)}-${new Date().getFullYear()}-${getAllCourrier.result !== null ? getAllCourrier.result.length : 0}`
-            },
-            onSubmit: values => {
-
-                if (selectedAdditionalFiles.length > 0) {
-                    const dataToSend = new FormData();
-                    selectedAdditionalFiles.map(file => {
-                        dataToSend.append('files', file);
-                    });
-
-                    fetchUploadMedias(dataToSend, {
-                        type: FileUsage.COURRIER_IMAGE_ANNEXE,
-                        entity: EntityType.COURRIER,
-                        filetype: FileType.PHOTO,
-                        role: Role.ADMIN,
-                    });
-                } else {
-                    fetchCreateCourrier({
-                        objet: values.objet,
-                        code: values.code,
-                        emetteur: values.emetteur,
-                        recepteur: values.recepteur,
-                        direction: values.direction,
-                        type: CourrierType.ENTRANT,
-                        status: CourrierStatus.PENDING,
-                        category: values.category,
-                        cotation: [],
-                        documents_annexe: [],
-                        modifications_history: {
-                            user: user._id,
-                            status: CourrierStatus.PENDING
-                        }
-                    })
-                }
-
-            }
-        });
-
-    const getImage = () => {
-        document.getElementById("upfile").click();
-    }
-
-    const onFileChange = event => {
-        setSelectedImage(event.target.files[0]);
-        var fileReader = new FileReader();
-        fileReader.readAsDataURL(event.target.files[0]);
-        fileReader.onload = (eventReader) => {
-            console.log("Event", eventReader.target.result);
-            setSelectedImagePreview(eventReader.target.result);
-        };
-    };
-
-    const getUploadParams = ({meta}) => {
-        return {
-            url: `${ServerUrl.base}${ServerUrl.multipleFile}`
-        }
-    }
-
-    const handleChangeStatus = ({meta, file}, status) => {
-        if (selectedAdditionalFiles.filter(additionalFile => additionalFile.name === file.name).length === 0) {
-            setSelectedAdditionalFiles([...selectedAdditionalFiles, file]);
-        }
-    }
-
-    const handleSubmitAdditionnalFiles = (files, allFiles) => {
-        allFiles.forEach(f => f.remove());
-    }
-
-
-    const renderModalAddUser = () => (
-        <Modal isOpen={openModal} toggle={toggleModal} size="lg">
-            <ModalHeader
-                toggle={toggleModal}>{t('add_new_courrier')}</ModalHeader>
-            <ModalBody>
-                <Row>
-                    <Col sm="12">
-                        {/*                        <Media body className="img-fluid img-place-holder" onClick={getImage}
-                               style={{
-                                   backgroundImage: `url("${selectedImagePreview ? selectedImagePreview : Images.imagePlaceHolder}")`
-                               }} alt=""/>*/}
-                        <Form className="theme-form needs-validation" noValidate=""
-                              onSubmit={handleSubmit}>
-                            <div style={{height: "0px", width: "0px", overflow: "hidden"}}>
-                                <input id="upfile" multiple type="file" accept="image/*"
-                                       onChange={(e) => onFileChange(e)}/>
-                            </div>
-                            <Row>
-                                <Col>
-                                    <FormGroup>
-                                        <Label>{t('objet')}</Label>
-                                        <Input className="form-control" type="text" name="objet"
-                                               placeholder={t('objet')}
-                                               value={values.objet}
-                                               onChange={handleChange('objet')}
-                                               onBlur={handleBlur('objet')}
-                                        />
-                                        <span
-                                            style={{color: "red"}}>{errors.objet !== '' && errors.objet}</span>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col sm="6">
-                                    <FormGroup>
-                                        <Label>{t('emetteur')} *</Label>
-                                        <Input className="form-control" type="text" name="objet"
-                                               placeholder={t('emetteur')}
-                                               value={values.emetteur}
-                                               onChange={handleChange('emetteur')}
-                                               onBlur={handleBlur('emetteur')}
-                                        />
-                                        <span
-                                            style={{color: "red"}}>{errors.emetteur !== '' && errors.emetteur}</span>
-                                    </FormGroup>
-                                </Col>
-                                <Col sm="6">
-                                    <FormGroup>
-                                        <Label>{t('recepteur')}</Label>
-                                        <Input className="form-control" type="text" name="recepteur"
-                                               placeholder={t('recepteur')}
-                                               value={values.recepteur}
-                                               onChange={handleChange('recepteur')}
-                                               onBlur={handleBlur('recepteur')}/>
-                                        <span
-                                            style={{color: "red"}}>{errors.recepteur !== '' && errors.recepteur}</span>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-
-                            <Row>
-                                <Col sm="4">
-                                    <FormGroup>
-                                        <Label>{t('direction')} *</Label>
-                                        <div className="select2-drpdwn-product select-options border-2">
-
-                                            <select className="form-control btn-square" name="direction"
-                                                    onChange={(e) => {
-                                                        setFieldValue("direction", e.target.value);
-                                                        setFieldValue("code", `${Utils.getKeyByValue(Direction, e.target.value)}-${new Date().getFullYear()}-${getAllCourrier.result.filter(courrier => courrier.direction === e.target.value).length}`);
-                                                    }}>
-                                                {
-                                                    Object.keys(Direction).map((direction, index) => (
-                                                            <option key={index} selected={index === 0}
-                                                                    value={Direction[direction]}>{t(Direction[direction])}</option>
-                                                        )
-                                                    )
-                                                }
-                                            </select>
-                                        </div>
-                                    </FormGroup>
-                                </Col>
-                                <Col sm="4">
-                                    <FormGroup>
-                                        <Label>{t('category')} *</Label>
-                                        <div className="select2-drpdwn-product select-options border-2">
-                                            <select className="form-control btn-square" name="category"
-                                                    onChange={(e) => setFieldValue("category", e.target.value)}>
-                                                {
-                                                    Object.keys(CourrierCategory).map((category, index) => (
-                                                            <option key={index} selected={index === 0}
-                                                                    value={CourrierCategory[category]}>{t(CourrierCategory[category])}</option>
-                                                        )
-                                                    )
-                                                }
-                                            </select>
-                                        </div>
-                                    </FormGroup>
-                                </Col>
-                                <Col sm="4">
-                                    <FormGroup>
-                                        <Label>{t('code')}</Label>
-                                        <Input className="form-control" type="text" name="code"
-                                               placeholder={t('code')}
-                                               disabled
-                                               value={values.code}/>
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col>
-                                    <FormGroup>
-                                        <Label>{t('file_annexe')} *</Label>
-                                        <Dropzone
-                                            ref={dropzoneRef}
-                                            getUploadParams={getUploadParams}
-                                            onChangeStatus={handleChangeStatus}
-                                            onSubmit={handleSubmitAdditionnalFiles}
-
-                                            maxFiles={5}
-                                            submitButtonDisabled
-                                            autoUpload={false}
-                                            multiple
-                                            accept="image/*,video/*,.pdf,doc,.docx,.xml,.xlsx,.xslx,.ppt,.pptx,.txt,.csv"
-                                            submitButtonContent={null}
-                                            canCancel={false}
-                                            inputContent={t('add_additionnal_files')}
-                                            styles={{
-                                                dropzone: {width: '100%', height: 50},
-                                                dropzoneActive: {borderColor: 'green'},
-                                            }}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                        </Form>
-                    </Col>
-                </Row>
-            </ModalBody>
-            <ModalFooter>
-                <Button color="primary" onClick={toggleModal}>{t('close')}</Button>
-                <Button color="secondary" disabled={createCourrier.loading || createCourrier.loading}
-                        onClick={handleSubmit}>
-                    {/*                    {signUp.loading && (
-                        <div className="loader-box">
-                            <div className="loader-3"></div>
-                        </div>
-                    )}*/}
-                    {(createCourrier.loading || updateCourrier.loading) ? t('loading_dots') : t('submit')}
-                </Button>
-            </ModalFooter>
-        </Modal>
-    );
-
 
     const renderModalDetailCourrier = () => (
         <Modal isOpen={openModalCourrier} toggle={toggleModalCourrier} size="xl">
@@ -725,16 +472,6 @@ const DashboardPageStandard = ({
                                 <div className="media">
                                     <h5 style={{lineHeigt: '40px'}}>{t('courriers')}</h5>
                                     <div className="media-body text-right">
-                                        <button className="btn btn-primary" onClick={() => {
-                                            setSelectedAdditionalFiles([]);
-                                            setSelectedImagePreview(null);
-                                            setSelectedImage(null);
-                                            toggleModal();
-                                            resetForm();
-                                        }}>
-                                            <span>{t('add')}</span>
-                                            <Mail style={{marginBottom: '-6px'}}/></button>
-                                        {renderModalAddUser()}
                                         {courrier !== null && renderModalDetailCourrier()}
                                     </div>
                                 </div>
@@ -746,22 +483,34 @@ const DashboardPageStandard = ({
                                             <main className="kanban-drag" id="addToDo">
                                                 <Board
                                                     onCardDragEnd={(boardElement, card, source, destination) => {
-
-                                                        if (destination.toColumnId === 2) {
-                                                            if (card.status === CourrierStatus.PENDING) {
-                                                                console.log(boardElement, card, source, destination);
-                                                                fetchUpdateCourrier(card.id, true, {
-                                                                    status: CourrierStatus.EN_ATTENTE_VALIDATION_1
-                                                                });
-                                                            }
+                                                        console.log("Destination", destination);
+                                                        if (card.status === CourrierStatus.PENDING) {
+                                                            console.log(boardElement, card, source, destination);
+                                                            fetchUpdateCourrier(card.id, true, {
+                                                                status: CourrierStatus.EN_ATTENTE_VALIDATION_1
+                                                            });
                                                         } else if (destination.toColumnId === 1) {
                                                             fetchUpdateCourrier(card.id, true, {
                                                                 status: CourrierStatus.PENDING
+                                                            });
+                                                        } else window.location.reload(false);
+
+                                                        if (destination.toColumnId === 3) {
+                                                            if (card.status === CourrierStatus.EN_ATTENTE_VALIDATION_1) {
+                                                                console.log(boardElement, card, source, destination);
+                                                                fetchUpdateCourrier(card.id, true, {
+                                                                    status: CourrierStatus.EN_ATTENTE_VALIDATION_2
+                                                                });
+                                                            }
+                                                        } else if (destination.toColumnId === 2) {
+                                                            fetchUpdateCourrier(card.id, true, {
+                                                                status: CourrierStatus.EN_ATTENTE_VALIDATION_1
                                                             });
                                                         } else {
                                                             preventDefault();
                                                             return false;
                                                         }
+
                                                     }}
                                                     disableColumnDrag
                                                     renderCard={({
@@ -769,7 +518,6 @@ const DashboardPageStandard = ({
                                                                      objet,
                                                                      createdAt,
                                                                      picture,
-                                                                     cotation,
                                                                      status,
                                                                      emetteur,
                                                                      category,
@@ -787,7 +535,6 @@ const DashboardPageStandard = ({
                                                                 createdAt,
                                                                 picture,
                                                                 status,
-                                                                cotation,
                                                                 category,
                                                                 emetteur,
                                                                 recepteur,
@@ -813,10 +560,7 @@ const DashboardPageStandard = ({
                                                                                 : status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
                                                                                     <span
                                                                                         className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
-                                                                                    : status === CourrierStatus.VALIDE_APPROUVE ?
-                                                                                        <span
-                                                                                            className={`badge badge-success f-right`}>{t('valide_approuve')}</span>
-                                                                                        : null
+                                                                                    : null
                                                                 }
                                                                 <img className="mt-2 img-fluid" src={picture}
                                                                      alt=""/>
@@ -890,4 +634,4 @@ export default connect(mapStateToProps, {
     fetchUpdateCourrier,
     fetchUploadMedias,
     fetchUploadMedia
-})(DashboardPageStandard);
+})(DashboardPageAdmin);

@@ -12,6 +12,7 @@ const ServerUrl = {
     signin: 'oauth/signin',
     skills: 'skills',
     signup: 'users',
+    courriers: 'courriers',
     findUserByMail: 'users/find-by-mail',
     checkUserExist: 'users/check-admin-exist',
     resendValidationCode: 'users/resend-validation-code',
@@ -24,6 +25,7 @@ const ServerUrl = {
     createStripePayment: 'payment/create-stripe-payment',
     doStripePayment: 'payment/do-stripe-payment',
     updateOneSignal: 'update-onesignal',
+    department: 'department',
 };
 
 export default ServerUrl;

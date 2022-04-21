@@ -63,21 +63,26 @@ import 'moment/locale/en-il';
 import 'moment/locale/en-nz';
 import 'moment/locale/es-us';
 import 'moment/locale/fr';
+import {fetchGetAllUser} from "../redux/user/user.action";
+import {selectGetAllUserExist} from "../redux/user/user.selector";
+import {Multiselect} from "multiselect-react-dropdown";
 
 const moment = require('moment-timezone');
 
-const DashboardPageStandard = ({
-                                   user,
-                                   createCourrier,
-                                   fetchCreateCourrier,
-                                   getAllCourrier,
-                                   fetchGetAllCourrier,
-                                   updateCourrier,
-                                   fetchUpdateCourrier,
-                                   filesupload,
-                                   fetchUploadMedias,
-                                   fetchUploadMedia
-                               }) => {
+const DashboardPageDirecteurAdjoint = ({
+                                           user,
+                                           createCourrier,
+                                           fetchCreateCourrier,
+                                           getAllCourrier,
+                                           fetchGetAllCourrier,
+                                           updateCourrier,
+                                           fetchUpdateCourrier,
+                                           filesupload,
+                                           fetchUploadMedias,
+                                           fetchUploadMedia,
+                                           getAllUser,
+                                           fetchGetAllUser,
+                                       }) => {
 
     const {t} = useTranslation();
     let history = useHistory();
@@ -103,9 +108,12 @@ const DashboardPageStandard = ({
     const [selectedImagePreview, setSelectedImagePreview] = useState(null); // Initially, no file is selected
     const [openModal, setOpenModal] = useState(false);
     const [openModalCourrier, setOpenModalCourrier] = useState(false);
+    const [openModalCotation, setOpenModalCotation] = useState(false);
     const [isCourrierCreated, setisCourrierCreated] = useState(false);
     const [userToModify, setUserToModify] = useState(null);
     const [courrier, setCourrier] = useState(null);
+    const [cotations, setCotation] = useState([]);
+    const [submitCotation, setSubmitCotation] = useState(false);
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
@@ -118,6 +126,21 @@ const DashboardPageStandard = ({
         setOpenModalCourrier(!openModalCourrier);
         setCourrier(null);
     }
+
+    const toggleModalCotation = () => {
+        if (openModalCotation) setSubmitCotation(false);
+        setOpenModalCotation(!openModalCotation);
+
+        console.log("openModalCotation", openModalCotation);
+        console.log("cotations", cotations);
+
+        if (cotations.length > 0) {
+            fetchUpdateCourrier(courrier.id, true, {
+                status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA,
+                cotation: cotations.map(cotation => cotation._id)
+            })
+        }
+    }
     const [date, setDate] = useState({date: new Date()});
     const [generalData, setGeneralData] = useState([]);
     const [accountType, setAccountType] = useState(Role.EDITOR);
@@ -128,6 +151,7 @@ const DashboardPageStandard = ({
         dispatch(fetchGetAllCourrierReset());
         dispatch(fetchUpdateCourrierReset());
         fetchGetAllCourrier();
+        fetchGetAllUser();
         moment.locale('fr');
     }, []);
 
@@ -188,9 +212,11 @@ const DashboardPageStandard = ({
         if (updateCourrier.result !== null) {
             setTimeout(() => {
                 window.location.reload(true);
+                window.location.reload(true);
             }, 100);
             fetchGetAllCourrier();
             dispatch(fetchUpdateCourrierReset());
+            setCotation([]);
         }
 
         if (updateCourrier.error !== null) {
@@ -199,6 +225,13 @@ const DashboardPageStandard = ({
         }
 
     }, [updateCourrier]);
+
+    useEffect(() => {
+
+        if (getAllUser.error) {
+            toast.error(Utils.getErrorMsg(getAllUser));
+        }
+    }, [getAllUser]);
 
     useEffect(() => {
         if (filesupload.result !== null) {
@@ -254,7 +287,6 @@ const DashboardPageStandard = ({
             toast.success(t('courrier_successfully_created'));
             //userToModify !== null ? toast.success(t('account_successfully_modified')) : toast.success(t('account_successfully_delete'));
             fetchGetAllCourrier();
-            window.location.reload(true);
             setOpenModal(false);
             dispatch(fetchCreateCourrierReset());
         }
@@ -303,7 +335,6 @@ const DashboardPageStandard = ({
                 } else {
                     fetchCreateCourrier({
                         objet: values.objet,
-                        code: values.code,
                         emetteur: values.emetteur,
                         recepteur: values.recepteur,
                         direction: values.direction,
@@ -311,11 +342,7 @@ const DashboardPageStandard = ({
                         status: CourrierStatus.PENDING,
                         category: values.category,
                         cotation: [],
-                        documents_annexe: [],
-                        modifications_history: {
-                            user: user._id,
-                            status: CourrierStatus.PENDING
-                        }
+                        documents_annexe: []
                     })
                 }
 
@@ -422,7 +449,7 @@ const DashboardPageStandard = ({
                                             <select className="form-control btn-square" name="direction"
                                                     onChange={(e) => {
                                                         setFieldValue("direction", e.target.value);
-                                                        setFieldValue("code", `${Utils.getKeyByValue(Direction, e.target.value)}-${new Date().getFullYear()}-${getAllCourrier.result.filter(courrier => courrier.direction === e.target.value).length}`);
+                                                        setFieldValue("code", `${Utils.getKeyByValue(Direction, e.target.value)}-${new Date().getFullYear()}-${getAllCourrier.result.length}`);
                                                     }}>
                                                 {
                                                     Object.keys(Direction).map((direction, index) => (
@@ -547,7 +574,8 @@ const DashboardPageStandard = ({
                                                         <td>{moment(courrier.createdAt).format('LL')}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td><b>{t('status')} &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                                        <td>
+                                                            <b>{t('status')} &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
                                                         </td>
                                                         <td>
                                                             {
@@ -571,6 +599,24 @@ const DashboardPageStandard = ({
                                                 </table>
                                             </div>
                                             <hr/>
+                                            {courrier.cotation.length > 0 && (<Row>
+                                                <Col md="6">
+                                                    <h6 className="product-title"><b>{t("cotation")}: </b></h6>
+                                                </Col>
+                                                <Col md="6">
+                                                    <div className="product-icon">
+                                                        <ul className="product-social">
+                                                            {
+                                                                courrier.cotation.map(cotation => (
+                                                                    <li>- {`${cotation.firstname} ${cotation.lastname}`}</li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                        <form className="d-inline-block f-right"></form>
+                                                    </div>
+                                                </Col>
+                                            </Row>)
+                                            }
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -651,6 +697,54 @@ const DashboardPageStandard = ({
 
             <ModalFooter>
                 <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
+            </ModalFooter>
+        </Modal>
+    )
+
+    const renderModalCotationCourrier = () => (
+        <Modal isOpen={openModalCotation} toggle={toggleModalCotation} size="lg">
+
+            <ModalHeader
+                toggle={toggleModalCotation}>{t('cotation')}</ModalHeader>
+
+            <ModalBody>
+                <Row>
+                    <Col sm="12">
+
+                        <Form className="theme-form needs-validation" noValidate="">
+                            <Row>
+                                <Col>
+                                    <FormGroup>
+                                        <Label>{t('person_name_to_be_rated')} *</Label>
+                                        <Multiselect
+                                            placeholder=""
+                                            options={getAllUser.result.filter(user => user.roles === Role.DG)}
+                                            onSelect={(selectedList, selectedItem) => {
+                                                setCotation(selectedList)
+                                            }}
+                                            onRemove={(selectedList, selectedItem) => {
+                                                setCotation(selectedList)
+                                            }}
+                                            displayValue="firstname"
+                                            groupBy="roles"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Col>
+                </Row>
+            </ModalBody>
+
+            <ModalFooter>
+                <Button color="primary" onClick={toggleModalCourrier}>{t('cancel')}</Button>
+                <Button color="secondary" disabled={updateCourrier.loading} onClick={() => {
+                    console.log("Courrier", courrier);
+                    toggleModalCotation();
+                    setSubmitCotation(true);
+                }}>
+                    {(updateCourrier.loading) ? t('loading_dots') : t('submit')}
+                </Button>
             </ModalFooter>
         </Modal>
     )
@@ -736,6 +830,7 @@ const DashboardPageStandard = ({
                                             <Mail style={{marginBottom: '-6px'}}/></button>
                                         {renderModalAddUser()}
                                         {courrier !== null && renderModalDetailCourrier()}
+                                        {renderModalCotationCourrier()}
                                     </div>
                                 </div>
                             </CardHeader>
@@ -746,22 +841,23 @@ const DashboardPageStandard = ({
                                             <main className="kanban-drag" id="addToDo">
                                                 <Board
                                                     onCardDragEnd={(boardElement, card, source, destination) => {
-
-                                                        if (destination.toColumnId === 2) {
-                                                            if (card.status === CourrierStatus.PENDING) {
-                                                                console.log(boardElement, card, source, destination);
-                                                                fetchUpdateCourrier(card.id, true, {
-                                                                    status: CourrierStatus.EN_ATTENTE_VALIDATION_1
-                                                                });
-                                                            }
-                                                        } else if (destination.toColumnId === 1) {
+                                                        console.log("Card", card);
+                                                        setCourrier({...card});
+                                                        if (destination.toColumnId === 4) {
+                                                            toggleModalCotation(card);
+                                                        } else if (destination.toColumnId === 3) {
                                                             fetchUpdateCourrier(card.id, true, {
-                                                                status: CourrierStatus.PENDING
+                                                                status: CourrierStatus.EN_ATTENTE_VALIDATION_2
+                                                            });
+                                                        } else if (destination.toColumnId === 5) {
+                                                            fetchUpdateCourrier(card.id, true, {
+                                                                status: CourrierStatus.VALIDE_APPROUVE
                                                             });
                                                         } else {
                                                             preventDefault();
                                                             return false;
                                                         }
+
                                                     }}
                                                     disableColumnDrag
                                                     renderCard={({
@@ -880,6 +976,7 @@ const mapStateToProps = createStructuredSelector({
     createCourrier: selectCreateCourrier,
     getAllCourrier: selectGetAllCourrier,
     updateCourrier: selectUpdateCourrier,
+    getAllUser: selectGetAllUserExist,
     filesupload: selectFileUpload,
     user: selectUser
 });
@@ -889,5 +986,6 @@ export default connect(mapStateToProps, {
     fetchGetAllCourrier,
     fetchUpdateCourrier,
     fetchUploadMedias,
-    fetchUploadMedia
-})(DashboardPageStandard);
+    fetchUploadMedia,
+    fetchGetAllUser
+})(DashboardPageDirecteurAdjoint);

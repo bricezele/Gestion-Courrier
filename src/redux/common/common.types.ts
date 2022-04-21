@@ -1,0 +1,20 @@
+/**
+ * Project yoolearn-mobile
+ * File common.types
+ * Path app/redux/common
+ * Created by BRICE ZELE
+ * Date: 30/09/2021
+ */
+const CommonActionsType = {
+    FILE_UPLOAD_PENDING: 'FILE_UPLOAD_PENDING',
+    FILE_UPLOAD_SUCCESS: 'FILE_UPLOAD_SUCCESS',
+    FILE_UPLOAD_ERROR: 'FILE_UPLOAD_ERROR',
+    FILE_UPLOAD_RESET: 'FILE_UPLOAD_RESET',
+    FILE_UPLOAD_PROGRESS: 'FILE_UPLOAD_PROGRESS',
+
+    COMMENT_PENDING: 'COMMENT_PENDING',
+    COMMENT_SUCCESS: 'COMMENT_SUCCESS',
+    COMMENT_ERROR: 'COMMENT_ERROR',
+    COMMENT_RESET: 'COMMENT_RESET',
+};
+export default CommonActionsType;

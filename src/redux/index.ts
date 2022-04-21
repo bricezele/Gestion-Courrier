@@ -13,6 +13,13 @@ import Projectapp from './project-app/reducer'
 import {configReducer} from "./config/config.reducer";
 import {oauthReducer} from "./auth/oauth.reducer";
 import {checkUserExistReducer, getAllUserReducer, signUpReducer, updateUserReducer} from "./user/user.reducer";
+import {createCourrierReducer, getAllCourrierReducer, updateCourrierReducer} from "./courrier/courrier.reducer";
+import {fileUploadReducer} from "./common/common.reducer";
+import {
+    createDepartmentReducer,
+    getAllDepartmentReducer,
+    updateDepartmentReducer
+} from "./department/department.reducer";
 
 export const API = 'API';
 export const ApiAction = ({
@@ -20,9 +27,12 @@ export const ApiAction = ({
                               method = 'GET',
                               data = null,
                               accessToken = null,
-                              onSuccess = () => {},
-                              onLoading = () => {},
-                              onProgress = () => {},
+                              onSuccess = () => {
+                              },
+                              onLoading = () => {
+                              },
+                              onProgress = () => {
+                              },
                               onError = () => {},
                               ...rest
                           }) => ({
@@ -63,8 +73,14 @@ const reducers = combineReducers({
     signUp: signUpReducer,
     checkUserExist: checkUserExistReducer,
     getAllUser: getAllUserReducer,
-    updateUser: updateUserReducer
-
+    updateUser: updateUserReducer,
+    getAllCourrier: getAllCourrierReducer,
+    createCourrier: createCourrierReducer,
+    updateCourrier: updateCourrierReducer,
+    fileupload: fileUploadReducer,
+    createDepartment: createDepartmentReducer,
+    getAllDepartment: getAllDepartmentReducer,
+    updateDepartment: updateDepartmentReducer
 });
 
 export default reducers;

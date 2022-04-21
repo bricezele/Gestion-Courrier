@@ -343,7 +343,7 @@
                 &:first-child {
                   padding: 20px;
                   background-color: #eaeaea;
-    
+
                   svg {
                     position: absolute;
                     width: 50px;
@@ -390,7 +390,7 @@
               }
             }
           }
-         
+
           .ProfileCard-realName {
             text-align: left;
           }
@@ -1832,7 +1832,7 @@
         background-color: $dark-card-background !important;
 
         .sidebar-main {
-          .sidebar-links {           
+          .sidebar-links {
             li {
               a {
                 span {
@@ -2379,15 +2379,18 @@
   // only body css
   &.only-body {
     background-color:#f2f0fa;
-    .page-body-wrapper{
+
+    .page-body-wrapper {
       background-color: #f2f0fa;
     }
-    .page-header {      
+
+    .page-header {
       position: relative;
-      .nav-menus{
-        .profile-nav{
-          .media-body{
-            >span,>p{
+
+      .nav-menus {
+        .profile-nav {
+          .media-body {
+            > span, > p {
               color: $white !important;
             }
           }
@@ -2547,7 +2550,7 @@
     //       .media{
     //         border-right: 1px solid lighten($primary-color, 22%) !important;
     //       }
-    //     } 
+    //     }
     //   }
     // }
 
@@ -2688,7 +2691,7 @@
       background-color: rgba($white, 0.5);
 
       .sidebar-wrapper {
-        
+
         position: relative;
         max-width: 1560px;
         margin: 0 auto !important;
@@ -2710,11 +2713,12 @@
     }
   }
 
-  &.advance-layout {    
+  &.advance-layout {
     background-blend-mode: overlay;
     background-color: rgba($body-color, 0.7);
+
     .card {
-      border-radius: 5px; 
+      border-radius: 5px;
       box-shadow: none;
       border: 1px solid #ecf3fa;
     }
@@ -2735,7 +2739,8 @@
         box-shadow: none;
         border-top: 1px solid #efefef;
         border-bottom: 1px solid #efefef;
-        >div {                    
+
+        > div {
           overflow-x: hidden;
         }
       }
@@ -3168,7 +3173,7 @@
         .page-body {
           margin-top: 0 !important;
           /*padding-left: 90px;*/
-          max-width: 1660px;
+          /*max-width: 1660px;*/
           margin: 0 auto;
         }
 

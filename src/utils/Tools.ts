@@ -11,3 +11,7 @@ export const getErrorMsg = (error: any) =>
             ? error.error?.message?.message.join('\n')
             : error.error?.message?.message
         : error.error?.message;
+
+export const getKeyByValue = (object: any, value: any) => {
+    return Object.keys(object).find(key => object[key] === value);
+}

@@ -7,6 +7,7 @@
   "homepage": "./",
   "main": "./public/electron.js",
   "dependencies": {
+    "@asseinfo/react-kanban": "^2.2.0",
     "@auth0/auth0-react": "^1.0.0",
     "@fullcalendar/daygrid": "^5.1.0",
     "@fullcalendar/interaction": "^5.1.0",
@@ -33,6 +34,7 @@
     "knob": "^1.1.0",
     "leaflet": "^1.6.0",
     "lodash": "^4.17.21",
+    "multiselect-react-dropdown": "^2.0.21",
     "node-sass": "^4.14.1",
     "react": "^17.0.1",
     "react-ace": "^9.1.1",

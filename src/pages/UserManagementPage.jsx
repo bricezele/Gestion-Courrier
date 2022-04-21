@@ -42,8 +42,19 @@ import {useHistory} from "react-router-dom";
 import omit from 'lodash/omit';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import {fetchGetAllDepartment} from "../redux/department/department.action";
+import {selectGetAllDepartment} from "../redux/department/department.selector";
 
-const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, updateUser, fetchUpdateUser}) => {
+const UserManagementPage = ({
+                                signUp,
+                                fetchSignUp,
+                                getAllUser,
+                                fetchGetAllUser,
+                                updateUser,
+                                fetchUpdateUser,
+                                getAllDepartment,
+                                fetchGetAllDepartment,
+                            }) => {
 
     const {t} = useTranslation();
     let history = useHistory();
@@ -55,24 +66,25 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
     const toggleModal = () => {
         setOpenModal(!openModal);
         setUserToModify(null);
+        resetForm();
     }
     const [date, setDate] = useState({date: new Date()});
     const [generalData, setGeneralData] = useState([]);
     const [accountType, setAccountType] = useState(Role.EDITOR);
 
-    /*    const {isLoading, error, data, refetch,  isFetching} = useQuery("userGithubInfos", () =>
-            axios.delete(
-                `${ServerUrl.signup}/${userToModify._id}`
-            ).then((res) => {
-                console.log(res.data);
-            })
-        );*/
-
     useEffect(() => {
         dispatch(fetchSignUpReset());
         dispatch(fetchUpdateUserReset());
         fetchGetAllUser();
+        fetchGetAllDepartment();
     }, []);
+
+    useEffect(() => {
+
+        if (getAllDepartment.error) {
+            toast.error(Utils.getErrorMsg(getAllDepartment));
+        }
+    }, [getAllDepartment]);
 
     useEffect(() => {
         if (signUp.result !== null) {
@@ -116,10 +128,11 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
             ),
         confirm_password: userToModify !== null ? Yup.string() : Yup.string()
             .oneOf([Yup.ref('password'), null], t('two_password_doesnt_match')),
-        phone_number: Yup.number()
+        phone_number: Yup.number(),
+        department: Yup.mixed(),
     });
 
-    const {handleChange, handleSubmit, handleBlur, values, errors, setFieldError, setFieldValue, touched} =
+    const {handleChange, handleSubmit, handleBlur, values, errors, setFieldError, setFieldValue, touched, resetForm} =
         useFormik({
             validationSchema: RegisterSchema,
             initialValues: {
@@ -129,12 +142,18 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
                 phone_number: '',
                 password: '',
                 confirm_password: '',
+                department: userToModify !== null
+                    ? userToModify.hasOwnProperty('department')
+                        ? userToModify.department._id
+                        : null
+                    : null
             },
             onSubmit: values => {
                 delete values.confirm_password;
                 if (userToModify === null) {
                     fetchSignUp({
                         ...values,
+                        department: values.department !== '' ? values.department : null,
                         roles: accountType,
                         picture
                     });
@@ -142,12 +161,16 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
                     delete values.player_id;
                     fetchUpdateUser(userToModify._id, true, '', {
                         ...values,
+                        department: values.department !== '' ? values.department : null,
                         roles: accountType,
                         picture
                     });
                 }
             }
         });
+
+    console.log("Errors", errors);
+    console.log("Values", values);
 
     useEffect(() => {
 
@@ -257,7 +280,12 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
                                     <FormGroup>
                                         <Label>{t('account_type')}</Label>
                                         <div className="select2-drpdwn-product select-options border-2"
-                                             onChange={(e) => setAccountType(e.target.value)}>
+                                             onChange={(e) => {
+                                                 setAccountType(e.target.value);
+                                                 if (e.target.value === Role.DG) {
+                                                     setFieldValue('department', getAllDepartment.result[0]._id)
+                                                 }
+                                             }}>
                                             <select className="form-control btn-square" name="select">
                                                 <option selected={userToModify === null}
                                                         value={Role.EDITOR}>{t(Role.EDITOR)}</option>
@@ -265,13 +293,44 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
                                                     selected={userToModify !== null ? userToModify.roles === Role.ASSISTANTE_DG : false}
                                                     value={Role.ASSISTANTE_DG}>{t(Role.ASSISTANTE_DG)}</option>
                                                 <option
+                                                    selected={userToModify !== null ? userToModify.roles === Role.DGA : false}
+                                                    value={Role.DGA}>{t(Role.DGA)}</option>
+                                                <option
                                                     selected={userToModify !== null ? userToModify.roles === Role.STANDARD : false}
                                                     value={Role.STANDARD}>{t(Role.STANDARD)}</option>
+                                                <option
+                                                    selected={userToModify !== null ? userToModify.roles === Role.DG : false}
+                                                    value={Role.DG}>{t(Role.DG)}</option>
                                             </select>
                                         </div>
                                     </FormGroup>
                                 </Col>
                             </Row>
+                            {
+                                (accountType === Role.DG && getAllDepartment.result !== null) &&
+                                (<Row>
+                                    <Col>
+                                        <FormGroup>
+                                            <Label>{t('department')}</Label>
+                                            <div className="select2-drpdwn-product select-options border-2"
+                                                 onChange={(e) => setFieldValue("department", e.target.value)}>
+                                                <select className="form-control btn-square" name="select">
+                                                    {
+                                                        getAllDepartment.result.map(item => (
+                                                            <option
+                                                                selected={userToModify !== null ? userToModify.hasOwnProperty("department")
+                                                                        ? userToModify.department._id === item._id
+                                                                        : false
+                                                                    : false}
+                                                                value={item._id}>{`${item.name} - ${item.dimunitif}`}</option>
+                                                        ))
+                                                    }
+                                                </select>
+                                            </div>
+                                        </FormGroup>
+                                    </Col>
+                                </Row>)
+                            }
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -381,6 +440,7 @@ const UserManagementPage = ({signUp, fetchSignUp, getAllUser, fetchGetAllUser, u
                                                                         setFieldValue(element, item[element]);
                                                                     });
                                                                 setOpenModal(true);
+                                                                setAccountType(item.roles);
                                                                 setUserToModify(item);
                                                             }}>
                                                                 <i className="fa fa-pencil" style={{
@@ -413,7 +473,13 @@ const mapStateToProps = createStructuredSelector({
     application: selectAppConfig,
     signUp: selectSignUp,
     getAllUser: selectGetAllUserExist,
+    getAllDepartment: selectGetAllDepartment,
     updateUser: selectUpdateUser
 });
 
-export default connect(mapStateToProps, {fetchSignUp, fetchGetAllUser, fetchUpdateUser})(UserManagementPage);
+export default connect(mapStateToProps, {
+    fetchSignUp,
+    fetchGetAllUser,
+    fetchGetAllDepartment,
+    fetchUpdateUser
+})(UserManagementPage);

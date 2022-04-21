@@ -9,6 +9,13 @@
   dependencies:
     "@jridgewell/trace-mapping" "^0.3.0"
 
+"@asseinfo/react-kanban@^2.2.0":
+  "integrity" "sha512-/gCigrNXRHeP9VCo8RipTOrA0vAPRIOThJhR4ibVxe6BLkaWFUEuJ1RMT4fODpRRsE3XsdrfVGKkfpRBKgvxXg=="
+  "resolved" "https://registry.npmjs.org/@asseinfo/react-kanban/-/react-kanban-2.2.0.tgz"
+  "version" "2.2.0"
+  dependencies:
+    "react-beautiful-dnd" "^13.0.0"
+
 "@auth0/auth0-react@^1.0.0":
   "integrity" "sha512-VkovI2i7dI1dkIJAdS51O9XMq6vlcHJn9DL+if4rSxt+sNocFd1i4q0j07a9XbafBj4/WEkSbOiX93z2ZXqdAA=="
   "resolved" "https://registry.npmjs.org/@auth0/auth0-react/-/auth0-react-1.9.0.tgz"
@@ -2266,23 +2273,6 @@
     "@types/minimatch" "*"
     "@types/node" "*"
 
-"@types/google-maps@*":
-  "integrity" "sha512-+GR/7sMvo2bENS26H4t2QqoCqE4FE5qhsG8aaDM9mJAlsorkLyaFdTQra8VkmS1RNE09fx9c1kac+GKG0RtA2A=="
-  "resolved" "https://registry.npmjs.org/@types/google-maps/-/google-maps-3.2.3.tgz"
-  "version" "3.2.3"
-  dependencies:
-    "@types/google.maps" "*"
-
-"@types/google.maps@*":
-  "integrity" "sha512-omUrHt83oSngRD0/pk3JW5dvTeSUVMmAFp6b2Btj5LFqPKc09f0OeHk2LIGPz12T3sRAtwkSvgmzwVMqPrIW9A=="
-  "resolved" "https://registry.npmjs.org/@types/google.maps/-/google.maps-3.48.1.tgz"
-  "version" "3.48.1"
-
-"@types/googlemaps@^3.0.0":
-  "integrity" "sha512-ZWNoz/O8MPEpiajvj7QiqCY8tTLFNqNZ/a+s+zTV58wFVNAvvqV4bdGfnsjTb5Cs4V6wEsLrX8XRhmnyYJ2Tdg=="
-  "resolved" "https://registry.npmjs.org/@types/googlemaps/-/googlemaps-3.43.3.tgz"
-  "version" "3.43.3"
-
 "@types/graceful-fs@^4.1.2":
   "integrity" "sha512-anKkLmZZ+xm4p8JWBf4hElkM4XR+EZeA2M9BAkkTldmcyDY4mbdIJnRghDJH3Ov5ooY7/UAoENtmdMSkaAd7Cw=="
   "resolved" "https://registry.npmjs.org/@types/graceful-fs/-/graceful-fs-4.1.5.tgz"
@@ -2369,13 +2359,6 @@
   "integrity" "sha512-auNrZ/c0w6wsM9DccwVxWHssrMDezHUAXNesdp2RQrCVCyrQbOiSq7yqdJKrUQQpw9VTm7CGYJH2A/YG7jjrjQ=="
   "resolved" "https://registry.npmjs.org/@types/marked/-/marked-4.0.2.tgz"
   "version" "4.0.2"
-
-"@types/markerclustererplus@^2.1.29":
-  "integrity" "sha512-ZDxsLUp8BmK9MVZZeQVDDzVrEXgRL0021AQcfXqfreFhdfZ9+PS0P6o4nZBvoIVYTmGSBemdCdI6mL6hf9yWvg=="
-  "resolved" "https://registry.npmjs.org/@types/markerclustererplus/-/markerclustererplus-2.1.33.tgz"
-  "version" "2.1.33"
-  dependencies:
-    "@types/google-maps" "*"
 
 "@types/minimatch@*":
   "integrity" "sha512-Klz949h02Gz2uZCMGwDUSDS1YBlTdDDgbWHi+81l29tQALUtvz4rAYi5uoVhE5Lagoq6DeqAUlbrHvW/mXDgdQ=="
@@ -5311,7 +5294,7 @@
   dependencies:
     "postcss" "^7.0.5"
 
-"css-box-model@^1.1.2":
+"css-box-model@^1.1.2", "css-box-model@^1.2.0":
   "integrity" "sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw=="
   "resolved" "https://registry.npmjs.org/css-box-model/-/css-box-model-1.2.1.tgz"
   "version" "1.2.1"
@@ -10447,6 +10430,11 @@
     "dns-packet" "^1.3.1"
     "thunky" "^1.0.2"
 
+"multiselect-react-dropdown@^2.0.21":
+  "integrity" "sha512-HvyM1rdpwlBylxORbxjY0XADYOyIfAebhOuLJOfjZFBnp8OA8kc07QbqVN5yVYue01aJF1svB55qAFngZavU5A=="
+  "resolved" "https://registry.npmjs.org/multiselect-react-dropdown/-/multiselect-react-dropdown-2.0.21.tgz"
+  "version" "2.0.21"
+
 "nan@^2.12.1", "nan@^2.13.2":
   "integrity" "sha512-8ZtvEnA2c5aYCZYd1cvgdnU6cqwixRoYg70xPLWUws5ORTa/lnw+u4amixRS/Ac5U5mQVgp9pnlSUnbNWFaWZQ=="
   "resolved" "https://registry.npmjs.org/nan/-/nan-2.15.0.tgz"
@@ -12359,7 +12347,7 @@
   "resolved" "https://registry.npmjs.org/queue-microtask/-/queue-microtask-1.2.3.tgz"
   "version" "1.2.3"
 
-"raf-schd@^4.0.0":
+"raf-schd@^4.0.0", "raf-schd@^4.0.2":
   "integrity" "sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ=="
   "resolved" "https://registry.npmjs.org/raf-schd/-/raf-schd-4.0.3.tgz"
   "version" "4.0.3"
@@ -12454,6 +12442,19 @@
     "redux" "^4.0.1"
     "tiny-invariant" "^1.0.4"
     "use-memo-one" "^1.1.0"
+
+"react-beautiful-dnd@^13.0.0":
+  "integrity" "sha512-aGvblPZTJowOWUNiwd6tNfEpgkX5OxmpqxHKNW/4VmvZTNTbeiq7bA3bn5T+QSF2uibXB0D1DmJsb1aC/+3cUA=="
+  "resolved" "https://registry.npmjs.org/react-beautiful-dnd/-/react-beautiful-dnd-13.1.0.tgz"
+  "version" "13.1.0"
+  dependencies:
+    "@babel/runtime" "^7.9.2"
+    "css-box-model" "^1.2.0"
+    "memoize-one" "^5.1.1"
+    "raf-schd" "^4.0.2"
+    "react-redux" "^7.2.0"
+    "redux" "^4.0.4"
+    "use-memo-one" "^1.1.1"
 
 "react-big-calendar@^0.26.0":
   "integrity" "sha512-8OuWNUauoCEibrXcQpjP7tMo887yRujij1a5lgaYNbdJQzlmb1QTWl/+N0xgPfeLW/Nwiqnw3lYRgFoQiFjpSw=="
@@ -12646,7 +12647,7 @@
     "strip-ansi" "6.0.0"
     "text-table" "0.2.0"
 
-"react-dom@*", "react-dom@^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0", "react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17", "react-dom@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^0.14.0 || ^15.0.1 || ^16.0.0", "react-dom@^0.14.0 || ^15.2.0 || ^16.0.0", "react-dom@^0.14.9 || >=15.3.0", "react-dom@^15.0.0 || ^16.0.0", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.11.0 || ^17", "react-dom@^16.12.0 || ^17.0.0", "react-dom@^16.2.0", "react-dom@^16.3.0", "react-dom@^16.3.0 || ^17.0.0-0", "react-dom@^16.4.1", "react-dom@^16.6.1", "react-dom@^16.7.0 || ^17", "react-dom@^16.8.0  || ^17.0.0", "react-dom@^16.9.0 || ^17", "react-dom@^17.0.1", "react-dom@>= 15", "react-dom@>= 16.8.0", "react-dom@>=15", "react-dom@>=15.0.0", "react-dom@>=15.5", "react-dom@>=16.2.0", "react-dom@>=16.3.0", "react-dom@>=16.3.x", "react-dom@>=16.6.0", "react-dom@>=16.8.0", "react-dom@16.x || 17.x":
+"react-dom@*", "react-dom@^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0", "react-dom@^0.14.0 || ^15.0.0 || ^16 || ^17", "react-dom@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^0.14.0 || ^15.0.1 || ^16.0.0", "react-dom@^0.14.0 || ^15.2.0 || ^16.0.0", "react-dom@^0.14.9 || >=15.3.0", "react-dom@^15.0.0 || ^16.0.0", "react-dom@^15.0.0 || ^16.0.0 || ^17.0.0", "react-dom@^15.5.x || ^16.x || ^17.x", "react-dom@^16.11.0 || ^17", "react-dom@^16.12.0 || ^17.0.0", "react-dom@^16.2.0", "react-dom@^16.3.0", "react-dom@^16.3.0 || ^17.0.0-0", "react-dom@^16.4.1", "react-dom@^16.6.1", "react-dom@^16.7.0 || ^17", "react-dom@^16.8.0  || ^17.0.0", "react-dom@^16.8.0 || ^17.0.0", "react-dom@^16.8.5 || ^17.0.0", "react-dom@^16.9.0 || ^17", "react-dom@^17.0.1", "react-dom@>= 15", "react-dom@>= 16.8.0", "react-dom@>=15", "react-dom@>=15.0.0", "react-dom@>=15.5", "react-dom@>=16.2.0", "react-dom@>=16.3.0", "react-dom@>=16.3.x", "react-dom@>=16.6.0", "react-dom@>=16.8.0", "react-dom@16.x || 17.x":
   "integrity" "sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-17.0.1.tgz"
   "version" "17.0.1"
@@ -13179,7 +13180,7 @@
     "prop-types" "^15.7.2"
     "react-intersection-observer" "^8.26.2"
 
-"react@*", "react@^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.0 || ^16 || ^17", "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.1 || ^16.0.0", "react@^0.14.0 || ^15.2.0 || ^16.0.0", "react@^0.14.9 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0", "react@^0.14.9 || >=15.3.0", "react@^15.0.0 || ^16.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0", "react@^15.3.0 || ^16.0.0-rc || ^16.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16.11.0 || ^17", "react@^16.12.0 || ^17.0.0", "react@^16.2.0", "react@^16.3.0 || ^17.0.0-0", "react@^16.4.1", "react@^16.6.1", "react@^16.7.0 || ^17", "react@^16.8.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.8.5", "react@^16.8.6 || ^17", "react@^16.9.0 || ^17", "react@^17.0.1", "react@>= 15", "react@>= 16", "react@>= 16.3.0", "react@>= 16.8.0", "react@>=0.13", "react@>=0.14.0", "react@>=0.14.9", "react@>=15", "react@>=15.0.0", "react@>=15.5", "react@>=16", "react@>=16.0.0", "react@>=16.13.1", "react@>=16.2.0", "react@>=16.3.0", "react@>=16.3.2", "react@>=16.3.x", "react@>=16.6.0", "react@>=16.8.0", "react@0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@16.x || 17.x", "react@17.0.1":
+"react@*", "react@^0.13.0 || ^0.14.0 || ^15.0.1 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.0 || ^16 || ^17", "react@^0.14.0 || ^15.0.0 || ^16.0.0", "react@^0.14.0 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.0-0 || ^16.0.0 || ^17.0.0", "react@^0.14.0 || ^15.0.1 || ^16.0.0", "react@^0.14.0 || ^15.2.0 || ^16.0.0", "react@^0.14.9 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^0.14.9 || ^15.3.0 || ^16.0.0", "react@^0.14.9 || >=15.3.0", "react@^15.0.0 || ^16.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0", "react@^15.0.0 || ^16.0.0 || ^17.0.0|| ^18.0.0", "react@^15.3.0 || ^16.0.0 || ^17.0.0", "react@^15.3.0 || ^16.0.0-rc || ^16.0", "react@^15.5.x || ^16.x || ^17.x", "react@^16.11.0 || ^17", "react@^16.12.0 || ^17.0.0", "react@^16.2.0", "react@^16.3.0 || ^17.0.0-0", "react@^16.4.1", "react@^16.6.1", "react@^16.7.0 || ^17", "react@^16.7.0 || ^17.0.0-0", "react@^16.8.0", "react@^16.8.0 || ^17", "react@^16.8.0 || ^17.0.0", "react@^16.8.3 || ^17", "react@^16.8.5", "react@^16.8.5 || ^17.0.0", "react@^16.8.6 || ^17", "react@^16.9.0 || ^17", "react@^17.0.1", "react@>= 15", "react@>= 16", "react@>= 16.3.0", "react@>= 16.8.0", "react@>=0.13", "react@>=0.14.0", "react@>=0.14.9", "react@>=15", "react@>=15.0.0", "react@>=15.5", "react@>=16", "react@>=16.0.0", "react@>=16.13.1", "react@>=16.2.0", "react@>=16.3.0", "react@>=16.3.2", "react@>=16.3.x", "react@>=16.6.0", "react@>=16.8.0", "react@0.14.x || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@16.x || 17.x", "react@17.0.1":
   "integrity" "sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w=="
   "resolved" "https://registry.npmjs.org/react/-/react-17.0.1.tgz"
   "version" "17.0.1"
@@ -15730,7 +15731,7 @@
   "resolved" "https://registry.npmjs.org/use-callback-ref/-/use-callback-ref-1.2.5.tgz"
   "version" "1.2.5"
 
-"use-memo-one@^1.1.0":
+"use-memo-one@^1.1.0", "use-memo-one@^1.1.1":
   "integrity" "sha512-u2qFKtxLsia/r8qG0ZKkbytbztzRb317XCkT7yP8wxL0tZ/CzK2G+WWie5vWvpyeP7+YoPIwbJoIHJ4Ba4k0oQ=="
   "resolved" "https://registry.npmjs.org/use-memo-one/-/use-memo-one-1.1.2.tgz"
   "version" "1.1.2"

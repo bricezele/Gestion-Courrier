@@ -55,19 +55,25 @@ const LoginPage = ({fetchSignIn, authkey, user}) => {
     useEffect(() => {
         console.log("authkey", authkey);
         if (authkey.result !== null) {
-            if (authkey.result.user.hasOwnProperty("firstname")){
+            if (authkey.result.user.hasOwnProperty("firstname")) {
                 switch (user.roles) {
                     case Role.ADMIN:
                         history.push(`/dashboard-admin`);
                         break;
-                        case Role.STANDARD:
+                    case Role.STANDARD:
                         history.push(`/dashboard-standard`);
                         break;
-                        case Role.ASSISTANTE_DG:
-                        history.push(`/dashboard-assistante-dg`);
+                    case Role.ASSISTANTE_DG:
+                        history.push(`/dashboard-assistant-dg`);
                         break;
-                        case Role.EDITOR:
+                    case Role.DGA:
+                        history.push(`/dashboard-dga`);
+                        break;
+                    case Role.EDITOR:
                         history.push(`/dashboard-editor`);
+                        break;
+                    case Role.DG:
+                        history.push(`/dashboard-direction`);
                         break;
                 }
             }
