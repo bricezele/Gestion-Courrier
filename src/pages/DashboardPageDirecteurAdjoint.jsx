@@ -137,7 +137,12 @@ const DashboardPageDirecteurAdjoint = ({
         if (cotations.length > 0) {
             fetchUpdateCourrier(courrier.id, true, {
                 status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA,
-                cotation: cotations.map(cotation => cotation._id)
+                cotation: cotations.map(cotation => {
+                    return {
+                        user: cotation._id,
+                        validated: false
+                    }
+                })
             })
         }
     }
@@ -558,6 +563,10 @@ const DashboardPageDirecteurAdjoint = ({
                                                 <table className="product-page-width">
                                                     <tbody>
                                                     <tr>
+                                                        <td><b>{t('Code')} &nbsp;&nbsp;&nbsp;:</b></td>
+                                                        <td>{courrier.code}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>{t('emetteur')} &nbsp;&nbsp;&nbsp;:</b></td>
                                                         <td>{courrier.emetteur}</td>
                                                     </tr>
@@ -608,7 +617,7 @@ const DashboardPageDirecteurAdjoint = ({
                                                         <ul className="product-social">
                                                             {
                                                                 courrier.cotation.map(cotation => (
-                                                                    <li>- {`${cotation.firstname} ${cotation.lastname}`}</li>
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}</li>
                                                                 ))
                                                             }
                                                         </ul>
@@ -866,6 +875,7 @@ const DashboardPageDirecteurAdjoint = ({
                                                                      createdAt,
                                                                      picture,
                                                                      cotation,
+                                                        code,
                                                                      status,
                                                                      emetteur,
                                                                      category,
@@ -883,6 +893,7 @@ const DashboardPageDirecteurAdjoint = ({
                                                                 createdAt,
                                                                 picture,
                                                                 status,
+                                                                code,
                                                                 cotation,
                                                                 category,
                                                                 emetteur,

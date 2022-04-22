@@ -144,7 +144,12 @@ const DashboardPageDirection = ({
         if (cotations.length > 0) {
             fetchUpdateCourrier(courrier.id, true, {
                 status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA,
-                cotation: cotations.map(cotation => cotation._id)
+                cotation: cotations.map(cotation => {
+                    return {
+                        user: cotation._id,
+                        validated: false
+                    }
+                })
             })
         }
     }
@@ -565,6 +570,10 @@ const DashboardPageDirection = ({
                                                 <table className="product-page-width">
                                                     <tbody>
                                                     <tr>
+                                                        <td><b>{t('Code')} &nbsp;&nbsp;&nbsp;:</b></td>
+                                                        <td>{courrier.code}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>{t('emetteur')} &nbsp;&nbsp;&nbsp;:</b></td>
                                                         <td>{courrier.emetteur}</td>
                                                     </tr>
@@ -605,6 +614,24 @@ const DashboardPageDirection = ({
                                                 </table>
                                             </div>
                                             <hr/>
+                                            {courrier.cotation.length > 0 && (<Row>
+                                                <Col md="6">
+                                                    <h6 className="product-title"><b>{t("cotation")}: </b></h6>
+                                                </Col>
+                                                <Col md="6">
+                                                    <div className="product-icon">
+                                                        <ul className="product-social">
+                                                            {
+                                                                courrier.cotation.map(cotation => (
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}</li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                        <form className="d-inline-block f-right"></form>
+                                                    </div>
+                                                </Col>
+                                            </Row>)
+                                            }
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -684,7 +711,9 @@ const DashboardPageDirection = ({
             </ModalBody>
 
             <ModalFooter>
-                <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
+                <Button color="success" onClick={toggleModalCourrier}>{t('read_and_approved')}</Button>
+                <Button color="danger" onClick={toggleModalCourrier}>{t('reject')}</Button>
+                <Button color="primary" onClick={toggleModalCourrier}>{t('close')}</Button>
             </ModalFooter>
         </Modal>
     )
@@ -697,7 +726,7 @@ const DashboardPageDirection = ({
 
             <ModalBody>
                 <Row>
-                    <Col sm="12">
+                    <Col sm="12">1997@Arachides1997
 
                         <Form className="theme-form needs-validation" noValidate="">
                             <Row>
@@ -838,6 +867,7 @@ const DashboardPageDirection = ({
                                                                      cotation,
                                                                      status,
                                                                      emetteur,
+                                                                     code,
                                                                      category,
                                                                      recepteur,
                                                                      direction,
@@ -852,6 +882,7 @@ const DashboardPageDirection = ({
                                                                 objet,
                                                                 createdAt,
                                                                 picture,
+                                                                code,
                                                                 status,
                                                                 cotation,
                                                                 category,

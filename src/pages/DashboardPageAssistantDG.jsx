@@ -285,6 +285,10 @@ const DashboardPageAssistantDG = ({
                                                 <table className="product-page-width">
                                                     <tbody>
                                                     <tr>
+                                                        <td><b>{t('Code')} &nbsp;&nbsp;&nbsp;:</b></td>
+                                                        <td>{courrier.code}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>{t('emetteur')} &nbsp;&nbsp;&nbsp;:</b></td>
                                                         <td>{courrier.emetteur}</td>
                                                     </tr>
@@ -325,6 +329,24 @@ const DashboardPageAssistantDG = ({
                                                 </table>
                                             </div>
                                             <hr/>
+                                            {courrier.cotation.length > 0 && (<Row>
+                                                <Col md="6">
+                                                    <h6 className="product-title"><b>{t("cotation")}: </b></h6>
+                                                </Col>
+                                                <Col md="6">
+                                                    <div className="product-icon">
+                                                        <ul className="product-social">
+                                                            {
+                                                                courrier.cotation.map(cotation => (
+                                                                    <li>- {`${cotation.firstname} ${cotation.lastname}`}</li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                        <form className="d-inline-block f-right"></form>
+                                                    </div>
+                                                </Col>
+                                            </Row>)
+                                            }
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -515,6 +537,7 @@ const DashboardPageAssistantDG = ({
                                                                      createdAt,
                                                                      picture,
                                                                      status,
+                                                                     code,
                                                                      emetteur,
                                                                      category,
                                                                      recepteur,
@@ -531,6 +554,7 @@ const DashboardPageAssistantDG = ({
                                                                 createdAt,
                                                                 picture,
                                                                 status,
+                                                                code,
                                                                 category,
                                                                 emetteur,
                                                                 recepteur,

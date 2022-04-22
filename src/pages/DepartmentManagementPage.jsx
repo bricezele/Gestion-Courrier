@@ -50,14 +50,7 @@ import {
     selectUpdateDepartment
 } from "../redux/department/department.selector";
 
-const DepartmentManagementPage = ({
-                                      createDepartment,
-                                      fetchCreateDepartment,
-                                      getAllDepartment,
-                                      fetchGetAllDepartment,
-                                      updateDepartment,
-                                      fetchUpdateDepartment
-                                  }) => {
+const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getAllDepartment, fetchGetAllDepartment, updateDepartment, fetchUpdateDepartment}) => {
 
     const {t} = useTranslation();
     let history = useHistory();
@@ -193,8 +186,7 @@ const DepartmentManagementPage = ({
             </ModalBody>
             <ModalFooter>
                 <Button color="primary" onClick={toggleModal}>{t('close')}</Button>
-                <Button color="secondary" disabled={createDepartment.loading || updateDepartment.loading}
-                        onClick={handleSubmit}>
+                <Button color="secondary" disabled={createDepartment.loading || updateDepartment.loading} onClick={handleSubmit}>
                     {/*                    {createDepartment.loading && (
                         <div className="loader-box">
                             <div className="loader-3"></div>
@@ -298,8 +290,4 @@ const mapStateToProps = createStructuredSelector({
     updateDepartment: selectUpdateDepartment
 });
 
-export default connect(mapStateToProps, {
-    fetchCreateDepartment,
-    fetchGetAllDepartment,
-    fetchUpdateDepartment
-})(DepartmentManagementPage);
+export default connect(mapStateToProps, {fetchCreateDepartment, fetchGetAllDepartment, fetchUpdateDepartment})(DepartmentManagementPage);

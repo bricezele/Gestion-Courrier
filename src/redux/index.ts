@@ -27,12 +27,9 @@ export const ApiAction = ({
                               method = 'GET',
                               data = null,
                               accessToken = null,
-                              onSuccess = () => {
-                              },
-                              onLoading = () => {
-                              },
-                              onProgress = () => {
-                              },
+                              onSuccess = () => {},
+                              onLoading = () => {},
+                              onProgress = () => {},
                               onError = () => {},
                               ...rest
                           }) => ({
@@ -78,9 +75,9 @@ const reducers = combineReducers({
     createCourrier: createCourrierReducer,
     updateCourrier: updateCourrierReducer,
     fileupload: fileUploadReducer,
-    createDepartment: createDepartmentReducer,
-    getAllDepartment: getAllDepartmentReducer,
-    updateDepartment: updateDepartmentReducer
+    createDepartment:createDepartmentReducer,
+    getAllDepartment:getAllDepartmentReducer,
+    updateDepartment:updateDepartmentReducer
 });
 
 export default reducers;

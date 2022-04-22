@@ -138,5 +138,8 @@
   "label": "Intitulé",
   "enter_label": "Entrer l'intitulé",
   "dimunitif": "Dimunitif",
-  "enter_dimunitif": "Entrer le dimunitif"
+  "enter_dimunitif": "Entrer le dimunitif",
+  "reject": "Rejéter",
+  "read_and_approved": "Lu et approuvé",
+  "close": "Fermer"
 }

@@ -531,6 +531,10 @@ const DashboardPageStandard = ({
                                                 <table className="product-page-width">
                                                     <tbody>
                                                     <tr>
+                                                        <td><b>{t('Code')} &nbsp;&nbsp;&nbsp;:</b></td>
+                                                        <td>{courrier.code}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>{t('emetteur')} &nbsp;&nbsp;&nbsp;:</b></td>
                                                         <td>{courrier.emetteur}</td>
                                                     </tr>
@@ -571,6 +575,24 @@ const DashboardPageStandard = ({
                                                 </table>
                                             </div>
                                             <hr/>
+                                            {courrier.cotation.length > 0 && (<Row>
+                                                <Col md="6">
+                                                    <h6 className="product-title"><b>{t("cotation")}: </b></h6>
+                                                </Col>
+                                                <Col md="6">
+                                                    <div className="product-icon">
+                                                        <ul className="product-social">
+                                                            {
+                                                                courrier.cotation.map(cotation => (
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}</li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                        <form className="d-inline-block f-right"></form>
+                                                    </div>
+                                                </Col>
+                                            </Row>)
+                                            }
                                         </CardBody>
                                     </Card>
                                 </Col>
@@ -588,13 +610,11 @@ const DashboardPageStandard = ({
                                                             <tr>
                                                                 <td><img
                                                                     className="img-fluid img-40 rounded-circle mb-3"
-                                                                    src={Images.avatars[historyElt.user.picture]}
-                                                                    alt=""/>
+                                                                    src={Images.avatars[historyElt.user.picture]} alt=""/>
                                                                 </td>
                                                                 <td className="img-content-box"><span
                                                                     className="d-block">{`${historyElt.user.firstname} ${historyElt.user.lastname}`}</span><span
-                                                                    className="font-roboto">{moment(historyElt.date).fromNow()}</span>
-                                                                </td>
+                                                                    className="font-roboto">{moment(historyElt.date).fromNow()}</span></td>
                                                                 <td className="text-right">
                                                                     {
                                                                         historyElt.status === CourrierStatus.PENDING ?
@@ -770,6 +790,7 @@ const DashboardPageStandard = ({
                                                                      createdAt,
                                                                      picture,
                                                                      cotation,
+                                                        code,
                                                                      status,
                                                                      emetteur,
                                                                      category,
@@ -788,6 +809,7 @@ const DashboardPageStandard = ({
                                                                 picture,
                                                                 status,
                                                                 cotation,
+                                                                code,
                                                                 category,
                                                                 emetteur,
                                                                 recepteur,

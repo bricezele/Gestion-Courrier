@@ -28,13 +28,13 @@ export const fetchCreateDepartmentError = (error: any) => ({
     type: DepartmentActionsType.CREATE_DEPARTMENT_ERROR,
     payload: error,
 });
-export const fetchCreateDepartment = (user: any) => {
+export const fetchCreateDepartment = (user:any) => {
     const auth = store.getState().authkey;
     const authKey = auth !== null ? `${auth.result?.accessToken}` : '';
     return ApiAction({
         url: ServerUrl.department,
         accessToken: authKey,
-        method: 'POST',
+        method:'POST',
         data: user,
         onLoading: fetchCreateDepartmentPending,
         // @ts-ignore

@@ -169,8 +169,8 @@ const UserManagementPage = ({
             }
         });
 
-    console.log("Errors", errors);
-    console.log("Values", values);
+    console.log("Errors",errors);
+    console.log("Values",values);
 
     useEffect(() => {
 
@@ -282,7 +282,7 @@ const UserManagementPage = ({
                                         <div className="select2-drpdwn-product select-options border-2"
                                              onChange={(e) => {
                                                  setAccountType(e.target.value);
-                                                 if (e.target.value === Role.DG) {
+                                                 if(e.target.value === Role.DG) {
                                                      setFieldValue('department', getAllDepartment.result[0]._id)
                                                  }
                                              }}>
