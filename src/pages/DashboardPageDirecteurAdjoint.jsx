@@ -110,6 +110,7 @@ const DashboardPageDirecteurAdjoint = ({
     const [openModalCourrier, setOpenModalCourrier] = useState(false);
     const [openModalCotation, setOpenModalCotation] = useState(false);
     const [isCourrierCreated, setisCourrierCreated] = useState(false);
+    const [users, setUsers] = useState([]);
     const [userToModify, setUserToModify] = useState(null);
     const [courrier, setCourrier] = useState(null);
     const [cotations, setCotation] = useState([]);
@@ -232,6 +233,23 @@ const DashboardPageDirecteurAdjoint = ({
     }, [updateCourrier]);
 
     useEffect(() => {
+
+        if(getAllUser.result) {
+            console.log(getAllUser.result.filter(user => user.roles === Role.DG).map(user => {
+                return {
+                    _id: user._id,
+                    name: user.firstname + ' '+user.lastname,
+                    department: user.department.name,
+                }
+            }));
+            setUsers(getAllUser.result.filter(user => user.roles === Role.DG).map(user => {
+                return {
+                    _id: user._id,
+                    name: user.firstname + ' '+user.lastname,
+                    department: user.department.name,
+                }
+            }));
+        }
 
         if (getAllUser.error) {
             toast.error(Utils.getErrorMsg(getAllUser));
@@ -598,9 +616,19 @@ const DashboardPageDirecteurAdjoint = ({
                                                                             <span
                                                                                 className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                             : courrier.status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                <span
-                                                                                    className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
-                                                                                : null
+                                                                                courrier.cotation.length > 0 ?
+                                                                                    courrier.cotation.filter(cotationParam => cotationParam.validated === true).length === courrier.cotation.length ?
+                                                                                        <span
+                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                        :
+                                                                                        <span
+                                                                                            className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                    : <span
+                                                                                        className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                : courrier.status === CourrierStatus.VALIDE_APPROUVE ?
+                                                                                    <span
+                                                                                        className={`badge badge-success f-right`}>{t('valide_approuve')}</span>
+                                                                                    : null
                                                             }
                                                         </td>
                                                     </tr>
@@ -609,15 +637,20 @@ const DashboardPageDirecteurAdjoint = ({
                                             </div>
                                             <hr/>
                                             {courrier.cotation.length > 0 && (<Row>
-                                                <Col md="6">
+                                                <Col md="4">
                                                     <h6 className="product-title"><b>{t("cotation")}: </b></h6>
                                                 </Col>
-                                                <Col md="6">
+                                                <Col md="8">
                                                     <div className="product-icon">
                                                         <ul className="product-social">
                                                             {
                                                                 courrier.cotation.map(cotation => (
-                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}</li>
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}
+                                                                        <span
+                                                                            className={`badge ${cotation.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                            {cotation.validated ? t('validated') : t('non_validated')}
+                                                                        </span>
+                                                                    </li>
                                                                 ))
                                                             }
                                                         </ul>
@@ -662,9 +695,19 @@ const DashboardPageDirecteurAdjoint = ({
                                                                                     <span
                                                                                         className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                     : historyElt.status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                        <span
-                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
-                                                                                        : null
+                                                                                        courrier.cotation.length > 0 ?
+                                                                                            courrier.cotation.filter(cotation => cotation.validated === true).length === courrier.cotation.length ?
+                                                                                                <span
+                                                                                                    className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                                :
+                                                                                                <span
+                                                                                                    className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                            : <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                        : historyElt.status === CourrierStatus.VALIDE_APPROUVE ?
+                                                                                            <span
+                                                                                                className={`badge badge-success f-right`}>{t('valide_approuve')}</span>
+                                                                                            : null
                                                                     }
                                                                 </td>
                                                             </tr>
@@ -727,15 +770,15 @@ const DashboardPageDirecteurAdjoint = ({
                                         <Label>{t('person_name_to_be_rated')} *</Label>
                                         <Multiselect
                                             placeholder=""
-                                            options={getAllUser.result.filter(user => user.roles === Role.DG)}
+                                            options={users}
                                             onSelect={(selectedList, selectedItem) => {
                                                 setCotation(selectedList)
                                             }}
                                             onRemove={(selectedList, selectedItem) => {
                                                 setCotation(selectedList)
                                             }}
-                                            displayValue="firstname"
-                                            groupBy="roles"
+                                            displayValue="name"
+                                            groupBy="department"
                                         />
                                     </FormGroup>
                                 </Col>
@@ -839,7 +882,7 @@ const DashboardPageDirecteurAdjoint = ({
                                             <Mail style={{marginBottom: '-6px'}}/></button>
                                         {renderModalAddUser()}
                                         {courrier !== null && renderModalDetailCourrier()}
-                                        {renderModalCotationCourrier()}
+                                        {getAllUser.result !== null && renderModalCotationCourrier()}
                                     </div>
                                 </div>
                             </CardHeader>
@@ -875,7 +918,7 @@ const DashboardPageDirecteurAdjoint = ({
                                                                      createdAt,
                                                                      picture,
                                                                      cotation,
-                                                        code,
+                                                                    code,
                                                                      status,
                                                                      emetteur,
                                                                      category,
@@ -918,8 +961,15 @@ const DashboardPageDirecteurAdjoint = ({
                                                                                 <span
                                                                                     className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                 : status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                    <span
-                                                                                        className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                    cotation.length > 0 ?
+                                                                                        cotation.filter(cotationParam => cotationParam.validated === true).length === cotation.length ?
+                                                                                            <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                            :
+                                                                                            <span
+                                                                                                className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                        : <span
+                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
                                                                                     : status === CourrierStatus.VALIDE_APPROUVE ?
                                                                                         <span
                                                                                             className={`badge badge-success f-right`}>{t('valide_approuve')}</span>

@@ -604,9 +604,19 @@ const DashboardPageDirection = ({
                                                                             <span
                                                                                 className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                             : courrier.status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                <span
-                                                                                    className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
-                                                                                : null
+                                                                                courrier.cotation.length > 0 ?
+                                                                                    courrier.cotation.filter(cotationParam => cotationParam.validated === true).length === courrier.cotation.length ?
+                                                                                        <span
+                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                        :
+                                                                                        <span
+                                                                                            className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                    : <span
+                                                                                        className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                : courrier.status === CourrierStatus.VALIDE_APPROUVE ?
+                                                                                    <span
+                                                                                        className={`badge badge-success f-right`}>{t('valide_approuve')}</span>
+                                                                                    : null
                                                             }
                                                         </td>
                                                     </tr>
@@ -615,15 +625,20 @@ const DashboardPageDirection = ({
                                             </div>
                                             <hr/>
                                             {courrier.cotation.length > 0 && (<Row>
-                                                <Col md="6">
+                                                <Col md="4">
                                                     <h6 className="product-title"><b>{t("cotation")}: </b></h6>
                                                 </Col>
-                                                <Col md="6">
+                                                <Col md="8">
                                                     <div className="product-icon">
                                                         <ul className="product-social">
                                                             {
                                                                 courrier.cotation.map(cotation => (
-                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}</li>
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}
+                                                                        <span
+                                                                            className={`badge ${cotation.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                            {cotation.validated ? t('validated') : t('non_validated')}
+                                                                        </span>
+                                                                    </li>
                                                                 ))
                                                             }
                                                         </ul>
@@ -668,9 +683,19 @@ const DashboardPageDirection = ({
                                                                                     <span
                                                                                         className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                     : historyElt.status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                        <span
-                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
-                                                                                        : null
+                                                                                        courrier.cotation.length > 0 ?
+                                                                                            courrier.cotation.filter(cotation => cotation.validated === true).length === courrier.cotation.length ?
+                                                                                                <span
+                                                                                                    className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                                :
+                                                                                                <span
+                                                                                                    className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                            : <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                        : historyElt.status === CourrierStatus.VALIDE_APPROUVE ?
+                                                                                            <span
+                                                                                                className={`badge badge-success f-right`}>{t('valide_approuve')}</span>
+                                                                                            : null
                                                                     }
                                                                 </td>
                                                             </tr>
@@ -711,8 +736,46 @@ const DashboardPageDirection = ({
             </ModalBody>
 
             <ModalFooter>
-                <Button color="success" onClick={toggleModalCourrier}>{t('read_and_approved')}</Button>
-                <Button color="danger" onClick={toggleModalCourrier}>{t('reject')}</Button>
+                <Button color="success" onClick={() => {
+                    fetchUpdateCourrier(courrier.id, true, {
+                        cotation: courrier.cotation.map(cotation => {
+                            if(user._id === cotation.user._id) {
+                                return {
+                                    user: cotation.user._id,
+                                    validated: true
+                                }
+                            } else {
+                                return {
+                                    user: cotation.user._id,
+                                    validated: cotation.validated,
+                                }
+                            }
+
+                        }),
+                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
+                    })
+                    toggleModalCourrier();
+                }}>{t('read_and_approved')}</Button>
+                <Button color="danger" onClick={() => {
+                    fetchUpdateCourrier(courrier.id, true, {
+                        cotation: courrier.cotation.map(cotation => {
+                            if(user._id === cotation.user._id) {
+                                return {
+                                    user: cotation.user._id,
+                                    validated: false
+                                }
+                            } else {
+                                return {
+                                    user: cotation.user._id,
+                                    validated: cotation.validated,
+                                }
+                            }
+
+                        }),
+                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
+                    })
+                    toggleModalCourrier();
+                }}>{t('reject')}</Button>
                 <Button color="primary" onClick={toggleModalCourrier}>{t('close')}</Button>
             </ModalFooter>
         </Modal>
@@ -908,8 +971,15 @@ const DashboardPageDirection = ({
                                                                                 <span
                                                                                     className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                 : status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                    <span
-                                                                                        className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                    cotation.length > 0 ?
+                                                                                        cotation.filter(cotationParam => cotationParam.validated === true).length === cotation.length ?
+                                                                                            <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                            :
+                                                                                            <span
+                                                                                                className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                        : <span
+                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
                                                                                     : status === CourrierStatus.VALIDE_APPROUVE ?
                                                                                         <span
                                                                                             className={`badge badge-success f-right`}>{t('valide_approuve')}</span>

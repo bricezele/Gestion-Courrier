@@ -143,6 +143,12 @@ const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
                                                             to={`${process.env.PUBLIC_URL}/dashboard-editor`}
                                                         />
                                                     );
+                                                    case Role.DG:
+                                                    return (
+                                                        <Redirect
+                                                            to={`${process.env.PUBLIC_URL}/dashboard-direction`}
+                                                        />
+                                                    );
                                             }
                                         } else
                                             return (

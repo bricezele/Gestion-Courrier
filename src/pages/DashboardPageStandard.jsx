@@ -627,8 +627,15 @@ const DashboardPageStandard = ({
                                                                                     <span
                                                                                         className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                     : historyElt.status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                        <span
-                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                        historyElt.cotation.length > 0 ?
+                                                                                            historyElt.cotation.filter(cotation => cotation.validated === true).length === historyElt.cotation.length ?
+                                                                                                <span
+                                                                                                    className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                                :
+                                                                                                <span
+                                                                                                    className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                            : <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
                                                                                         : null
                                                                     }
                                                                 </td>
@@ -833,8 +840,15 @@ const DashboardPageStandard = ({
                                                                                 <span
                                                                                     className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
                                                                                 : status === CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA ?
-                                                                                    <span
-                                                                                        className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                    cotation.length > 0 ?
+                                                                                        cotation.filter(cotationParam => cotationParam.validated === true).length === cotation.length ?
+                                                                                            <span
+                                                                                                className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
+                                                                                            :
+                                                                                            <span
+                                                                                                className={`badge badge-primary f-right`}>{t(CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA)}</span>
+                                                                                        : <span
+                                                                                            className={`badge badge-secondary f-right`}>{t('en_attente_approbation')}</span>
                                                                                     : status === CourrierStatus.VALIDE_APPROUVE ?
                                                                                         <span
                                                                                             className={`badge badge-success f-right`}>{t('valide_approuve')}</span>

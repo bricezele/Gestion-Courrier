@@ -108,7 +108,7 @@
   "pending": "Reçu",
   "en_attente_validation_1": "En attente de validation 1",
   "en_attente_validation_2": "En attente de validation 2",
-  "en_attente_cotation_approbation_dga": "En attente cotation et approbation DGA",
+  "en_attente_cotation_approbation_dga": "Cotation et approbation DGA",
   "valide_approuve": "Validé et approuvé",
   "validation_1": "Validation 1",
   "validation_2": "Validation 2",
@@ -141,5 +141,7 @@
   "enter_dimunitif": "Entrer le dimunitif",
   "reject": "Rejéter",
   "read_and_approved": "Lu et approuvé",
-  "close": "Fermer"
+  "close": "Fermer",
+  "validated": "Validé",
+  "non_validated": "Non validé"
 }
