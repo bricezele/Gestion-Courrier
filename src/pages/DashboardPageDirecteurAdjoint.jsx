@@ -170,7 +170,7 @@ const DashboardPageDirecteurAdjoint = ({
         if (getAllCourrier.result !== null) {
             let tmpcolumns = board.columns;
 
-            getAllCourrier.result.map((courrier, index) => {
+            getAllCourrier.result.filter((courrier) => courrier.status !== 'archive').map((courrier, index) => {
 
                 const indexColumn = tmpcolumns.findIndex(elt => {
                     return elt.status === courrier.status
@@ -749,6 +749,14 @@ const DashboardPageDirecteurAdjoint = ({
 
             <ModalFooter>
                 <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
+                {courrier.status === CourrierStatus.VALIDE_APPROUVE && <Button color="secondary" disabled={updateCourrier.loading}
+                         onClick={() => {
+                             fetchUpdateCourrier(courrier.id, true, {
+                                 status: 'archive'
+                             })
+                         }}>
+                    {(updateCourrier.loading) ? t('loading_dots') : t('archive')}
+                </Button>}
             </ModalFooter>
         </Modal>
     )
@@ -856,7 +864,7 @@ const DashboardPageDirecteurAdjoint = ({
                                     <div className="align-self-center text-center"><Mail/></div>
                                     <div className="media-body"><span className="m-0">{t('courrier_termine')}</span>
                                         <h4 className="mb-0 counter"><CountUp end={getAllCourrier.result !== null
-                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE)).length : 0}/>
+                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE || courrier.status === 'archive')).length : 0}/>
                                         </h4>
                                         <Check className="icon-bg"/>
                                     </div>
@@ -895,19 +903,27 @@ const DashboardPageDirecteurAdjoint = ({
                                                     onCardDragEnd={(boardElement, card, source, destination) => {
                                                         console.log("Card", card);
                                                         setCourrier({...card});
-                                                        if (destination.toColumnId === 4) {
-                                                            toggleModalCotation(card);
-                                                        } else if (destination.toColumnId === 3) {
-                                                            fetchUpdateCourrier(card.id, true, {
-                                                                status: CourrierStatus.EN_ATTENTE_VALIDATION_2
-                                                            });
-                                                        } else if (destination.toColumnId === 5) {
-                                                            fetchUpdateCourrier(card.id, true, {
-                                                                status: CourrierStatus.VALIDE_APPROUVE
-                                                            });
+                                                        if(card.cotation.filter(cotationParam => cotationParam.validated === true).length === card.cotation.length) {
+                                                            if (destination.toColumnId === 4) {
+                                                                toggleModalCotation(card);
+                                                            } else if (destination.toColumnId === 3) {
+                                                                fetchUpdateCourrier(card.id, true, {
+                                                                    status: CourrierStatus.EN_ATTENTE_VALIDATION_2
+                                                                });
+                                                            } else if (destination.toColumnId === 5) {
+                                                                fetchUpdateCourrier(card.id, true, {
+                                                                    status: CourrierStatus.VALIDE_APPROUVE
+                                                                });
+                                                            } else {
+                                                                preventDefault();
+                                                                return false;
+                                                            }
                                                         } else {
-                                                            preventDefault();
-                                                            return false;
+                                                            toast.error(t('courrier_non_cote'));
+                                                            setTimeout(()=> {
+                                                                preventDefault();
+                                                                return false;
+                                                            }, 500);
                                                         }
 
                                                     }}

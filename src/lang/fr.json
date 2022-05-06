@@ -143,5 +143,9 @@
   "read_and_approved": "Lu et approuvé",
   "close": "Fermer",
   "validated": "Validé",
-  "non_validated": "Non validé"
+  "non_validated": "Non validé",
+  "courrier_non_cote": "Le dossier n'as pas encore été côté par tous les directeurs",
+  "courriers_archives": "Courriers archivés",
+  "archive": "Archiver",
+  "archived": "Archivé"
 }

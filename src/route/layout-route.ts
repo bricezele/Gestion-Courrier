@@ -6,6 +6,7 @@ import DashboardPageAssistantDG from "../pages/DashboardPageAssistantDG";
 import DashboardPageDirecteurAdjoint from "../pages/DashboardPageDirecteurAdjoint";
 import DepartmentManagementPage from "../pages/DepartmentManagementPage";
 import DashboardPageDirection from "../pages/DashboardPageDirection";
+import CourrierManagementPage from "../pages/CourrierManagementPage";
 
 export const layoutRoute = [
     {path: "/wizard-setup", Component: WizardSetupPage},
@@ -19,4 +20,5 @@ export const dashboardLayoutRoute = [
     {path: "/user-management", Component: UserManagementPage},
     {path: "/department-management", Component: DepartmentManagementPage},
     {path: "/dashboard-direction", Component: DashboardPageDirection},
+    {path: "/dashboard-courrier", Component: CourrierManagementPage},
 ];

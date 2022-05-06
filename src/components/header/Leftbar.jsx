@@ -3,7 +3,7 @@ import {Col} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import {Images} from '../../constant'
 import {useTranslation} from "react-i18next";
-import {Home, List, Users} from "react-feather";
+import {Home, List, Mail, Users} from "react-feather";
 import {Role} from "../../enum/role.enum";
 import {createStructuredSelector} from "reselect";
 import {selectAppConfig} from "../../redux/config/config.selector";
@@ -33,12 +33,12 @@ const Leftbar = ({user}) => {
                                     <span>{t('dashboard')}</span>
                                 </Link>
                             </li>
-                            {/*                        <li className="level-menu outside">
-                            <Link className="nav-link active" to={`${process.env.PUBLIC_URL}/dashboard`}>
-                                <Mail/>
-                                <span>{t('courriers')}</span>
-                            </Link>
-                        </li>*/}
+                            <li className="level-menu outside">
+                                <Link className="nav-link active" to={`${process.env.PUBLIC_URL}/dashboard-courrier`}>
+                                    <Mail/>
+                                    <span>{t('courriers')}</span>
+                                </Link>
+                            </li>
                             <li className="level-menu outside">
                                 <Link className="nav-link active" to={`${process.env.PUBLIC_URL}/user-management`}>
                                     <Users/>

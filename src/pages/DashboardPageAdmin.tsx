@@ -7,6 +7,9 @@ import {
     CardHeader,
     Col,
     Container,
+    Form,
+    FormGroup,
+    Label,
     Modal,
     ModalBody,
     ModalFooter,
@@ -41,7 +44,6 @@ import {FileUsage} from "../enum/fileusage.enum";
 import {EntityType} from "../enum/entitytype.enum";
 import {FileType} from "../enum/filetype.enum";
 import {CourrierStatus} from "../enum/courrierstatus.enum";
-import {CourrierType} from "../enum/courriertype.enum";
 import {selectFileUpload} from "../redux/common/common.selector";
 import {selectUser} from "../redux/auth/oauth.selector";
 
@@ -53,6 +55,9 @@ import 'moment/locale/en-il';
 import 'moment/locale/en-nz';
 import 'moment/locale/es-us';
 import 'moment/locale/fr';
+import {Multiselect} from "multiselect-react-dropdown";
+import {selectGetAllUserExist} from "../redux/user/user.selector";
+import {fetchGetAllUser} from "../redux/user/user.action";
 
 const moment = require('moment-timezone');
 
@@ -66,7 +71,9 @@ const DashboardPageAdmin = ({
                                 fetchUpdateCourrier,
                                 filesupload,
                                 fetchUploadMedias,
-                                fetchUploadMedia
+                                fetchUploadMedia,
+                                getAllUser,
+                                fetchGetAllUser,
                             }) => {
 
     const {t} = useTranslation();
@@ -94,6 +101,10 @@ const DashboardPageAdmin = ({
     const [openModal, setOpenModal] = useState(false);
     const [openModalCourrier, setOpenModalCourrier] = useState(false);
     const [isCourrierCreated, setisCourrierCreated] = useState(false);
+    const [users, setUsers] = useState([]);
+    const [openModalCotation, setOpenModalCotation] = useState(false);
+    const [cotations, setCotation] = useState([]);
+    const [submitCotation, setSubmitCotation] = useState(false);
     const [userToModify, setUserToModify] = useState(null);
     const [courrier, setCourrier] = useState(null);
     const [, updateState] = React.useState();
@@ -108,6 +119,27 @@ const DashboardPageAdmin = ({
         setOpenModalCourrier(!openModalCourrier);
         setCourrier(null);
     }
+
+    const toggleModalCotation = () => {
+        if (openModalCotation) setSubmitCotation(false);
+        setOpenModalCotation(!openModalCotation);
+
+        console.log("openModalCotation", openModalCotation);
+        console.log("cotations", cotations);
+
+        if (cotations.length > 0) {
+            fetchUpdateCourrier(courrier.id, true, {
+                status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA,
+                cotation: cotations.map(cotation => {
+                    return {
+                        user: cotation._id,
+                        validated: false
+                    }
+                })
+            })
+        }
+    }
+
     const [date, setDate] = useState({date: new Date()});
     const [generalData, setGeneralData] = useState([]);
     const [accountType, setAccountType] = useState(Role.EDITOR);
@@ -130,7 +162,7 @@ const DashboardPageAdmin = ({
         if (getAllCourrier.result !== null) {
             let tmpcolumns = board.columns;
 
-            getAllCourrier.result.map((courrier, index) => {
+            getAllCourrier.result.filter((courrier) => courrier.status !== 'archive').map((courrier, index) => {
 
                 const indexColumn = tmpcolumns.findIndex(elt => {
                     return elt.status === courrier.status
@@ -175,6 +207,30 @@ const DashboardPageAdmin = ({
     }, [getAllCourrier]);
 
     useEffect(() => {
+
+        if(getAllUser.result) {
+            console.log(getAllUser.result.filter(user => user.roles === Role.DG).map(user => {
+                return {
+                    _id: user._id,
+                    name: user.firstname + ' '+user.lastname,
+                    department: user.department.name,
+                }
+            }));
+            setUsers(getAllUser.result.filter(user => user.roles === Role.DG).map(user => {
+                return {
+                    _id: user._id,
+                    name: user.firstname + ' '+user.lastname,
+                    department: user.department.name,
+                }
+            }));
+        }
+
+        if (getAllUser.error) {
+            toast.error(Utils.getErrorMsg(getAllUser));
+        }
+    }, [getAllUser]);
+
+    useEffect(() => {
         if (updateCourrier.result !== null) {
             setTimeout(() => {
                 window.location.reload(true);
@@ -193,7 +249,7 @@ const DashboardPageAdmin = ({
     useEffect(() => {
         if (filesupload.result !== null) {
 
-            if (Array.isArray(filesupload.result)) {
+        /*            if (Array.isArray(filesupload.result)) {
                 fetchCreateCourrier({
                     objet: values.objet,
                     emetteur: values.emetteur,
@@ -210,7 +266,7 @@ const DashboardPageAdmin = ({
                     code: values.code,
                     documents_annexe: filesupload.result.map(file => file._id)
                 })
-            }
+            }*/
             dispatch(fetchUploadMediaReset());
         }
 
@@ -418,6 +474,63 @@ const DashboardPageAdmin = ({
 
             <ModalFooter>
                 <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
+                {courrier.status === CourrierStatus.VALIDE_APPROUVE && <Button color="secondary" disabled={updateCourrier.loading}
+                                                                               onClick={() => {
+                                                                                   fetchUpdateCourrier(courrier.id, true, {
+                                                                                       status: 'archive'
+                                                                                   })
+                                                                               }}>
+                    {(updateCourrier.loading) ? t('loading_dots') : t('archive')}
+                </Button>}
+            </ModalFooter>
+        </Modal>
+    )
+
+
+    const renderModalCotationCourrier = () => (
+        <Modal isOpen={openModalCotation} toggle={toggleModalCotation} size="lg">
+
+            <ModalHeader
+                toggle={toggleModalCotation}>{t('cotation')}</ModalHeader>
+
+            <ModalBody>
+                <Row>
+                    <Col sm="12">
+
+                        <Form className="theme-form needs-validation" noValidate="">
+                            <Row>
+                                <Col>
+                                    <FormGroup>
+                                        <Label>{t('person_name_to_be_rated')} *</Label>
+                                        <Multiselect
+                                            placeholder=""
+                                            options={users}
+                                            onSelect={(selectedList, selectedItem) => {
+                                                setCotation(selectedList)
+                                            }}
+                                            onRemove={(selectedList, selectedItem) => {
+                                                setCotation(selectedList)
+                                            }}
+                                            displayValue="name"
+                                            groupBy="department"
+                                        />
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                        </Form>
+                    </Col>
+                </Row>
+            </ModalBody>
+
+            <ModalFooter>
+                <Button color="primary" onClick={toggleModalCourrier}>{t('cancel')}</Button>
+                <Button color="secondary" disabled={updateCourrier.loading} onClick={() => {
+                    console.log("Courrier", courrier);
+                    toggleModalCotation();
+                    setSubmitCotation(true);
+                }}>
+                    {(updateCourrier.loading) ? t('loading_dots') : t('submit')}
+                </Button>
             </ModalFooter>
         </Modal>
     )
@@ -477,7 +590,7 @@ const DashboardPageAdmin = ({
                                     <div className="align-self-center text-center"><Mail/></div>
                                     <div className="media-body"><span className="m-0">{t('courrier_termine')}</span>
                                         <h4 className="mb-0 counter"><CountUp end={getAllCourrier.result !== null
-                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE)).length : 0}/>
+                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE || courrier.status === 'archive')).length : 0}/>
                                         </h4>
                                         <Check className="icon-bg"/>
                                     </div>
@@ -493,6 +606,7 @@ const DashboardPageAdmin = ({
                                     <h5 style={{lineHeigt: '40px'}}>{t('courriers')}</h5>
                                     <div className="media-body text-right">
                                         {courrier !== null && renderModalDetailCourrier()}
+                                        {getAllUser.result !== null && renderModalCotationCourrier()}
                                     </div>
                                 </div>
                             </CardHeader>
@@ -504,6 +618,7 @@ const DashboardPageAdmin = ({
                                                 <Board
                                                     onCardDragEnd={(boardElement, card, source, destination) => {
                                                         console.log("Destination", destination);
+
                                                         if (card.status === CourrierStatus.PENDING) {
                                                             console.log(boardElement, card, source, destination);
                                                             fetchUpdateCourrier(card.id, true, {
@@ -525,6 +640,16 @@ const DashboardPageAdmin = ({
                                                         } else if (destination.toColumnId === 2) {
                                                             fetchUpdateCourrier(card.id, true, {
                                                                 status: CourrierStatus.EN_ATTENTE_VALIDATION_1
+                                                            });
+                                                        } else if (destination.toColumnId === 4) {
+                                                            toggleModalCotation(card);
+                                                        } else if (destination.toColumnId === 3) {
+                                                            fetchUpdateCourrier(card.id, true, {
+                                                                status: CourrierStatus.EN_ATTENTE_VALIDATION_2
+                                                            });
+                                                        } else if (destination.toColumnId === 5) {
+                                                            fetchUpdateCourrier(card.id, true, {
+                                                                status: CourrierStatus.VALIDE_APPROUVE
                                                             });
                                                         } else {
                                                             preventDefault();
@@ -656,6 +781,7 @@ const mapStateToProps = createStructuredSelector({
     createCourrier: selectCreateCourrier,
     getAllCourrier: selectGetAllCourrier,
     updateCourrier: selectUpdateCourrier,
+    getAllUser: selectGetAllUserExist,
     filesupload: selectFileUpload,
     user: selectUser
 });
@@ -665,5 +791,6 @@ export default connect(mapStateToProps, {
     fetchGetAllCourrier,
     fetchUpdateCourrier,
     fetchUploadMedias,
-    fetchUploadMedia
+    fetchUploadMedia,
+    fetchGetAllUser
 })(DashboardPageAdmin);

@@ -137,7 +137,7 @@ const DashboardPageAssistantDG = ({
         if (getAllCourrier.result !== null) {
             let tmpcolumns = board.columns;
 
-            getAllCourrier.result.map((courrier, index) => {
+            getAllCourrier.result.filter((courrier) => courrier.status !== 'archive').map((courrier, index) => {
 
                 const indexColumn = tmpcolumns.findIndex(elt => {
                     return elt.status === courrier.status
@@ -503,7 +503,7 @@ const DashboardPageAssistantDG = ({
                                     <div className="align-self-center text-center"><Mail/></div>
                                     <div className="media-body"><span className="m-0">{t('courrier_termine')}</span>
                                         <h4 className="mb-0 counter"><CountUp end={getAllCourrier.result !== null
-                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE)).length : 0}/>
+                                            ? getAllCourrier.result.filter((courrier) => (courrier.status === CourrierStatus.VALIDE_APPROUVE || courrier.status === 'archive')).length : 0}/>
                                         </h4>
                                         <Check className="icon-bg"/>
                                     </div>
