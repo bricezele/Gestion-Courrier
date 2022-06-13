@@ -20,6 +20,7 @@ import {
     getAllDepartmentReducer,
     updateDepartmentReducer
 } from "./department/department.reducer";
+import {createSocietyReducer, getAllSocietyReducer, updateSocietyReducer} from "./society/society.reducer";
 
 export const API = 'API';
 export const ApiAction = ({
@@ -77,7 +78,10 @@ const reducers = combineReducers({
     fileupload: fileUploadReducer,
     createDepartment:createDepartmentReducer,
     getAllDepartment:getAllDepartmentReducer,
-    updateDepartment:updateDepartmentReducer
+    updateDepartment:updateDepartmentReducer,
+    createSociety:createSocietyReducer,
+    getAllSociety:getAllSocietyReducer,
+    updateSociety:updateSocietyReducer
 });
 
 export default reducers;

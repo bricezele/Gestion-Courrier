@@ -147,7 +147,7 @@ const RightHeader = ({user}) => {
 
     return (
         <Fragment>
-            <div className="nav-right col-6 pull-right right-header p-0">
+            <div className="nav-right col-5 pull-right right-header p-0">
                 <ul className="nav-menus">
                     <li className="language-nav">
                         <div className={`translate_wrapper ${langdropdown ? 'active' : ''}`}>

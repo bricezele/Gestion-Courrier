@@ -33,7 +33,6 @@ import {Images} from "../assets/images/Images";
 import {createStructuredSelector} from "reselect";
 import {selectAppConfig} from "../redux/config/config.selector";
 import Dropzone from 'react-dropzone-uploader'
-import {Direction} from "../enum/direction.enum";
 import {CourrierCategory} from "../enum/courriercategory.enum";
 import './styles.scss';
 import {selectCreateCourrier, selectGetAllCourrier, selectUpdateCourrier} from "../redux/courrier/courrier.selector";
@@ -63,8 +62,11 @@ import 'moment/locale/en-il';
 import 'moment/locale/en-nz';
 import 'moment/locale/es-us';
 import 'moment/locale/fr';
+import {selectGetAllSociety} from "../redux/society/society.selector";
+import {fetchGetAllSociety} from "../redux/society/society.action";
 
 const moment = require('moment-timezone');
+const slugify = require('slugify');
 
 const DashboardPageStandard = ({
                                    user,
@@ -72,6 +74,8 @@ const DashboardPageStandard = ({
                                    fetchCreateCourrier,
                                    getAllCourrier,
                                    fetchGetAllCourrier,
+                                   getAllSociety,
+                                   fetchGetAllSociety,
                                    updateCourrier,
                                    fetchUpdateCourrier,
                                    filesupload,
@@ -128,6 +132,7 @@ const DashboardPageStandard = ({
         dispatch(fetchGetAllCourrierReset());
         dispatch(fetchUpdateCourrierReset());
         fetchGetAllCourrier();
+        fetchGetAllSociety();
         moment.locale('fr');
     }, []);
 
@@ -183,6 +188,7 @@ const DashboardPageStandard = ({
             toast.error(Utils.getErrorMsg(getAllCourrier));
         }
     }, [getAllCourrier]);
+
 
     useEffect(() => {
         if (updateCourrier.result !== null) {
@@ -266,6 +272,14 @@ const DashboardPageStandard = ({
 
     }, [createCourrier]);
 
+
+    const getFirstLetters = (str) => {
+        return str
+            .split(' ')
+            .map(word => word[0])
+            .join('');
+    }
+
     const AddCourrierSchema = Yup.object().shape({
         objet: Yup.string().required(t('objet_required')),
         emetteur: Yup.string().required(t('required')),
@@ -283,8 +297,10 @@ const DashboardPageStandard = ({
                 emetteur: '',
                 recepteur: '',
                 category: CourrierCategory.COURRIER,
-                direction: Direction.FGT,
-                code: `${Utils.getKeyByValue(Direction, Direction.FGT)}-${new Date().getFullYear()}-${getAllCourrier.result !== null ? getAllCourrier.result.length : 0}`
+                direction: getAllSociety.result !== null ? getAllSociety.result[0].name : '',
+                code:  getAllSociety.result !== null ?
+                    `${getFirstLetters(getAllSociety.result[0].name).toUpperCase()}-${new Date().getFullYear()}-${getAllCourrier.result !== null ? getAllCourrier.result.length : 0}`
+                    : ''
             },
             onSubmit: values => {
 
@@ -351,7 +367,6 @@ const DashboardPageStandard = ({
     const handleSubmitAdditionnalFiles = (files, allFiles) => {
         allFiles.forEach(f => f.remove());
     }
-
 
     const renderModalAddUser = () => (
         <Modal isOpen={openModal} toggle={toggleModal} size="lg">
@@ -422,15 +437,12 @@ const DashboardPageStandard = ({
                                             <select className="form-control btn-square" name="direction"
                                                     onChange={(e) => {
                                                         setFieldValue("direction", e.target.value);
-                                                        setFieldValue("code", `${Utils.getKeyByValue(Direction, e.target.value)}-${new Date().getFullYear()}-${getAllCourrier.result.filter(courrier => courrier.direction === e.target.value).length}`);
+                                                        setFieldValue("code", `${getFirstLetters(e.target.value).toUpperCase()}-${new Date().getFullYear()}-${getAllCourrier.result.filter(courrier => courrier.direction.toUpperCase() === getFirstLetters(e.target.value).toUpperCase()).length}`);
                                                     }}>
-                                                {
-                                                    Object.keys(Direction).map((direction, index) => (
-                                                            <option key={index} selected={index === 0}
-                                                                    value={Direction[direction]}>{t(Direction[direction])}</option>
-                                                        )
-                                                    )
-                                                }
+                                                {getAllSociety.result.map((item, index) => (
+                                                    <option key={index} selected={index === 0}
+                                                            value={item.name}>{item.name}</option>
+                                                ))}
                                             </select>
                                         </div>
                                     </FormGroup>
@@ -916,6 +928,7 @@ const mapStateToProps = createStructuredSelector({
     createCourrier: selectCreateCourrier,
     getAllCourrier: selectGetAllCourrier,
     updateCourrier: selectUpdateCourrier,
+    getAllSociety: selectGetAllSociety,
     filesupload: selectFileUpload,
     user: selectUser
 });
@@ -925,5 +938,6 @@ export default connect(mapStateToProps, {
     fetchGetAllCourrier,
     fetchUpdateCourrier,
     fetchUploadMedias,
-    fetchUploadMedia
+    fetchUploadMedia,
+    fetchGetAllSociety
 })(DashboardPageStandard);

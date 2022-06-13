@@ -1,3 +1,10 @@
+/**
+ * @Project gestion-courrier-native
+ * @File UserDGManagement.tsx
+ * @Path src/pages
+ * @Author BRICE ZELE
+ * @Date 09/06/2022
+ */
 import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../components/breadcrumb';
 import {
@@ -44,8 +51,10 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import {fetchGetAllDepartment} from "../redux/department/department.action";
 import {selectGetAllDepartment} from "../redux/department/department.selector";
+import {selectUser} from "../redux/auth/oauth.selector";
 
-const UserManagementPage = ({
+const UserDGManagementPage = ({
+    user,
                                 signUp,
                                 fetchSignUp,
                                 getAllUser,
@@ -146,7 +155,7 @@ const UserManagementPage = ({
                     ? userToModify.hasOwnProperty('department')
                         ? userToModify.department._id
                         : null
-                    : null
+                    : user.department._id
             },
             onSubmit: values => {
                 delete values.confirm_password;
@@ -154,7 +163,7 @@ const UserManagementPage = ({
                     fetchSignUp({
                         ...values,
                         department: values.department !== '' ? values.department : null,
-                        roles: accountType,
+                        roles: Role.EDITOR,
                         picture
                     });
                 } else {
@@ -162,7 +171,7 @@ const UserManagementPage = ({
                     fetchUpdateUser(userToModify._id, true, '', {
                         ...values,
                         department: values.department !== '' ? values.department : null,
-                        roles: accountType,
+                        roles: Role.EDITOR,
                         picture
                     });
                 }
@@ -275,62 +284,27 @@ const UserManagementPage = ({
                                     </FormGroup>
                                 </Col>
                             </Row>
+
                             <Row>
                                 <Col>
                                     <FormGroup>
-                                        <Label>{t('account_type')}</Label>
+                                        <Label>{t('department')}</Label>
                                         <div className="select2-drpdwn-product select-options border-2"
-                                             onChange={(e) => {
-                                                 setAccountType(e.target.value);
-                                                 if(e.target.value === Role.DG) {
-                                                     setFieldValue('department', getAllDepartment.result[0]._id)
-                                                 }
-                                             }}>
-                                            <select className="form-control btn-square" name="select">
-{/*                                                <option selected={userToModify === null}
-                                                        value={Role.EDITOR}>{t(Role.EDITOR)}</option>*/}
-                                                <option
-                                                    selected={userToModify !== null ? userToModify.roles === Role.ASSISTANTE_DG : false}
-                                                    value={Role.ASSISTANTE_DG}>{t(Role.ASSISTANTE_DG)}</option>
-                                                <option
-                                                    selected={userToModify !== null ? userToModify.roles === Role.DGA : false}
-                                                    value={Role.DGA}>{t(Role.DGA)}</option>
-                                                <option
-                                                    selected={userToModify !== null ? userToModify.roles === Role.STANDARD : false}
-                                                    value={Role.STANDARD}>{t(Role.STANDARD)}</option>
-                                                <option
-                                                    selected={userToModify !== null ? userToModify.roles === Role.DG : false}
-                                                    value={Role.DG}>{t(Role.DG)}</option>
+                                             onChange={(e) => setFieldValue("department", e.target.value)}>
+                                            <select disabled className="form-control btn-square" name="select">
+                                                {
+                                                    getAllDepartment.result.map(item => (
+                                                        <option
+                                                            selected={user.department._id === item._id}
+                                                            value={item._id}>{`${item.name} - ${item.dimunitif}`}</option>
+                                                    ))
+                                                }
                                             </select>
                                         </div>
                                     </FormGroup>
                                 </Col>
                             </Row>
-                            {
-                                (accountType === Role.DG && getAllDepartment.result !== null) &&
-                                (<Row>
-                                    <Col>
-                                        <FormGroup>
-                                            <Label>{t('department')}</Label>
-                                            <div className="select2-drpdwn-product select-options border-2"
-                                                 onChange={(e) => setFieldValue("department", e.target.value)}>
-                                                <select className="form-control btn-square" name="select">
-                                                    {
-                                                        getAllDepartment.result.map(item => (
-                                                            <option
-                                                                selected={userToModify !== null ? userToModify.hasOwnProperty("department")
-                                                                        ? userToModify.department._id === item._id
-                                                                        : false
-                                                                    : false}
-                                                                value={item._id}>{`${item.name} - ${item.dimunitif}`}</option>
-                                                        ))
-                                                    }
-                                                </select>
-                                            </div>
-                                        </FormGroup>
-                                    </Col>
-                                </Row>)
-                            }
+
                             <Row>
                                 <Col>
                                     <FormGroup>
@@ -406,6 +380,7 @@ const UserManagementPage = ({
                                             </thead>
                                             <tbody>
                                             {getAllUser.result
+                                                .filter((item) => (item.roles === Role.EDITOR && (item.department !== null ? item.department._id === user.department._id : false) ))
                                                 .map(item => (
                                                 <tr key={item._id}>
                                                     <td className="bd-t-none u-s-tb">
@@ -475,7 +450,8 @@ const mapStateToProps = createStructuredSelector({
     signUp: selectSignUp,
     getAllUser: selectGetAllUserExist,
     getAllDepartment: selectGetAllDepartment,
-    updateUser: selectUpdateUser
+    updateUser: selectUpdateUser,
+    user: selectUser
 });
 
 export default connect(mapStateToProps, {
@@ -483,4 +459,4 @@ export default connect(mapStateToProps, {
     fetchGetAllUser,
     fetchGetAllDepartment,
     fetchUpdateUser
-})(UserManagementPage);
+})(UserDGManagementPage);

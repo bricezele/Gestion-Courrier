@@ -1,9 +1,9 @@
 /**
  * @Project gestion-courrier-native
- * @File DepartmentManagementPage.jsx
+ * @File SocietyManagementPage.tsx
  * @Path src/pages
  * @Author BRICE ZELE
- * @Date 21/04/2022
+ * @Date 09/06/2022
  */
 import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../components/breadcrumb';
@@ -30,12 +30,12 @@ import {useFormik} from "formik";
 import * as Yup from "yup";
 import {Role} from "../enum/role.enum";
 import {
-    fetchCreateDepartment,
-    fetchCreateDepartmentReset,
-    fetchGetAllDepartment,
-    fetchUpdateDepartment,
-    fetchUpdateDepartmentReset
-} from "../redux/department/department.action";
+    fetchCreateSociety,
+    fetchCreateSocietyReset,
+    fetchGetAllSociety,
+    fetchUpdateSociety,
+    fetchUpdateSocietyReset
+} from "../redux/society/society.action";
 import {toast} from "react-toastify";
 import * as Utils from "../utils/Tools";
 import {createStructuredSelector} from "reselect";
@@ -44,14 +44,9 @@ import {connect, useDispatch} from "react-redux";
 import {useHistory} from "react-router-dom";
 import omit from 'lodash/omit';
 import 'react-phone-input-2/lib/style.css'
-import {
-    selectCreateDepartment,
-    selectGetAllDepartment,
-    selectUpdateDepartment
-} from "../redux/department/department.selector";
+import {selectCreateSociety, selectGetAllSociety, selectUpdateSociety} from "../redux/society/society.selector";
 
-
-const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getAllDepartment, fetchGetAllDepartment, updateDepartment, fetchUpdateDepartment}) => {
+const SocietyManagementPage = ({createSociety, fetchCreateSociety, getAllSociety, fetchGetAllSociety, updateSociety, fetchUpdateSociety}) => {
 
     const {t} = useTranslation();
     let history = useHistory();
@@ -59,10 +54,10 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
 
     const [openModal, setOpenModal] = useState(false);
     const [picture, setPicture] = useState(1);
-    const [departmentToModify, setDepartmentToModify] = useState(null);
+    const [societyToModify, setSocietyToModify] = useState(null);
     const toggleModal = () => {
         setOpenModal(!openModal);
-        setDepartmentToModify(null);
+        setSocietyToModify(null);
         resetForm();
     }
     const [date, setDate] = useState({date: new Date()});
@@ -71,68 +66,65 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
 
     /*    const {isLoading, error, data, refetch,  isFetching} = useQuery("userGithubInfos", () =>
             axios.delete(
-                `${ServerUrl.signup}/${departmentToModify._id}`
+                `${ServerUrl.signup}/${societyToModify._id}`
             ).then((res) => {
                 console.log(res.data);
             })
         );*/
 
     useEffect(() => {
-        dispatch(fetchCreateDepartmentReset());
-        dispatch(fetchUpdateDepartmentReset());
-        fetchGetAllDepartment();
+        dispatch(fetchCreateSocietyReset());
+        dispatch(fetchUpdateSocietyReset());
+        fetchGetAllSociety();
     }, []);
 
     useEffect(() => {
-        if (createDepartment.result !== null) {
-            toast.success(t('department_successfully_added'));
-            fetchGetAllDepartment();
+        if (createSociety.result !== null) {
+            toast.success(t('society_successfully_added'));
+            fetchGetAllSociety();
             setOpenModal(false);
-            dispatch(fetchCreateDepartmentReset());
+            dispatch(fetchCreateSocietyReset());
         }
-        if (createDepartment.error !== null) {
-            toast.error(Utils.getErrorMsg(createDepartment));
-            dispatch(fetchCreateDepartmentReset());
+        if (createSociety.error !== null) {
+            toast.error(Utils.getErrorMsg(createSociety));
+            dispatch(fetchCreateSocietyReset());
         }
-    }, [createDepartment]);
+    }, [createSociety]);
 
     useEffect(() => {
-        if (updateDepartment.result !== null) {
-            departmentToModify !== null ? toast.success(t('department_successfullu_created')) : toast.success(t('department_successfullu_modified'));
-            fetchGetAllDepartment();
+        if (updateSociety.result !== null) {
+            societyToModify !== null ? toast.success(t('society_successfullu_created')) : toast.success(t('society_successfullu_modified'));
+            fetchGetAllSociety();
             setOpenModal(false);
-            dispatch(fetchUpdateDepartmentReset());
+            dispatch(fetchUpdateSocietyReset());
         }
-        if (updateDepartment.error !== null) {
-            toast.error(Utils.getErrorMsg(updateDepartment));
-            dispatch(fetchUpdateDepartmentReset());
+        if (updateSociety.error !== null) {
+            toast.error(Utils.getErrorMsg(updateSociety));
+            dispatch(fetchUpdateSocietyReset());
         }
-        if (departmentToModify !== null) setDepartmentToModify(null);
+        if (societyToModify !== null) setSocietyToModify(null);
 
-    }, [updateDepartment]);
+    }, [updateSociety]);
 
-    const AddDepartmentSchema = Yup.object().shape({
-        name: Yup.string().required(t('required')),
-        dimunitif: Yup.string().required(t('required')),
+    const AddSocietySchema = Yup.object().shape({
+        name: Yup.string().required(t('required'))
     });
 
     const {handleChange, handleSubmit, handleBlur, values, errors, setFieldError, setFieldValue, touched, resetForm} =
         useFormik({
-            validationSchema: AddDepartmentSchema,
+            validationSchema: AddSocietySchema,
             initialValues: {
                 name: '',
-                dimunitif: '',
             },
             onSubmit: values => {
-                if (departmentToModify === null) {
-                    fetchCreateDepartment({
+                if (societyToModify === null) {
+                    fetchCreateSociety({
                         ...values
                     });
                 } else {
                     delete values.player_id;
-                    fetchUpdateDepartment(departmentToModify._id, true, '', {
+                    fetchUpdateSociety(societyToModify._id, true, '', {
                         name: values.name,
-                        dimunitif: values.dimunitif
                     });
                 }
             }
@@ -140,22 +132,22 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
 
     useEffect(() => {
 
-        if (getAllDepartment.error) {
-            toast.error(Utils.getErrorMsg(getAllDepartment));
+        if (getAllSociety.error) {
+            toast.error(Utils.getErrorMsg(getAllSociety));
         }
-    }, [getAllDepartment]);
+    }, [getAllSociety]);
 
-    const renderModalAddDepartment = () => (
+    const renderModalAddSociety = () => (
         <Modal isOpen={openModal} toggle={toggleModal} size="lg">
             <ModalHeader
-                toggle={toggleModal}>{departmentToModify !== null ? t('modify_department') : t('add_new_department')}</ModalHeader>
+                toggle={toggleModal}>{societyToModify !== null ? t('modify_society') : t('add_new_society')}</ModalHeader>
             <ModalBody>
                 <Row>
                     <Col sm="12">
 
                         <Form className="theme-form needs-validation" noValidate="" onSubmit={handleSubmit}>
                             <Row>
-                                <Col sm="6">
+                                <Col sm="12">
                                     <FormGroup>
                                         <Label>{t('label')} *</Label>
                                         <Input className="form-control" type="text" name="firstname"
@@ -168,18 +160,6 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
                                             style={{color: "red"}}>{errors.name !== '' && errors.name}</span>
                                     </FormGroup>
                                 </Col>
-                                <Col sm="6">
-                                    <FormGroup>
-                                        <Label>{t('dimunitif')}</Label>
-                                        <Input className="form-control" type="text" name="lastname"
-                                               placeholder={t('enter_dimunitif')}
-                                               value={values.dimunitif}
-                                               onChange={handleChange('dimunitif')}
-                                               onBlur={handleBlur('dimunitif')}/>
-                                        <span
-                                            style={{color: "red"}}>{errors.dimunitif !== '' && errors.dimunitif}</span>
-                                    </FormGroup>
-                                </Col>
                             </Row>
                         </Form>
                     </Col>
@@ -187,13 +167,13 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
             </ModalBody>
             <ModalFooter>
                 <Button color="primary" onClick={toggleModal}>{t('close')}</Button>
-                <Button color="secondary" disabled={createDepartment.loading || updateDepartment.loading} onClick={handleSubmit}>
-                    {/*                    {createDepartment.loading && (
+                <Button color="secondary" disabled={createSociety.loading || updateSociety.loading} onClick={handleSubmit}>
+                    {/*                    {createSociety.loading && (
                         <div className="loader-box">
                             <div className="loader-3"></div>
                         </div>
                     )}*/}
-                    {(createDepartment.loading || updateDepartment.loading) ? t('loading_dots') : t('submit')}
+                    {(createSociety.loading || updateSociety.loading) ? t('loading_dots') : t('submit')}
                 </Button>
             </ModalFooter>
         </Modal>
@@ -201,45 +181,43 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
 
     return (
         <Fragment>
-            <Breadcrumb parent="Pages" title={t("departments")}/>
+            <Breadcrumb parent="Pages" title={t("societies")}/>
             <Container fluid={true}>
                 <Row>
                     <Col sm="12">
                         <Card>
                             <CardHeader>
                                 <div className="media">
-                                    <h5 style={{lineHeigt: '40px'}}>{t('department_list')}</h5>
+                                    <h5 style={{lineHeigt: '40px'}}>{t('society_list')}</h5>
                                     <div className="media-body text-right">
                                         <button className="btn btn-primary" onClick={toggleModal}>
                                             <span>{t('add')}</span></button>
-                                        {renderModalAddDepartment()}
+                                        {renderModalAddSociety()}
                                     </div>
                                 </div>
                             </CardHeader>
                             <CardBody>
-                                {getAllDepartment.loading ?
+                                {getAllSociety.loading ?
                                     <div className="loader-box">
                                         <div className="loader-3"></div>
                                     </div>
-                                    : getAllDepartment.result !== null &&
+                                    : getAllSociety.result !== null &&
                                     (<div className="user-status table-responsive">
                                         <Table borderless>
                                             <thead>
                                             <tr>
                                                 <th scope="col">{`${t('label')}`}</th>
-                                                <th scope="col">{t('dimunitif')}</th>
                                                 <th scope="col">Actions</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {getAllDepartment.result.map(item => (
+                                            {getAllSociety.result.map(item => (
                                                 <tr key={item._id}>
                                                     <td>{item.name}</td>
-                                                    <td>{item.dimunitif}</td>
                                                     <td className="digits">
                                                         <div>
                                                             <span onClick={() => {
-                                                                fetchUpdateDepartment(item._id, false, '', {});
+                                                                fetchUpdateSociety(item._id, false, '', {});
                                                             }}>
                                                                 <i className="fa fa-trash" style={{
                                                                     width: 35,
@@ -256,7 +234,7 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
                                                                         setFieldValue(element, item[element]);
                                                                     });
                                                                 setOpenModal(true);
-                                                                setDepartmentToModify(item);
+                                                                setSocietyToModify(item);
                                                             }}>
                                                                 <i className="fa fa-pencil" style={{
                                                                     width: 35,
@@ -286,9 +264,9 @@ const DepartmentManagementPage = ({createDepartment, fetchCreateDepartment, getA
 
 const mapStateToProps = createStructuredSelector({
     application: selectAppConfig,
-    createDepartment: selectCreateDepartment,
-    getAllDepartment: selectGetAllDepartment,
-    updateDepartment: selectUpdateDepartment
+    createSociety: selectCreateSociety,
+    getAllSociety: selectGetAllSociety,
+    updateSociety: selectUpdateSociety
 });
 
-export default connect(mapStateToProps, {fetchCreateDepartment, fetchGetAllDepartment, fetchUpdateDepartment})(DepartmentManagementPage);
+export default connect(mapStateToProps, {fetchCreateSociety, fetchGetAllSociety, fetchUpdateSociety})(SocietyManagementPage);

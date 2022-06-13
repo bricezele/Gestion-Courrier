@@ -124,6 +124,7 @@ const DashboardPageDirection = ({
     const [, updateState] = React.useState();
     const forceUpdate = React.useCallback(() => updateState({}), []);
 
+
     const toggleModal = () => {
         setOpenModal(!openModal);
         setUserToModify(null);
@@ -133,6 +134,8 @@ const DashboardPageDirection = ({
         setOpenModalCourrier(!openModalCourrier);
         setCourrier(null);
     }
+
+
 
     const toggleModalCotation = () => {
         if (openModalCotation) setSubmitCotation(false);
@@ -144,10 +147,19 @@ const DashboardPageDirection = ({
         if (cotations.length > 0) {
             fetchUpdateCourrier(courrier.id, true, {
                 status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA,
-                cotation: cotations.map(cotation => {
-                    return {
-                        user: cotation._id,
-                        validated: false
+                cotation: courrier.cotation.map(cotation => {
+                    if( cotation.user._id ===  user._id) {
+                        return {
+                            ...cotation,
+                            cotation_employe: cotations.map(cotation => {
+                                return {
+                                    user: cotation._id,
+                                    validated: false
+                                }
+                            })
+                        }
+                    } else {
+                        return cotation;
                     }
                 })
             })
@@ -222,10 +234,10 @@ const DashboardPageDirection = ({
 
     useEffect(() => {
         if (updateCourrier.result !== null) {
-            setTimeout(() => {
+/*            setTimeout(() => {
                 window.location.reload(true);
                 window.location.reload(true);
-            }, 100);
+            }, 100);*/
             fetchGetAllCourrier();
             dispatch(fetchUpdateCourrierReset());
             setCotation([]);
@@ -638,6 +650,18 @@ const DashboardPageDirection = ({
                                                                             className={`badge ${cotation.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
                                                                             {cotation.validated ? t('validated') : t('non_validated')}
                                                                         </span>
+                                                                        <ul style={{marginLeft: '30px'}} className="product-social">
+                                                                            {
+                                                                                cotation.cotation_employe.map(cotation_employe => (
+                                                                                    <li>- {`${cotation_employe.user.firstname} ${cotation_employe.user.lastname}`}
+                                                                                        <span style={{marginLeft: '30px'}}
+                                                                                            className={`badge ${cotation_employe.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                                            {cotation_employe.validated ? t('validated') : t('non_validated')}
+                                                                                        </span>
+                                                                                    </li>
+                                                                                ))
+                                                                            }
+                                                                        </ul>
                                                                     </li>
                                                                 ))
                                                             }
@@ -737,7 +761,9 @@ const DashboardPageDirection = ({
 
             <ModalFooter>
                 <Button color="success" onClick={() => {
-                    fetchUpdateCourrier(courrier.id, true, {
+                    toggleModalCotation();
+                    setSubmitCotation(true);
+/*                    fetchUpdateCourrier(courrier.id, true, {
                         cotation: courrier.cotation.map(cotation => {
                             if(user._id === cotation.user._id) {
                                 return {
@@ -754,28 +780,55 @@ const DashboardPageDirection = ({
                         }),
                         status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
                     })
-                    toggleModalCourrier();
-                }}>{t('read_and_approved')}</Button>
-                <Button color="danger" onClick={() => {
-                    fetchUpdateCourrier(courrier.id, true, {
-                        cotation: courrier.cotation.map(cotation => {
-                            if(user._id === cotation.user._id) {
-                                return {
-                                    user: cotation.user._id,
-                                    validated: false
-                                }
-                            } else {
-                                return {
-                                    user: cotation.user._id,
-                                    validated: cotation.validated,
-                                }
-                            }
+                    toggleModalCourrier();*/
+                }}>{t('coter')}</Button>
+                {courrier.cotation.filter(item => item.user_id === user._id).length > 0
+                    ? courrier.cotation.filter(item => item.user_id === user._id)[0].cotation_employe.filter(item => item.validated).length === courrier.cotation.filter(item => item.user_id === user._id)[0].cotation_employe &&
+                    (
+                        <>
+                            <Button color="success" onClick={() => {
+                                    fetchUpdateCourrier(courrier.id, true, {
+                                        cotation: courrier.cotation.map(cotation => {
+                                            if(user._id === cotation.user._id) {
+                                                return {
+                                                    user: cotation.user._id,
+                                                    validated: true
+                                                }
+                                            } else {
+                                                return {
+                                                    user: cotation.user._id,
+                                                    validated: cotation.validated,
+                                                }
+                                            }
 
-                        }),
-                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
-                    })
-                    toggleModalCourrier();
-                }}>{t('reject')}</Button>
+                                        }),
+                                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
+                                    })
+                                    toggleModalCourrier();
+                                }}>{t('read_and_approved')}</Button>
+                                <Button color="danger" onClick={() => {
+                                    fetchUpdateCourrier(courrier.id, true, {
+                                        cotation: courrier.cotation.map(cotation => {
+                                            if(user._id === cotation.user._id) {
+                                                return {
+                                                    user: cotation.user._id,
+                                                    validated: false
+                                                }
+                                            } else {
+                                                return {
+                                                    user: cotation.user._id,
+                                                    validated: cotation.validated,
+                                                }
+                                            }
+
+                                        }),
+                                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
+                                    })
+                                    toggleModalCourrier();
+                                }}>{t('reject')}</Button>
+                        </>
+                    ) : null
+                }
                 <Button color="primary" onClick={toggleModalCourrier}>{t('close')}</Button>
             </ModalFooter>
         </Modal>
@@ -789,8 +842,7 @@ const DashboardPageDirection = ({
 
             <ModalBody>
                 <Row>
-                    <Col sm="12">1997@Arachides1997
-
+                    <Col sm="12">
                         <Form className="theme-form needs-validation" noValidate="">
                             <Row>
                                 <Col>
@@ -798,9 +850,26 @@ const DashboardPageDirection = ({
                                         <Label>{t('person_name_to_be_rated')} *</Label>
                                         <Multiselect
                                             placeholder=""
-                                            options={getAllUser.result.filter(user => user.roles === Role.DG)}
+                                            options={getAllUser.result.filter((item) => (item.roles === Role.EDITOR && (item.department !== null ? item.department._id === user.department._id : false) ))}
                                             onSelect={(selectedList, selectedItem) => {
-                                                setCotation(selectedList)
+                                                setCotation(selectedList);
+                                                console.log("USER", user);
+                                                console.log("COURRIER", courrier);
+                                                console.log("COTATION",courrier.cotation.map(cotation => {
+                                                    if( cotation.user._id !==  user._id) {
+                                                        return {
+                                                            ...cotation,
+                                                            cotation_employe: selectedList.map(cotation => {
+                                                                return {
+                                                                    user: cotation._id,
+                                                                    validated: false
+                                                                }
+                                                            })
+                                                        }
+                                                    } else {
+                                                        return cotation;
+                                                    }
+                                                }));
                                             }}
                                             onRemove={(selectedList, selectedItem) => {
                                                 setCotation(selectedList)

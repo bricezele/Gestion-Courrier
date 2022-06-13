@@ -92,6 +92,7 @@
     "redux-thunk": "^2.4.1",
     "reselect": "^4.1.5",
     "slick-carousel": "^1.8.1",
+    "slugify": "^1.6.5",
     "styled-components": "^5.1.1",
     "sweetalert2": "^9.15.2",
     "typescript": "^4.6.2",

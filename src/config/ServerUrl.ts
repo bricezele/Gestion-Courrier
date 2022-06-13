@@ -26,6 +26,7 @@ const ServerUrl = {
     doStripePayment: 'payment/do-stripe-payment',
     updateOneSignal: 'update-onesignal',
     department: 'department',
+    society: 'society',
 };
 
 export default ServerUrl;

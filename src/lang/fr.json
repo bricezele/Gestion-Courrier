@@ -142,10 +142,20 @@
   "reject": "Rejéter",
   "read_and_approved": "Lu et approuvé",
   "close": "Fermer",
-  "validated": "Validé",
-  "non_validated": "Non validé",
+  "validated": "Traité",
+  "non_validated": "Non traité",
   "courrier_non_cote": "Le dossier n'as pas encore été côté par tous les directeurs",
   "courriers_archives": "Courriers archivés",
   "archive": "Archiver",
-  "archived": "Archivé"
+  "archived": "Archivé",
+  "collaborators": "Collaborateurs",
+  "home": "Accueil",
+  "society": "Société",
+  "societies": "Sociétés",
+  "society_list": "Liste des sociétés",
+  "add_new_society": "Ajouter une nouvelle société",
+  "modify_society": "Modifier une société",
+  "society_successfully_added": "Société crée avec succès",
+  "department_successfully_added": "Département crée avec succès",
+  "coter": "Coter"
 }
