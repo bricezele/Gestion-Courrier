@@ -1,13 +1,22 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import {Container,Row,Col,Card,CardHeader,CardBody,Table,Button, InputGroup,Input} from 'reactstrap'
-import {useSelector,useDispatch} from 'react-redux' 
+import {Button, Card, CardBody, CardHeader, Col, Container, Input, InputGroup, Row, Table} from 'reactstrap'
+import {useDispatch, useSelector} from 'react-redux'
 import {getCartTotal} from '../../../services/ecommerce.service'
 import {Link} from 'react-router-dom'
-import { XCircle } from 'react-feather';
+import {XCircle} from 'react-feather';
 import {ADD_TO_CART} from '../../../redux/actionTypes'
-import {decrementQty,removeFromCart} from '../../../redux/ecommerce/cart/action'
-import { CartTitle,CartTableHeader, Apply, TotalPrice, ContinueShopping,CheckOut,CartEmpty,ExploreShortlistItems } from '../../../constant';
+import {decrementQty, removeFromCart} from '../../../redux/ecommerce/cart/action'
+import {
+    Apply,
+    CartEmpty,
+    CartTableHeader,
+    CartTitle,
+    CheckOut,
+    ContinueShopping,
+    ExploreShortlistItems,
+    TotalPrice
+} from '../../../constant';
 
 const  Cart = () =>  {
   
@@ -99,8 +108,8 @@ const  Cart = () =>  {
                             <td><span>{symbol}{getCartTotal(cart)}</span></td>
                         </tr>
                         <tr>
-                            <td className="text-right" colSpan="5"><Link to={`${process.env.PUBLIC_URL}/app/ecommerce/product`} className="btn btn-secondary cart-btn-transform" >{ContinueShopping}</Link></td>
-                            <td><Link to={`${process.env.PUBLIC_URL}/app/ecommerce/checkout`} className="btn btn-success cart-btn-transform">{CheckOut}</Link></td>
+                            <td className="text-right" colSpan="5"><Link to={`/app/ecommerce/product`} className="btn btn-secondary cart-btn-transform" >{ContinueShopping}</Link></td>
+                            <td><Link to={`/app/ecommerce/checkout`} className="btn btn-success cart-btn-transform">{CheckOut}</Link></td>
                         </tr>
                     </tbody>
                   </Table>

@@ -1,11 +1,35 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import { Container, Row, Col, Card, CardHeader, CardBody, Form, FormGroup, Input, Label, Button } from 'reactstrap'
-import { getCartTotal } from "../../../services/ecommerce.service";
-import { useForm } from 'react-hook-form'
-import { useSelector } from 'react-redux'
-import { Link, useHistory } from 'react-router-dom'
-import { BillingDetails, FirstName, LastName, Phone, EmailAddress, Country, CountryMenu, Address,TownCity,StateCountry,PostalCode,Product,Total,Subtotal,Shipping,Option1,Option2,PlaceOrder,CheckMeOut,CheckPayments,CashOnDelivery,PayPal,ContinueShopping } from '../../../constant';
+import {Button, Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Input, Label, Row} from 'reactstrap'
+import {getCartTotal} from "../../../services/ecommerce.service";
+import {useForm} from 'react-hook-form'
+import {useSelector} from 'react-redux'
+import {Link, useHistory} from 'react-router-dom'
+import {
+    Address,
+    BillingDetails,
+    CashOnDelivery,
+    CheckMeOut,
+    CheckPayments,
+    ContinueShopping,
+    Country,
+    CountryMenu,
+    EmailAddress,
+    FirstName,
+    LastName,
+    Option1,
+    Option2,
+    PayPal,
+    Phone,
+    PlaceOrder,
+    PostalCode,
+    Product,
+    Shipping,
+    StateCountry,
+    Subtotal,
+    Total,
+    TownCity
+} from '../../../constant';
 
 const Checkout = (props) => {
   
@@ -14,7 +38,7 @@ const Checkout = (props) => {
   const onSubmit = data => {
     if (data !== '') {
       alert('You submitted the form and stuff!');
-      history.push(`${process.env.PUBLIC_URL}/app/ecommerce/invoice`)
+      history.push(`/app/ecommerce/invoice`)
     }else {
       errors.showMessages();
     }
@@ -146,7 +170,7 @@ const Checkout = (props) => {
                         </div>
                         <div className="text-right mt-2">
                           <Link
-                            to={`${process.env.PUBLIC_URL}/app/ecommerce/product`}
+                            to={`/app/ecommerce/product`}
                           >
                             <Button
                               color="primary"

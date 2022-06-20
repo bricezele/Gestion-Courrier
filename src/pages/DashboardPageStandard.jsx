@@ -368,7 +368,7 @@ const DashboardPageStandard = ({
         allFiles.forEach(f => f.remove());
     }
 
-    const renderModalAddUser = () => (
+    const renderAddNewCourrier = () => (
         <Modal isOpen={openModal} toggle={toggleModal} size="lg">
             <ModalHeader
                 toggle={toggleModal}>{t('add_new_courrier')}</ModalHeader>
@@ -437,9 +437,9 @@ const DashboardPageStandard = ({
                                             <select className="form-control btn-square" name="direction"
                                                     onChange={(e) => {
                                                         setFieldValue("direction", e.target.value);
-                                                        setFieldValue("code", `${getFirstLetters(e.target.value).toUpperCase()}-${new Date().getFullYear()}-${getAllCourrier.result.filter(courrier => courrier.direction.toUpperCase() === getFirstLetters(e.target.value).toUpperCase()).length}`);
+                                                        setFieldValue("code", `${getFirstLetters(e.target.value).toUpperCase()}-${new Date().getFullYear()}-${getAllCourrier?.result.filter(courrier => courrier.direction.toUpperCase() === getFirstLetters(e.target.value).toUpperCase()).length}`);
                                                     }}>
-                                                {getAllSociety.result.map((item, index) => (
+                                                {getAllSociety?.result.map((item, index) => (
                                                     <option key={index} selected={index === 0}
                                                             value={item.name}>{item.name}</option>
                                                 ))}
@@ -588,10 +588,10 @@ const DashboardPageStandard = ({
                                             </div>
                                             <hr/>
                                             {courrier.cotation.length > 0 && (<Row>
-                                                <Col md="6">
+                                                <Col md="3">
                                                     <h6 className="product-title"><b>{t("cotation")}: </b></h6>
                                                 </Col>
-                                                <Col md="6">
+                                                <Col md="7">
                                                     <div className="product-icon">
                                                         <ul className="product-social">
                                                             {
@@ -773,7 +773,7 @@ const DashboardPageStandard = ({
                                         }}>
                                             <span>{t('add')}</span>
                                             <Mail style={{marginBottom: '-6px'}}/></button>
-                                        {renderModalAddUser()}
+                                        {getAllCourrier.result !== null && renderAddNewCourrier()}
                                         {courrier !== null && renderModalDetailCourrier()}
                                     </div>
                                 </div>

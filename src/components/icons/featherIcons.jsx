@@ -1,9 +1,9 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
-import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Media, Row} from 'reactstrap'
 import axios from 'axios'
-import {Feather,Icons} from "../../constant";
+import {Feather, Icons} from "../../constant";
 import * as feather from 'feather-icons';
 
 const FeatherIcons = () => {
@@ -13,7 +13,7 @@ const FeatherIcons = () => {
     const [feathericon, setfeatherIcon] = useState('');
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/featherData.json`).then(res => setData(res.data))
+        axios.get(`/api/featherData.json`).then(res => setData(res.data))
     },[])
 
     const getItag = (tag) => {

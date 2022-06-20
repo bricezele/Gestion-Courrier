@@ -1,21 +1,29 @@
-import React, { Fragment, useRef } from "react";
+import React, {Fragment, useRef} from "react";
 import Breadcrumb from '../../breadcrumb'
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  CardBody,
-  Table,
-  Button,
-  Media,
-  Form,
-} from "reactstrap";
-import { getCartTotal } from "../../../services/ecommerce.service";
+import {Button, Card, CardBody, Col, Container, Form, Media, Row, Table,} from "reactstrap";
+import {getCartTotal} from "../../../services/ecommerce.service";
 import ReactToPrint from "react-to-print";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { Cuba,HelloCuba,InvoiceHash,IssuedMay,PaymentDue,JohanDeo,JohanDeoMailId,ProjectDescription,ProjectDescriptionDetails,ProductName,Sub_total,ThankBusiness,ThankBusinessDesc,Print,Quantity,Price,Cancel } from '../../../constant';
+import {useSelector} from "react-redux";
+import {Link} from "react-router-dom";
+import {
+    Cancel,
+    Cuba,
+    HelloCuba,
+    InvoiceHash,
+    IssuedMay,
+    JohanDeo,
+    JohanDeoMailId,
+    PaymentDue,
+    Price,
+    Print,
+    ProductName,
+    ProjectDescription,
+    ProjectDescriptionDetails,
+    Quantity,
+    Sub_total,
+    ThankBusiness,
+    ThankBusinessDesc
+} from '../../../constant';
 
 class Invoice extends React.Component {
   render() {
@@ -200,7 +208,7 @@ const PrintComponent = () => {
           )}
           content={() => componentRef.current}
         />
-        <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/product`}>
+        <Link to={`/app/ecommerce/product`}>
           <Button color="secondary">{Cancel}</Button>
         </Link>
       </Col>

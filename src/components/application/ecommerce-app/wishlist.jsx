@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import {Container,Row,Col,Card,CardHeader,CardBody,Button} from 'reactstrap'
-import {useSelector,useDispatch} from 'react-redux'
-import { WishlistTitle,Price,MoveToCarts } from '../../../constant';
+import {Button, Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
+import {useDispatch, useSelector} from 'react-redux'
+import {MoveToCarts, Price, WishlistTitle} from '../../../constant';
 import {ADD_TO_CART} from '../../../redux/actionTypes'
-import {withRouter} from 'react-router-dom' 
+import {withRouter} from 'react-router-dom'
 
 const Wishlist = (props) => {
   
@@ -14,7 +14,7 @@ const Wishlist = (props) => {
    
     const MoveToCart = (product, qty) => {
       dispatch({ type: ADD_TO_CART, payload: { product, qty } })
-      props.history.push(`${process.env.PUBLIC_URL}/app/ecommerce/cart`);
+      props.history.push(`/app/ecommerce/cart`);
     }
     
     return (

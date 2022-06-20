@@ -1,9 +1,9 @@
 /**
  * @Project gestion-courrier-native
- * @File DashboardPageDirection.jsx
+ * @File DashboardPageEditor.tsx
  * @Path src/pages
  * @Author BRICE ZELE
- * @Date 21/04/2022
+ * @Date 18/06/2022
  */
 import React, {createRef, Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../components/breadcrumb'
@@ -76,7 +76,7 @@ import {Multiselect} from "multiselect-react-dropdown";
 
 const moment = require('moment-timezone');
 
-const DashboardPageDirection = ({
+const DashboardPageEditor = ({
                                     user,
                                     createCourrier,
                                     fetchCreateCourrier,
@@ -119,6 +119,7 @@ const DashboardPageDirection = ({
     const [isCourrierCreated, setisCourrierCreated] = useState(false);
     const [userToModify, setUserToModify] = useState(null);
     const [courrier, setCourrier] = useState(null);
+    const [courrierCotationEmploye, setCourrierCotationEmploye] = useState(null);
     const [cotations, setCotation] = useState([]);
     const [submitCotation, setSubmitCotation] = useState(false);
     const [, updateState] = React.useState();
@@ -655,7 +656,7 @@ const DashboardPageDirection = ({
                                                                                 cotation.cotation_employe.map(cotation_employe => (
                                                                                     <li>- {`${cotation_employe.user.firstname} ${cotation_employe.user.lastname}`}
                                                                                         <span style={{marginLeft: '30px'}}
-                                                                                            className={`badge ${cotation_employe.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                                              className={`badge ${cotation_employe.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
                                                                                             {cotation_employe.validated ? t('validated') : t('non_validated')}
                                                                                         </span>
                                                                                     </li>
@@ -761,78 +762,49 @@ const DashboardPageDirection = ({
 
             <ModalFooter>
                 <Button color="success" onClick={() => {
-                    toggleModalCotation();
-                    setSubmitCotation(true);
-/*                    fetchUpdateCourrier(courrier.id, true, {
-                        cotation: courrier.cotation.map(cotation => {
-                            if(user._id === cotation.user._id) {
-                                return {
-                                    user: cotation.user._id,
-                                    validated: true
-                                }
-                            } else {
-                                return {
-                                    user: cotation.user._id,
-                                    validated: cotation.validated,
-                                }
-                            }
 
+                    fetchUpdateCourrier(courrier.id, true, {
+                        cotation: courrier.cotation.map(cotation => {
+                            return {
+                                ...cotation,
+                                cotation_employe: cotation.cotation_employe.map(cotationEmploye => {
+                                    if( cotationEmploye.user._id ===  user._id) {
+                                        return {
+                                            ...cotationEmploye,
+                                            user: cotationEmploye.user._id,
+                                            validated: true
+                                        }
+                                    } else
+                                        return cotationEmploye
+                                })
+                            }
                         }),
                         status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
                     })
-                    toggleModalCourrier();*/
-                }}>{t('coter')}</Button>
-                {courrier.cotation.filter(item => item.user._id === user._id).length > 0
-                    ? ((courrier.cotation.filter(item => item.user._id === user._id)[0].cotation_employe.filter(item => item.validated).length) === (courrier.cotation.filter(item => item.user._id === user._id)[0].cotation_employe.length)) &&
-                    (
-                        <>
-                            <Button color="success" onClick={() => {
-                                    fetchUpdateCourrier(courrier.id, true, {
-                                        cotation: courrier.cotation.map(cotation => {
-                                            if(user._id === cotation.user._id) {
-                                                return {
-                                                    ...cotation,
-                                                    user: cotation.user._id,
-                                                    validated: true
-                                                }
-                                            } else {
-                                                return {
-                                                    ...cotation,
-                                                    user: cotation.user._id,
-                                                    validated: cotation.validated,
-                                                }
-                                            }
+                    toggleModalCourrier();
+                }}>{t('read_and_approved')}</Button>
+                <Button color="danger" onClick={() => {
+                    fetchUpdateCourrier(courrier.id, true, {
+                        cotation: courrier.cotation.map(cotation => {
+                            return {
+                                ...cotation,
+                                cotation_employe: cotation.cotation_employe.map(cotationEmploye => {
+                                    if( cotationEmploye.user._id ===  user._id) {
+                                        return {
+                                            ...cotationEmploye,
+                                            user: cotationEmploye.user._id,
+                                            validated: false
+                                        }
+                                    } else
+                                        return cotationEmploye
+                                })
+                            }
+                        }),
+                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
+                    })
+                    toggleModalCourrier();
+                }}>{t('reject')}</Button>
 
-                                        }),
-                                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
-                                    })
-                                    toggleModalCourrier();
-                                }}>{t('read_and_approved')}</Button>
-                                <Button color="danger" onClick={() => {
-                                    fetchUpdateCourrier(courrier.id, true, {
-                                        cotation: courrier.cotation.map(cotation => {
-                                            if(user._id === cotation.user._id) {
-                                                return {
-                                                    ...cotation,
-                                                    user: cotation.user._id,
-                                                    validated: false
-                                                }
-                                            } else {
-                                                return {
-                                                    ...cotation,
-                                                    user: cotation.user._id,
-                                                    validated: cotation.validated,
-                                                }
-                                            }
-
-                                        }),
-                                        status: CourrierStatus.EN_ATTENTE_COTATION_APPROBATION_DGA
-                                    })
-                                    toggleModalCourrier();
-                                }}>{t('reject')}</Button>
-                        </>
-                    ) : null
-                }
                 <Button color="primary" onClick={toggleModalCourrier}>{t('close')}</Button>
             </ModalFooter>
         </Modal>
@@ -972,16 +944,6 @@ const DashboardPageDirection = ({
                                 <div className="media">
                                     <h5 style={{lineHeigt: '40px'}}>{t('courriers')}</h5>
                                     <div className="media-body text-right">
-                                        <button className="btn btn-primary" onClick={() => {
-                                            setSelectedAdditionalFiles([]);
-                                            setSelectedImagePreview(null);
-                                            setSelectedImage(null);
-                                            toggleModal();
-                                            resetForm();
-                                        }}>
-                                            <span>{t('add')}</span>
-                                            <Mail style={{marginBottom: '-6px'}}/></button>
-                                        {renderModalAddUser()}
                                         {courrier !== null && renderModalDetailCourrier()}
                                         {renderModalCotationCourrier()}
                                     </div>
@@ -1028,6 +990,11 @@ const DashboardPageDirection = ({
                                                                 modifications_history,
                                                                 documents_annexe,
                                                             });
+                                                            let isEmployeCote = 0;
+                                                            cotation.map((item) => {
+                                                                isEmployeCote += item.cotation_employe.filter(employe => employe.user._id === user._id).length
+                                                            });
+                                                            console.log('isEmployeCote',isEmployeCote);
                                                         }} className="kanban-item"
                                                              id="todo" dragging={dragging}>
                                                             <a className="kanban-box" href="#javascript">
@@ -1132,4 +1099,4 @@ export default connect(mapStateToProps, {
     fetchUploadMedias,
     fetchUploadMedia,
     fetchGetAllUser
-})(DashboardPageDirection);
+})(DashboardPageEditor);

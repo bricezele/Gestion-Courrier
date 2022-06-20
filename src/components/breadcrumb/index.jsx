@@ -1,7 +1,5 @@
-import React, { Fragment } from 'react';
-import { Container, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap'
-import { Home } from 'react-feather';
-import { Link } from 'react-router-dom'
+import React, {Fragment} from 'react';
+import {Col, Container, Row} from 'reactstrap'
 
 const Breadcrumbs = (props) => {
   return (
@@ -14,7 +12,7 @@ const Breadcrumbs = (props) => {
             </Col>
 {/*            <Col xs="6">
               <Breadcrumb>
-                <BreadcrumbItem><Link to={`${process.env.PUBLIC_URL}/dashboard/default/`}><Home /></Link></BreadcrumbItem>
+                <BreadcrumbItem><Link to={`/dashboard/default/`}><Home /></Link></BreadcrumbItem>
                 <BreadcrumbItem>{props.parent}</BreadcrumbItem>
                 <BreadcrumbItem active>{props.title}</BreadcrumbItem>
               </Breadcrumb>

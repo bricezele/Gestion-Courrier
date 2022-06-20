@@ -1,9 +1,8 @@
-import React, { Fragment ,useState,useEffect } from 'react';
-import {Col,Row,Card,CardBody,Media} from 'reactstrap'
+import React, {Fragment, useEffect, useState} from 'react';
+import {Card, CardBody, Col, Media, Row} from 'reactstrap'
 import Lightbox from "react-image-lightbox";
 import axios from 'axios'
-import { PortfolioTitle } from "../../constant";
-
+import {PortfolioTitle} from "../../constant";
 
 
 const PhotosTab = () => {
@@ -26,11 +25,11 @@ const PhotosTab = () => {
 
     useEffect(() => {
 
-        axios.get(`${process.env.PUBLIC_URL}/api/image-light.json`).then((response) => {
+        axios.get(`/api/image-light.json`).then((response) => {
             setImage(response.data.src);
         })
 
-        axios.get(`${process.env.PUBLIC_URL}/api/image-big-light.json`).then((response) => {
+        axios.get(`/api/image-big-light.json`).then((response) => {
             setsmallImages(response.data.src);
         })
 

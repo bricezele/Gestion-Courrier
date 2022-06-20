@@ -14,6 +14,7 @@ import {
     CardHeader,
     Col,
     Container,
+    Input,
     Modal,
     ModalBody,
     ModalFooter,
@@ -75,6 +76,8 @@ const CourrierManagementPage = ({
     const [generalData, setGeneralData] = useState([]);
     const [accountType, setAccountType] = useState(Role.EDITOR);
     const [courrier, setCourrier] = useState(null);
+    const [courriers, setCourriers] = useState([]);
+
     const [openModalCourrier, setOpenModalCourrier] = useState(false);
 
     const toggleModalCourrier = () => {
@@ -92,6 +95,8 @@ const CourrierManagementPage = ({
     }, []);
 
     useEffect(() => {
+        if(getAllCourrier.result !== null)
+            setCourriers(getAllCourrier.result.filter(courrier => courrier.status === 'archive'));
 
         if (getAllCourrier.error) {
             toast.error(Utils.getErrorMsg(getAllCourrier));
@@ -177,10 +182,10 @@ const CourrierManagementPage = ({
                                             </div>
                                             <hr/>
                                             {courrier.cotation.length > 0 && (<Row>
-                                                <Col md="4">
+                                                <Col md="3">
                                                     <h6 className="product-title"><b>{t("cotation")}: </b></h6>
                                                 </Col>
-                                                <Col md="8">
+                                                <Col md="9">
                                                     <div className="product-icon">
                                                         <ul className="product-social">
                                                             {
@@ -306,6 +311,20 @@ const CourrierManagementPage = ({
                             <CardHeader>
                                 <div className="media">
                                     <h5 style={{lineHeigt: '40px'}}>{t('courriers_archives')}</h5>
+                                    <div className="media-body" style={{display: 'flex', justifyContent: 'flex-end'}}>
+                                        <Input className="form-control" type="text" name="firstname"
+                                               placeholder={t('search')}
+                                               onChange={(e)=> {
+                                                   const inputValue = ('' + e.target.value).toLowerCase();
+                                                   if(inputValue === '')
+                                                       setCourriers(getAllCourrier.result.filter(courrier => courrier.status === 'archive'))
+                                                   else
+                                                       setCourriers(getAllCourrier.result.filter(courrier => ((courrier.status === 'archive') && (courrier.category.toLowerCase().includes(inputValue)
+                                                       || courrier.emetteur.toLowerCase().includes(inputValue) || courrier.objet.toLowerCase().includes(inputValue) || courrier.direction.toLowerCase().includes(inputValue)))));
+                                               }}
+                                               style={{width: 'fit-content'}}
+                                        />
+                                    </div>
                                 </div>
                                 {courrier !== null && renderModalDetailCourrier()}
                             </CardHeader>
@@ -328,7 +347,7 @@ const CourrierManagementPage = ({
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            {getAllCourrier.result.filter(courrier => courrier.status === 'archive').map(item => (
+                                            {courriers.map(item => (
                                                 <tr key={item._id}>
                                                     <td className="bd-t-none u-s-tb">
                                                         {item.code}

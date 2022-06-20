@@ -334,6 +334,10 @@ const DashboardPageAdmin = ({
                                                 <table className="product-page-width">
                                                     <tbody>
                                                     <tr>
+                                                        <td><b>{t('Code')} &nbsp;&nbsp;&nbsp;:</b></td>
+                                                        <td>{courrier.code}</td>
+                                                    </tr>
+                                                    <tr>
                                                         <td><b>{t('emetteur')} &nbsp;&nbsp;&nbsp;:</b></td>
                                                         <td>{courrier.emetteur}</td>
                                                     </tr>
@@ -384,6 +388,41 @@ const DashboardPageAdmin = ({
                                                 </table>
                                             </div>
                                             <hr/>
+                                            {courrier.cotation.length > 0 && (<Row>
+                                                <Col md="3">
+                                                    <h6 className="product-title"><b>{t("cotation")}: </b></h6>
+                                                </Col>
+                                                <Col md="9">
+                                                    <div className="product-icon">
+                                                        <ul className="product-social">
+                                                            {
+                                                                courrier.cotation.map(cotation => (
+                                                                    <li>- {`${cotation.user.firstname} ${cotation.user.lastname}`}
+                                                                        <span
+                                                                            className={`badge ${cotation.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                            {cotation.validated ? t('validated') : t('non_validated')}
+                                                                        </span>
+                                                                        <ul style={{marginLeft: '30px'}} className="product-social">
+                                                                            {
+                                                                                cotation.cotation_employe.map(cotation_employe => (
+                                                                                    <li>- {`${cotation_employe.user.firstname} ${cotation_employe.user.lastname}`}
+                                                                                        <span style={{marginLeft: '30px'}}
+                                                                                              className={`badge ${cotation_employe.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                                            {cotation_employe.validated ? t('validated') : t('non_validated')}
+                                                                                        </span>
+                                                                                    </li>
+                                                                                ))
+                                                                            }
+                                                                        </ul>
+                                                                    </li>
+                                                                ))
+                                                            }
+                                                        </ul>
+                                                        <form className="d-inline-block f-right"></form>
+                                                    </div>
+                                                </Col>
+                                            </Row>)
+                                            }
                                         </CardBody>
                                     </Card>
                                 </Col>

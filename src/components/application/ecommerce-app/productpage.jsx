@@ -1,15 +1,15 @@
-import React,{Fragment, useState,useEffect,useRef} from 'react';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import {Container,Row,Col,Card,Button,Media, CardBody} from 'reactstrap'
+import {Button, Card, CardBody, Col, Container, Media, Row} from 'reactstrap'
 import Tablet from './tabsets';
 import Slider from 'react-slick';
 import {useHistory} from 'react-router-dom'
-import {useSelector,useDispatch} from 'react-redux'
-import { addToCart,watchfetchSingleProducts } from '../../../redux/ecommerce/product/action';
-import { ADD_TO_WISHLIST } from '../../../redux/actionTypes'
+import {useDispatch, useSelector} from 'react-redux'
+import {addToCart, watchfetchSingleProducts} from '../../../redux/ecommerce/product/action';
+import {ADD_TO_WISHLIST} from '../../../redux/actionTypes'
 import Ratings from 'react-ratings-declarative'
-import { ProductReview,  Brand, Availability, AddToCart, BuyNow } from "../../../constant";
-import { Truck, Gift,CreditCard,Clock } from 'react-feather';
+import {AddToCart, Availability, Brand, BuyNow, ProductReview} from "../../../constant";
+import {Clock, CreditCard, Gift, Truck} from 'react-feather';
 
 const  Productpage = (props)  => {
     const history = useHistory()
@@ -35,17 +35,17 @@ const  Productpage = (props)  => {
 
     const  addcart = (product, qty) => {
         dispatch(addToCart(product, qty));
-        history.push(`${process.env.PUBLIC_URL}/app/ecommerce/cart`)
+        history.push(`/app/ecommerce/cart`)
     }
     
     const buyProduct = (product, qty) => {
         dispatch(addToCart(product, qty)); 
-        history.push(`${process.env.PUBLIC_URL}/app/ecommerce/checkout`)
+        history.push(`/app/ecommerce/checkout`)
     }
 
     const addWishList = (product) => {
         dispatch({ type: ADD_TO_WISHLIST, payload: { product } });
-        history.push(`${process.env.PUBLIC_URL}/app/ecommerce/wishlist`);
+        history.push(`/app/ecommerce/wishlist`);
     }
 
     const changeRating = (newRating) => {

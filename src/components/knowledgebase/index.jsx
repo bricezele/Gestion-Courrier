@@ -1,14 +1,24 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import { Codepen, FileText, Youtube, BookOpen, Aperture, Archive, ArrowRight, Search } from 'react-feather';
+import {Aperture, Archive, ArrowRight, BookOpen, Codepen, FileText, Search, Youtube} from 'react-feather';
 import two from '../../assets/images/faq/2.jpg';
 import one from '../../assets/images/faq/1.jpg';
 import three from '../../assets/images/faq/3.jpg';
 import four from '../../assets/images/faq/4.jpg';
 import errorImg from '../../assets/images/search-not-found.png';
-import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Media, Form, FormGroup, Input } from "reactstrap"
+import {Card, CardBody, CardFooter, CardHeader, Col, Container, Form, FormGroup, Input, Media, Row} from "reactstrap"
 import axios from 'axios'
-import { Articles,Knowledgebase,Support,BrowseArticles,FeaturedTutorials,WebDesign,WebDevelopment,UIDesign,UXDesign } from "../../constant";
+import {
+    Articles,
+    BrowseArticles,
+    FeaturedTutorials,
+    Knowledgebase,
+    Support,
+    UIDesign,
+    UXDesign,
+    WebDesign,
+    WebDevelopment
+} from "../../constant";
 
 const KnowledgebaseComponent = () => {
     const [searchTerm, setSearchTerm] = useState("");
@@ -16,13 +26,13 @@ const KnowledgebaseComponent = () => {
     const [Data,setData] = useState([])
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/knowledgebaseDB.json`).then(res => setsearch(res.data))
+        axios.get(`/api/knowledgebaseDB.json`).then(res => setsearch(res.data))
     },[])
 
     const handleChange = event => {
         const searchByTitle = [];
         setSearchTerm(event.target.value);
-        axios.get(`${process.env.PUBLIC_URL}/api/knowledgebaseDB.json`).then(res => setData(res.data))
+        axios.get(`/api/knowledgebaseDB.json`).then(res => setData(res.data))
         Data.filter(data => {
             if (data.title.toLowerCase().indexOf(event.target.value) > -1) {
                 searchByTitle.push(data);

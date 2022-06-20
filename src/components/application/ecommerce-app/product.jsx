@@ -1,16 +1,47 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import { useSelector, useDispatch } from 'react-redux';
-import { Container, Row, Col, Card, CardHeader, CardBody, Button, ListGroup, Form, FormGroup, Input, Media, Modal, ModalHeader, ModalBody, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap'
-import { SEARCH_BY, SORT_BY, ADD_TO_CART, ADD_TO_WISHLIST } from '../../../redux/actionTypes'
-import { Grid, List } from 'react-feather'
-import { Link, useHistory } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux';
+import {
+    Button,
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    Container,
+    Form,
+    FormGroup,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    InputGroupText,
+    ListGroup,
+    Media,
+    Modal,
+    ModalBody,
+    ModalHeader,
+    Row
+} from 'reactstrap'
+import {ADD_TO_CART, ADD_TO_WISHLIST, SEARCH_BY, SORT_BY} from '../../../redux/actionTypes'
+import {Grid, List} from 'react-feather'
+import {Link, useHistory} from 'react-router-dom'
 import errorImg from '../../../assets/images/search-not-found.png';
 import Allfilters from '../../../components/application/ecommerce-app/filters/allfilters'
 import Carousal from '../../../components/application/ecommerce-app/filters/carousal'
-import { getVisibleproducts } from '../../../services/ecommerce.service'
-import  {watchfetchProducts} from "../../../redux/ecommerce/product/action"
-import { Filters,ShowingProducts,Featured,LowestPrices,HighestPrices,NotFoundData,ProductDetails,Quantity,AddToCart,ViewDetails,ProductSizeArray } from "../../../constant";
+import {getVisibleproducts} from '../../../services/ecommerce.service'
+import {watchfetchProducts} from "../../../redux/ecommerce/product/action"
+import {
+    AddToCart,
+    Featured,
+    Filters,
+    HighestPrices,
+    LowestPrices,
+    NotFoundData,
+    ProductDetails,
+    ProductSizeArray,
+    Quantity,
+    ShowingProducts,
+    ViewDetails
+} from "../../../constant";
 
 const Product = (props) => {
 
@@ -117,12 +148,12 @@ const Product = (props) => {
 
   const addcart = (product, qty) => {
     dispatch({ type: ADD_TO_CART, payload: { product, qty } })
-    history.push(`${process.env.PUBLIC_URL}/app/ecommerce/cart`);
+    history.push(`/app/ecommerce/cart`);
   }
 
   const addWishList = (product) => {
     dispatch({ type: ADD_TO_WISHLIST, payload: { product } });
-    history.push(`${process.env.PUBLIC_URL}/app/ecommerce/wishlist`);
+    history.push(`/app/ecommerce/wishlist`);
   }
 
   const handleSearchKeyword = (keyword) => {
@@ -132,7 +163,7 @@ const Product = (props) => {
 
   const onClickDetailPage = (product) => {
     const id = product.id;
-    history.push(`${process.env.PUBLIC_URL}/app/ecommerce/product-page/${id}`)
+    history.push(`/app/ecommerce/product-page/${id}`)
   }
 
 
@@ -288,7 +319,7 @@ const Product = (props) => {
                           <div className="product-hover">
                             <ul>
                               <li>
-                                <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/cart`}>
+                                <Link to={`/app/ecommerce/cart`}>
                                   <Button color="default" onClick={() => addcart(item, quantity)}>
                                     <i className="icon-shopping-cart"></i>
                                   </Button>
@@ -301,7 +332,7 @@ const Product = (props) => {
                                 </Button>
                               </li>
                               <li>
-                                <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/wishlist`}>
+                                <Link to={`/app/ecommerce/wishlist`}>
                                   <Button color="default" onClick={() => addWishList(item)} >
                                     <i className="icon-heart"></i>
                                   </Button>
@@ -377,7 +408,7 @@ const Product = (props) => {
                               </InputGroup>
                             </fieldset>
                             <div className="addcart-btn">
-                              <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/cart`}><Button color="primary" className="mr-2 mt-2" onClick={() => addcart(singleProduct, quantity)}>{AddToCart}</Button></Link>
+                              <Link to={`/app/ecommerce/cart`}><Button color="primary" className="mr-2 mt-2" onClick={() => addcart(singleProduct, quantity)}>{AddToCart}</Button></Link>
                               <Button onClick={() => onClickDetailPage(singleProduct)} color="primary" className="mr-2 mt-2">{ViewDetails}</Button>
                             </div>
                           </div>

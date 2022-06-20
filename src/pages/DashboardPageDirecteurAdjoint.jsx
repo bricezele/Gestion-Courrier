@@ -216,11 +216,11 @@ const DashboardPageDirecteurAdjoint = ({
 
     useEffect(() => {
         if (updateCourrier.result !== null) {
+            fetchGetAllCourrier();
             setTimeout(() => {
                 window.location.reload(true);
                 window.location.reload(true);
-            }, 100);
-            fetchGetAllCourrier();
+            }, 500);
             dispatch(fetchUpdateCourrierReset());
             setCotation([]);
         }
@@ -568,7 +568,7 @@ const DashboardPageDirecteurAdjoint = ({
                     <Col>
                         <Card>
                             <Row className="product-page-main">
-                                <Col xl="6 xl-100">
+                                <Col xl="5 xl-100">
                                     <Card>
                                         <CardBody>
                                             <div className="product-page-details">
@@ -601,8 +601,7 @@ const DashboardPageDirecteurAdjoint = ({
                                                         <td>{moment(courrier.createdAt).format('LL')}</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>
-                                                            <b>{t('status')} &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
+                                                        <td><b>{t('status')} &nbsp;&nbsp;&nbsp;: &nbsp;&nbsp;&nbsp;</b>
                                                         </td>
                                                         <td>
                                                             {
@@ -637,10 +636,10 @@ const DashboardPageDirecteurAdjoint = ({
                                             </div>
                                             <hr/>
                                             {courrier.cotation.length > 0 && (<Row>
-                                                <Col md="4">
+                                                <Col md="3">
                                                     <h6 className="product-title"><b>{t("cotation")}: </b></h6>
                                                 </Col>
-                                                <Col md="8">
+                                                <Col md="9">
                                                     <div className="product-icon">
                                                         <ul className="product-social">
                                                             {
@@ -650,6 +649,18 @@ const DashboardPageDirecteurAdjoint = ({
                                                                             className={`badge ${cotation.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
                                                                             {cotation.validated ? t('validated') : t('non_validated')}
                                                                         </span>
+                                                                        <ul style={{marginLeft: '30px'}} className="product-social">
+                                                                            {
+                                                                                cotation.cotation_employe.map(cotation_employe => (
+                                                                                    <li>- {`${cotation_employe.user.firstname} ${cotation_employe.user.lastname}`}
+                                                                                        <span style={{marginLeft: '30px'}}
+                                                                                              className={`badge ${cotation_employe.validated ? 'badge-primary' : 'badge-danger'} f-right`}>
+                                                                                            {cotation_employe.validated ? t('validated') : t('non_validated')}
+                                                                                        </span>
+                                                                                    </li>
+                                                                                ))
+                                                                            }
+                                                                        </ul>
                                                                     </li>
                                                                 ))
                                                             }
@@ -748,7 +759,9 @@ const DashboardPageDirecteurAdjoint = ({
             </ModalBody>
 
             <ModalFooter>
-                <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
+                <Button color="success" onClick={()=> {
+                    toggleModalCotation(courrier);
+                }}>{t('coter')}</Button>
                 {courrier.status === CourrierStatus.VALIDE_APPROUVE && <Button color="secondary" disabled={updateCourrier.loading}
                          onClick={() => {
                              fetchUpdateCourrier(courrier.id, true, {
@@ -757,6 +770,7 @@ const DashboardPageDirecteurAdjoint = ({
                          }}>
                     {(updateCourrier.loading) ? t('loading_dots') : t('archive')}
                 </Button>}
+                <Button color="primary" onClick={toggleModalCourrier}>{t('OK')}</Button>
             </ModalFooter>
         </Modal>
     )

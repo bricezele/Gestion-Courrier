@@ -1,7 +1,7 @@
-import React,{Fragment,useState,useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import Lightbox from "react-image-lightbox";
-import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Media, Row} from 'reactstrap'
 import axios from 'axios'
 import {IMAGE_GALLERY} from "../../constant";
 
@@ -23,11 +23,11 @@ const ImageGallery = () => {
 
         useEffect(() => {
 
-            axios.get(`${process.env.PUBLIC_URL}/api/image-light.json`).then((response) => {
+            axios.get(`/api/image-light.json`).then((response) => {
                 setImage(response.data.src);
             })
 
-            axios.get(`${process.env.PUBLIC_URL}/api/image-big-light.json`).then((response) => {
+            axios.get(`/api/image-big-light.json`).then((response) => {
                 setsmallImages(response.data.src);
             })
 

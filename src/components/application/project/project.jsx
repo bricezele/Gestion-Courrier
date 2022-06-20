@@ -1,10 +1,23 @@
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useState} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import { Container, Row, Col, Card, CardBody, FormGroup, Progress, Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
-import { Target, Info, CheckCircle, PlusCircle } from 'react-feather';
+import {
+    Card,
+    CardBody,
+    Col,
+    Container,
+    FormGroup,
+    Nav,
+    NavItem,
+    NavLink,
+    Progress,
+    Row,
+    TabContent,
+    TabPane
+} from 'reactstrap'
+import {CheckCircle, Info, PlusCircle, Target} from 'react-feather';
 import {Link} from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import {Issues,Resolved,Comment,Done,All,Doing,CreateNewProject} from '../../../constant'
+import {useSelector} from 'react-redux';
+import {All, Comment, CreateNewProject, Doing, Done, Issues, Resolved} from '../../../constant'
 
 const Project = (props) => {
   
@@ -31,7 +44,7 @@ const Project = (props) => {
                 <Col sm="6">
                   <div className="text-right">
                     <FormGroup className="mb-0 mr-0"></FormGroup>
-                    <Link className="btn btn-primary" style={{ color: 'white' }} to={`${process.env.PUBLIC_URL}/app/project/new-project`}> <PlusCircle />{CreateNewProject}</Link>
+                    <Link className="btn btn-primary" style={{ color: 'white' }} to={`/app/project/new-project`}> <PlusCircle />{CreateNewProject}</Link>
                   </div>
                 </Col>
               </Row>

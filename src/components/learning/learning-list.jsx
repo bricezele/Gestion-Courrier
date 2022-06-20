@@ -1,9 +1,9 @@
-import React, { Fragment, useEffect,useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import LearningFilter from './learning-filter';
 import {useHistory} from 'react-router-dom'
-import {Container,Row,Col,Card,Media} from 'reactstrap'
-import { JavaLanguage, WebDevelopment } from "../../constant";
+import {Card, Col, Container, Media, Row} from 'reactstrap'
+import {JavaLanguage, WebDevelopment} from "../../constant";
 import axios from 'axios'
 
 const LearningList = (props) => {
@@ -12,11 +12,11 @@ const LearningList = (props) => {
     const [learnindData,setLearningData] = useState([])
 
     const clickApply = () => {
-        history.push(`${process.env.PUBLIC_URL}/app/learning/learning-detail`);
+        history.push(`/app/learning/learning-detail`);
     }
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/learning.json`).then(res => setLearningData(res.data))
+        axios.get(`/api/learning.json`).then(res => setLearningData(res.data))
     },[])
 
     return (

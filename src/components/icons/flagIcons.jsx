@@ -1,7 +1,7 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
-import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Media, Row} from 'reactstrap'
 import axios from 'axios'
 import {FlagIcons} from '../../constant'
 
@@ -12,7 +12,7 @@ const FlagIconss = () => {
     const [icon, setIcon] = useState('');
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/flagIconData.json`).then(res => seticonsData(res.data))
+        axios.get(`/api/flagIconData.json`).then(res => seticonsData(res.data))
     },[])
 
     const getItag = (tag) => {

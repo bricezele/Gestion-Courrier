@@ -1,15 +1,11 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment} from 'react';
 import {ToastContainer} from 'react-toastify';
 import {Route, withRouter} from 'react-router-dom';
 import Header from "../components/header";
-import Footer from "../components/footer";
-import Loader from "../components/LoaderComponent";
 import {CSSTransition, TransitionGroup} from "react-transition-group";
-import {dashboardLayoutRoute, layoutRoute} from "../route/layout-route";
-import ConfigDB from "../data/customizer/config";
-import Taptop from "../components/tap-top";
+import {dashboardLayoutRoute} from "../route/layout-route";
 import ThemeCustomize from "../components/theme-customizer"
-import Sidebar from "../components/sidebar";
+
 const DashboardLayout = ({anim = ''}) => {
 
     return (
@@ -20,7 +16,7 @@ const DashboardLayout = ({anim = ''}) => {
                     <div className="page-body">
                         <TransitionGroup>
                             {dashboardLayoutRoute.map(({ path, Component }) => (
-                                <Route key={path}  exact  path={`${process.env.PUBLIC_URL}${path}`}>
+                                <Route key={path}  exact  path={`${path}`}>
                                     {({ match }) => (
                                         <CSSTransition
                                             in={match != null}

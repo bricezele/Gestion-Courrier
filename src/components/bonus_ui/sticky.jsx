@@ -1,14 +1,15 @@
-import React, { useState,Fragment,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
-import {StickyNote,AddNewNote} from '../../constant'
+import {Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
+import {AddNewNote, StickyNote} from '../../constant'
 import axios from 'axios'
+
 const Sticky = (props) => {
 
   const [notes, setNotes] = useState([]);
  
   useEffect(() => {
-      axios.get(`${process.env.PUBLIC_URL}/api/sticky.json`).then(res => setNotes(res.data))
+      axios.get(`/api/sticky.json`).then(res => setNotes(res.data))
   }, []);
 
   const addStickyNote = () => {

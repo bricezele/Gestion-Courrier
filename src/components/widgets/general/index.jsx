@@ -91,7 +91,7 @@ const General = () => {
     };
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/general.json`).then(res => setGeneralData(res.data.result))
+        axios.get(`/api/general.json`).then(res => setGeneralData(res.data.result))
     }, [])
 
 

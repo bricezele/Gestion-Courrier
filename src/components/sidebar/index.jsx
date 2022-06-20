@@ -1,10 +1,10 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { useSelector } from 'react-redux'
-import { MENUITEMS } from './menu';
-import { ArrowRight, ArrowLeft, Grid } from 'react-feather';
-import { Link } from 'react-router-dom';
+import React, {Fragment, useEffect, useState} from 'react';
+import {useSelector} from 'react-redux'
+import {MENUITEMS} from './menu';
+import {ArrowLeft, ArrowRight, Grid} from 'react-feather';
+import {Link} from 'react-router-dom';
 import configDB from '../../data/customizer/config';
-import { DefaultLayout } from '../theme-customizer';
+import {DefaultLayout} from '../theme-customizer';
 
 
 const Sidebar = (props) => {
@@ -196,7 +196,7 @@ const Sidebar = (props) => {
        <div className={`bg-overlay1`} onClick={() => {closeOverlay()}} ></div>
       <div className="sidebar-wrapper" id="sidebar-wrapper">
         <div className="logo-wrapper">
-          <Link to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`}>
+          <Link to={`/dashboard/default/${layout}`}>
             <img className="img-fluid for-light" src={require("../../assets/images/logo/logo.png")} alt="" />
             <img className="img-fluid for-dark" src={require("../../assets/images/logo/logo_dark.png")} alt="" />
           </Link>
@@ -204,7 +204,7 @@ const Sidebar = (props) => {
           <div className="toggle-sidebar" onClick={() => openCloseSidebar(sidebartoogle)}><Grid className="status_toggle middle sidebar-toggle" /></div>
         </div>
         <div className="logo-icon-wrapper">
-          <Link to={`${process.env.PUBLIC_URL}/dashboard/default/${layout}`}><img className="img-fluid" src={require("../../assets/images/logo/logo-icon.png")} alt="" /></Link>
+          <Link to={`/dashboard/default/${layout}`}><img className="img-fluid" src={require("../../assets/images/logo/logo-icon.png")} alt="" /></Link>
         </div>
         <nav className="sidebar-main" id="sidebar-main">
             <div className="left-arrow" onClick={scrollToLeft}><ArrowLeft /></div>

@@ -9,6 +9,7 @@ import DashboardPageDirection from "../pages/DashboardPageDirection";
 import CourrierManagementPage from "../pages/CourrierManagementPage";
 import UserDGManagementPage from "../pages/UserDGManagement";
 import SocietyManagementPage from "../pages/SocietyManagementPage";
+import DashboardPageEditor from "../pages/DashboardPageEditor";
 
 export const layoutRoute = [
     {path: "/wizard-setup", Component: WizardSetupPage},
@@ -25,4 +26,5 @@ export const dashboardLayoutRoute = [
     {path: "/society-management", Component: SocietyManagementPage},
     {path: "/dashboard-direction", Component: DashboardPageDirection},
     {path: "/dashboard-courrier", Component: CourrierManagementPage},
+    {path: "/dashboard-editor", Component: DashboardPageEditor},
 ];

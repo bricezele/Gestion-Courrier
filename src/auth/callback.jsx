@@ -1,8 +1,8 @@
-import React,{useEffect} from 'react';
-import { withRouter } from 'react-router-dom';
+import React, {useEffect} from 'react';
+import {withRouter} from 'react-router-dom';
 import Loader from '../components/LoaderComponent'
 import {useAuth0} from '@auth0/auth0-react'
-import { DefaultLayout } from '../components/theme-customizer';
+import {DefaultLayout} from '../components/theme-customizer';
 
 const Callback = (props) => {
   
@@ -14,7 +14,7 @@ const Callback = (props) => {
     if(user){
       localStorage.setItem("auth0_profile",JSON.stringify(user))
       localStorage.setItem("authenticated",true)
-      window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/${layout}`;
+      window.location.href = `/dashboard/default/${layout}`;
     }
   })
 

@@ -1,13 +1,38 @@
-import React,{useState,useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import man from '../assets/images/dashboard/profile.jpg';
-import {Container,Row,Col,Form,FormGroup,Input,Label,Button,NavItem, NavLink, Nav,TabContent,TabPane} from 'reactstrap'
-import {firebase_app,googleProvider,facebookProvider,githubProvider, Jwt_token } from '../data/config'
-import { handleResponse } from '../services/fack.backend'
-import { useAuth0 } from '@auth0/auth0-react'
-import { toast } from 'react-toastify';
+import {
+    Button,
+    Col,
+    Container,
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Nav,
+    NavItem,
+    NavLink,
+    Row,
+    TabContent,
+    TabPane
+} from 'reactstrap'
+import {facebookProvider, firebase_app, githubProvider, googleProvider, Jwt_token} from '../data/config'
+import {handleResponse} from '../services/fack.backend'
+import {useAuth0} from '@auth0/auth0-react'
+import {toast} from 'react-toastify';
 import {withRouter} from 'react-router-dom'
-import { Facebook, GitHub} from 'react-feather'
-import {Password,SignIn, EmailAddress,RememberPassword,ForgotPassword ,CreateAccount,FIREBASE,AUTH0,JWT,LoginWithJWT } from '../constant';
+import {Facebook, GitHub} from 'react-feather'
+import {
+    AUTH0,
+    CreateAccount,
+    EmailAddress,
+    FIREBASE,
+    ForgotPassword,
+    JWT,
+    LoginWithJWT,
+    Password,
+    RememberPassword,
+    SignIn
+} from '../constant';
 
 const Logins = (props) => {
   
@@ -41,7 +66,7 @@ const Logins = (props) => {
                 setName("Emay Walter");
                 localStorage.setItem('token', Jwt_token);
                 setTimeout(() => {
-                  props.history.push(`${process.env.PUBLIC_URL}/dashboard/default/`);
+                  props.history.push(`/dashboard/default/`);
                 }, 200);
                 })
       } catch (error) {
@@ -59,7 +84,7 @@ const Logins = (props) => {
               setValue(result.user.photoURL)
               localStorage.setItem('token', Jwt_token);
               setTimeout(() => {
-                props.history.push(`${process.env.PUBLIC_URL}/dashboard/default/`);
+                props.history.push(`/dashboard/default/`);
               }, 200);
             
           });
@@ -78,7 +103,7 @@ const Logins = (props) => {
               setName(result.user.displayName)
               localStorage.setItem('token', Jwt_token);
               setTimeout(() => {
-                props.history.push(`${process.env.PUBLIC_URL}/dashboard/default/`);
+                props.history.push(`/dashboard/default/`);
               }, 200);
           });
       } catch (error) {
@@ -96,7 +121,7 @@ const Logins = (props) => {
               setName(result.additionalUserInfo.username)
               localStorage.setItem('token', Jwt_token);
               setTimeout(() => {
-                props.history.push(`${process.env.PUBLIC_URL}/dashboard/default/`);
+                props.history.push(`/dashboard/default/`);
               }, 200);
           });
       } catch (error) {
@@ -122,7 +147,7 @@ const Logins = (props) => {
         console.log("result", user);
         setName("Emay Walter");
         localStorage.setItem('token', user);
-        window.location.href = `${process.env.PUBLIC_URL}/dashboard/default/`
+        window.location.href = `/dashboard/default/`
         return user;
       });
     }

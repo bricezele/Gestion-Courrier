@@ -1,9 +1,9 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
-import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
 import axios from 'axios'
-import {ArrowsDirection,WebApp,Control,TextEditor,Brand,Icons} from "../../constant";
+import {ArrowsDirection, Brand, Control, Icons, TextEditor, WebApp} from "../../constant";
 
 const ThemifyIcons = () => {
 
@@ -12,7 +12,7 @@ const ThemifyIcons = () => {
     const [icon, setIcon] = useState('');
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/themifyData.json`).then(res => setData(res.data))
+        axios.get(`/api/themifyData.json`).then(res => setData(res.data))
     },[])
 
     

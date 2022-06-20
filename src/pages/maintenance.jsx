@@ -1,7 +1,8 @@
-import React, { Fragment } from 'react';
-import {Container,Button} from 'reactstrap'
-import { Link } from 'react-router-dom';
-import {MAINTENANCE,BACK_TO_HOME_PAGE} from "../constant";
+import React, {Fragment} from 'react';
+import {Button, Container} from 'reactstrap'
+import {Link} from 'react-router-dom';
+import {BACK_TO_HOME_PAGE, MAINTENANCE} from "../constant";
+
 const Maintenance = (props) => {
     return (
         <Fragment>
@@ -18,7 +19,7 @@ const Maintenance = (props) => {
             </div>
             <h4 className="sub-content">{"Our Site is Currently under maintenance We will be back Shortly"}<br/>{"Thank You For Patience"}</h4>
             <div>
-              <Link to={`${process.env.PUBLIC_URL}/dashboard/default/`}><Button color="primary-gradien" size='lg' className="text-light">{BACK_TO_HOME_PAGE}</Button></Link>
+              <Link to={`/dashboard/default/`}><Button color="primary-gradien" size='lg' className="text-light">{BACK_TO_HOME_PAGE}</Button></Link>
             </div>
           </Container>
         </div>

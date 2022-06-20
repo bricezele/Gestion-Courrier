@@ -1,10 +1,9 @@
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import Masonry from 'react-masonry-css';
-import { Container, Row, Col, Card, CardHeader, CardBody, Media } from 'reactstrap'
-import { useEffect } from 'react';
+import {Card, CardBody, CardHeader, Col, Container, Media, Row} from 'reactstrap'
 import axios from 'axios'
-import { PortfolioTitle,MasonryGalleryWithDescription } from '../../constant';
+import {MasonryGalleryWithDescription, PortfolioTitle} from '../../constant';
 
 
 const MesonryDesc = () => {
@@ -18,7 +17,7 @@ const MesonryDesc = () => {
     };
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/masonry.json`).then((response) => {
+        axios.get(`/api/masonry.json`).then((response) => {
             setMasonryImg(response.data);
         })
     },[])

@@ -1,15 +1,15 @@
-import React,{Fragment,useEffect,useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../../breadcrumb'
-import {Container,Row,Col,Card,CardHeader,CardBody,Button} from 'reactstrap'
+import {Button, Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
 import {X} from 'react-feather'
-import {NewOrder,ShippedOrders,CancelledOrders,Price} from '../../../constant'
+import {CancelledOrders, NewOrder, Price, ShippedOrders} from '../../../constant'
 import axios from "axios";
 
 const OrderHistory = (props) =>  {
 
    const [orders,setOrders] = useState([])
    useEffect(() => {
-      axios.get(`${process.env.PUBLIC_URL}/api/orederhistory.json`).then(res => setOrders(res.data))
+      axios.get(`/api/orederhistory.json`).then(res => setOrders(res.data))
     },[])
 
     return (

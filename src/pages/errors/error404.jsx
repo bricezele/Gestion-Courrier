@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
+import React, {Fragment} from 'react';
 import sad from '../../assets/images/other-images/sad.png';
-import { Link } from 'react-router-dom';
-import {Container,Button,Media,Col} from "reactstrap"
-import { BACK_TO_HOME_PAGE } from "../../constant";
+import {Link} from 'react-router-dom';
+import {Button, Col, Container, Media} from "reactstrap"
+import {BACK_TO_HOME_PAGE} from "../../constant";
 
 const Error404 = () => {
     return (
@@ -17,7 +17,7 @@ const Error404 = () => {
                     <Col md="8 offset-md-2">
                     <p className="sub-content">{"The page you are attempting to reach is currently not available. This may be because the page does not exist or has been moved."}</p>
                     </Col>
-                    <Link to={`${process.env.PUBLIC_URL}/dashboard/default/`}><Button color="danger-gradien" size='lg'>{BACK_TO_HOME_PAGE}</Button></Link>
+                    <Link to={`/dashboard/default/`}><Button color="danger-gradien" size='lg'>{BACK_TO_HOME_PAGE}</Button></Link>
                 </Container>
                 </div>
             </div>

@@ -56,7 +56,7 @@ const Newproject = (props) => {
     const AddProject = data => {
         if (data !== '') {
             dispatch(addNewProject(data))
-            props.history.push(`${process.env.PUBLIC_URL}/app/project/project-list`)
+            props.history.push(`/app/project/project-list`)
         } else {
             errors.showMessages();
         }
@@ -189,7 +189,7 @@ const Newproject = (props) => {
                                         <Col>
                                             <FormGroup className="mb-0">
                                                 <Button color="success" className="mr-3">{Add}</Button>
-                                                <Link to={`${process.env.PUBLIC_URL}/app/project/project-list`}>
+                                                <Link to={`/app/project/project-list`}>
                                                     <Button color="danger">{Cancel}</Button>
                                                 </Link>
                                             </FormGroup>

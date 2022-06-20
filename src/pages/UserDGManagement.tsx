@@ -293,7 +293,7 @@ const UserDGManagementPage = ({
                                              onChange={(e) => setFieldValue("department", e.target.value)}>
                                             <select disabled className="form-control btn-square" name="select">
                                                 {
-                                                    getAllDepartment.result.map(item => (
+                                                    getAllDepartment?.result?.map(item => (
                                                         <option
                                                             selected={user.department._id === item._id}
                                                             value={item._id}>{`${item.name} - ${item.dimunitif}`}</option>

@@ -34,7 +34,7 @@ const Filemanager = (props) => {
     const [myfile, setMyFile] = useState([])
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/files.json`).then((response) => {
+        axios.get(`/api/files.json`).then((response) => {
             setMyFile(response.data);
         })
     }, [])

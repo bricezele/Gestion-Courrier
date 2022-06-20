@@ -1,15 +1,15 @@
-import React, {Fragment,useState,useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import {Container,Row,Col,Card,CardBody,Media} from 'reactstrap'
+import {Card, CardBody, Col, Container, Media, Row} from 'reactstrap'
 import JobFilter from './job-filter';
-import {Link}  from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import axios from 'axios'
 
 const CardView = (props) => {
 
     const [JobData,setJobData] = useState([])
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/jobSearch.json`).then(res => setJobData(res.data))
+        axios.get(`/api/jobSearch.json`).then(res => setJobData(res.data))
     },[])
 
     return (
@@ -30,7 +30,7 @@ const CardView = (props) => {
                                                         <img className="img-40 img-fluid m-r-20" src={require(`../../assets/images/${data.logo}`)} alt="" />
                                                         <Media body>
                                                             <h6 className="f-w-600">
-                                                                <Link to={`${process.env.PUBLIC_URL}/app/jobSearch/job-detail`}> 
+                                                                <Link to={`/app/jobSearch/job-detail`}> 
                                                                     {data.job_name}
                                                                 </Link>
                                                                 {(data.badgeType === 'primary' ?

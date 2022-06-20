@@ -105,7 +105,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron:start": "concurrently -k \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electronmon .\"",
-    "electron:package:mac": "sudo yarn build && sudo chmod -R 777 /Users/bricezele/Library/Caches/electron && sudo npx electron-builder -m -c.extraMetadata.main=build/electron.js",
+    "electron:package:mac": "sudo yarn build && sudo npx electron-builder -m -c.extraMetadata.main=build/electron.js",
     "electron:package:win": "yarn build && electron-builder -w -c.extraMetadata.main=build/electron.js",
     "electron:package:linux": "yarn build && electron-builder -l -c.extraMetadata.main=build/electron.js"
   },

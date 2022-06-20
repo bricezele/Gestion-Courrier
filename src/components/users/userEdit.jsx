@@ -1,14 +1,55 @@
-import React, { Fragment,useEffect,useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import { Container, Row, Col, Card, CardHeader, CardBody, CardFooter, Media, Form, FormGroup, Label, Input, Button } from 'reactstrap'
+import {
+    Button,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+    Col,
+    Container,
+    Form,
+    FormGroup,
+    Input,
+    Label,
+    Media,
+    Row
+} from 'reactstrap'
 import axios from 'axios'
-import { MyProfile,Bio,MarkJecno,Designer,Password,Website,Save,EditProfile,Company,Username,UsersCountryMenu,AboutMe,UpdateProfile,UsersTableTitle,FirstName,LastName,Address,EmailAddress,PostalCode,Country, UsersTableHeader,City,Edit,Update,Delete} from '../../constant'
+import {
+    AboutMe,
+    Address,
+    Bio,
+    City,
+    Company,
+    Country,
+    Delete,
+    Designer,
+    Edit,
+    EditProfile,
+    EmailAddress,
+    FirstName,
+    LastName,
+    MarkJecno,
+    MyProfile,
+    Password,
+    PostalCode,
+    Save,
+    Update,
+    UpdateProfile,
+    Username,
+    UsersCountryMenu,
+    UsersTableHeader,
+    UsersTableTitle,
+    Website
+} from '../../constant'
+
 const UserEdit = (props) => {
 
   const [data,setData] = useState([])
 
   useEffect(() => {
-      axios.get(`${process.env.PUBLIC_URL}/api/user-edit-table.json`).then(res => setData(res.data))
+      axios.get(`/api/user-edit-table.json`).then(res => setData(res.data))
   },[])
 
   return (

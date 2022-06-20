@@ -9,7 +9,7 @@ const FriendsTab = () => {
     const [cards, setCards] = useState([])
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/usercard.json`).then(res => setCards(res.data))
+        axios.get(`/api/usercard.json`).then(res => setCards(res.data))
     }, [])
 
     return (

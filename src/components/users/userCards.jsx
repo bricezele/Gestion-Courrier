@@ -1,7 +1,7 @@
-import React, { Fragment,useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import { Container, Row, Col, Card, CardHeader, CardFooter, Media } from 'reactstrap'
-import {Follower,Following,TotalPost} from '../../constant'
+import {Card, CardFooter, CardHeader, Col, Container, Media, Row} from 'reactstrap'
+import {Follower, Following, TotalPost} from '../../constant'
 import axios from 'axios'
 
 const UserCards = (props) => {
@@ -9,7 +9,7 @@ const UserCards = (props) => {
   const [cards,setCards] = useState([])
 
   useEffect(() => {
-    axios.get(`${process.env.PUBLIC_URL}/api/usercard.json`).then(res => setCards(res.data))
+    axios.get(`/api/usercard.json`).then(res => setCards(res.data))
   },[])
 
   return (

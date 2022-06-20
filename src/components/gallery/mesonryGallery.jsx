@@ -1,16 +1,16 @@
-import React, { Fragment,useEffect,useState} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import Breadcrumb from '../breadcrumb'
 import Masonry from 'react-masonry-css';
-import {Container,Row,Col,Card,CardHeader,CardBody,Media} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Media, Row} from 'reactstrap'
 import axios from 'axios'
-import { MasonryGallery } from '../../constant';
+import {MasonryGallery} from '../../constant';
 
 const MesonryGallery = () => {
     
     const [masonryImg,setMasonryImg] = useState([])
     
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/masonry.json`).then((response) => {
+        axios.get(`/api/masonry.json`).then((response) => {
             setMasonryImg(response.data);
         })
     },[])

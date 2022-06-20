@@ -1,6 +1,6 @@
-import React, { Fragment,useRef,useEffect,useState } from 'react';
-import { Typeahead } from 'react-bootstrap-typeahead';
-import {ButtonToolbar,Button} from 'react-bootstrap';
+import React, {Fragment, useEffect, useRef, useState} from 'react';
+import {Typeahead} from 'react-bootstrap-typeahead';
+import {Button, ButtonToolbar} from 'react-bootstrap';
 import axios from 'axios'
 
 const TypeaheadOne = () =>  {
@@ -10,7 +10,7 @@ const TypeaheadOne = () =>  {
         const [options,setOptions] = useState([])
 
         useEffect(() => {
-            axios.get(`${process.env.PUBLIC_URL}/api/typeaheadData.json`).then(res => setOptions(res.data))
+            axios.get(`/api/typeaheadData.json`).then(res => setOptions(res.data))
         },[])
 
         return (

@@ -95,71 +95,71 @@ const App = ({application, user, checkUserExist, fetchCheckUserExist}) => {
 
                     <Switch>
                         <Route
-                            path={`${process.env.PUBLIC_URL}/login`}
+                            path={`/login`}
                             component={LoginPage}/>
                         <Route
                             exact
-                            path={`${process.env.PUBLIC_URL}/wizard-setup`}
+                            path={`/wizard-setup`}
                             component={WizardSetupPage}/>
 
                         <Route
                             exact
-                            path={`${process.env.PUBLIC_URL}/`}
+                            path={`/`}
                             render={() => {
 
                                 if (checkUserExist.result !== null) {
                                     if (checkUserExist.result.count === 0)
-                                        return <Redirect to={`${process.env.PUBLIC_URL}/wizard-setup`}/>;
+                                        return <Redirect to={`/wizard-setup`}/>;
                                     else if (user) {
                                         if (user.hasOwnProperty("firstname")) {
                                             switch (user.roles) {
                                                 case Role.ADMIN:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-admin`}
+                                                            to={`/dashboard-admin`}
                                                         />
                                                     );
                                                 case Role.STANDARD:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-standard`}
+                                                            to={`/dashboard-standard`}
                                                         />
                                                     );
                                                 case Role.ASSISTANTE_DG:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-assistant-dg`}
+                                                            to={`/dashboard-assistant-dg`}
                                                         />
                                                     );
                                                 case Role.DGA:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-dga`}
+                                                            to={`/dashboard-dga`}
                                                         />
                                                     );
                                                 case Role.EDITOR:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-editor`}
+                                                            to={`/dashboard-editor`}
                                                         />
                                                     );
                                                     case Role.DG:
                                                     return (
                                                         <Redirect
-                                                            to={`${process.env.PUBLIC_URL}/dashboard-direction`}
+                                                            to={`/dashboard-direction`}
                                                         />
                                                     );
                                             }
                                         } else
                                             return (
                                                 <Redirect
-                                                    to={`${process.env.PUBLIC_URL}/login`}
+                                                    to={`/login`}
                                                 />
                                             );
                                     } else
                                         return (
                                             <Redirect
-                                                to={`${process.env.PUBLIC_URL}/login`}
+                                                to={`/login`}
                                             />
                                         );
                                 }

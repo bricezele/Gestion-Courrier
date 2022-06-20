@@ -1,9 +1,29 @@
-import React, { useState, Fragment,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import axios from 'axios'
 import Lightbox from "react-image-lightbox";
-import { Container, Row, Col, Card, CardHeader, CardBody, Form,  Input, Media, TabContent, TabPane, Nav, NavItem, NavLink, Pagination, PaginationItem, PaginationLink, InputGroup, InputGroupAddon } from 'reactstrap';
-import {All,Images,Videos,Settings,Tools,Previous,Next,PortfolioTitle,Audios} from '../../constant'
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Col,
+    Container,
+    Form,
+    Input,
+    InputGroup,
+    InputGroupAddon,
+    Media,
+    Nav,
+    NavItem,
+    NavLink,
+    Pagination,
+    PaginationItem,
+    PaginationLink,
+    Row,
+    TabContent,
+    TabPane
+} from 'reactstrap';
+import {All, Audios, Images, Next, PortfolioTitle, Previous, Settings, Tools, Videos} from '../../constant'
 
 const Search = (props) => {
 
@@ -13,11 +33,11 @@ const Search = (props) => {
 
   useEffect(() => {
 
-    axios.get(`${process.env.PUBLIC_URL}/api/image-light.json`).then((response) => {
+    axios.get(`/api/image-light.json`).then((response) => {
         setImage(response.data.src);
     })
 
-    axios.get(`${process.env.PUBLIC_URL}/api/image-big-light.json`).then((response) => {
+    axios.get(`/api/image-big-light.json`).then((response) => {
         setsmallImages(response.data.src);
     })
 

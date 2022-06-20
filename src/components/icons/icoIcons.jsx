@@ -1,9 +1,40 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
-import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
 import axios from 'axios'
-import { Abstract,Animal,Brand,Business,Charts,Construction,Currency,Device,Education,Emotion,FileType,Food,Law,KidsToys,Mathematical,Medical,MobileUI,Multimedia,Payment,Person,Search,Social,Sport,TextEditor,Transport,Travel,WebApplication,Weather,Directional,Icons } from "../../constant";
+import {
+    Abstract,
+    Animal,
+    Brand,
+    Business,
+    Charts,
+    Construction,
+    Currency,
+    Device,
+    Directional,
+    Education,
+    Emotion,
+    FileType,
+    Food,
+    Icons,
+    KidsToys,
+    Law,
+    Mathematical,
+    Medical,
+    MobileUI,
+    Multimedia,
+    Payment,
+    Person,
+    Search,
+    Social,
+    Sport,
+    TextEditor,
+    Transport,
+    Travel,
+    Weather,
+    WebApplication
+} from "../../constant";
 
 const IcoIcons = () => {
 
@@ -12,7 +43,7 @@ const IcoIcons = () => {
     const [icon, setIcon] = useState('');
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/icoData.json`).then(res => setData(res.data))
+        axios.get(`/api/icoData.json`).then(res => setData(res.data))
     },[])
 
     const getItag = (tag) => {

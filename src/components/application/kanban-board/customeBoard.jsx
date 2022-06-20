@@ -1,6 +1,6 @@
-import React, { Fragment,useEffect,useState } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Board from '@lourenci/react-kanban'
-import { Card, CardHeader, CardBody } from 'reactstrap'
+import {Card, CardBody, CardHeader} from 'reactstrap'
 import {CustomBoards} from '../../../constant'
 import axios from 'axios'
 
@@ -10,7 +10,7 @@ const CustomeBoard = (props) => {
     const {customboard} = board
     
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/customboard.json`).then(res => setBoard(res.data))
+        axios.get(`/api/customboard.json`).then(res => setBoard(res.data))
     },[])
 
     return (

@@ -1,10 +1,10 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../../../breadcrumb'
-import { Typeahead } from 'react-bootstrap-typeahead';
+import {Typeahead} from 'react-bootstrap-typeahead';
 import TypeaheadOne from './typeahead-one';
-import { Container, Row, Col, Card, CardHeader, CardBody, Form, FormGroup } from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Form, FormGroup, Row} from 'reactstrap'
 import axios from 'axios'
-import { BasicDemo,MultipleSelections,CustomSelections,Remote } from "../../../../constant";
+import {BasicDemo, CustomSelections, MultipleSelections, Remote} from "../../../../constant";
 
 
 const TypeaheadComp = () => {
@@ -13,7 +13,7 @@ const TypeaheadComp = () => {
     const [options,setOptions] = useState([])
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/typeaheadData.json`).then(res => setOptions(res.data))
+        axios.get(`/api/typeaheadData.json`).then(res => setOptions(res.data))
     },[])
 
     return (

@@ -1,9 +1,20 @@
-import React, { Fragment, useState,useEffect } from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
 import IconMarkUp from './Icon-markup';
-import {Container,Row,Col,Card,CardHeader,CardBody} from 'reactstrap'
+import {Card, CardBody, CardHeader, Col, Container, Row} from 'reactstrap'
 import axios from 'axios'
-import { Icons,Currency,WebApp,Spinner,FormControl,Directional,VideoPlayer,MedicalPlayer,TextEditor,BrandPlayer } from "../../constant";
+import {
+    BrandPlayer,
+    Currency,
+    Directional,
+    FormControl,
+    Icons,
+    MedicalPlayer,
+    Spinner,
+    TextEditor,
+    VideoPlayer,
+    WebApp
+} from "../../constant";
 
 const FontAwsomeIcon = () => {
 
@@ -12,7 +23,7 @@ const FontAwsomeIcon = () => {
   const [icon, setIcon] = useState('');
 
   useEffect(() => {
-    axios.get(`${process.env.PUBLIC_URL}/api/fontawsomeData.json`).then(res => setData(res.data))
+    axios.get(`/api/fontawsomeData.json`).then(res => setData(res.data))
   },[])
   
   const getItag = (tag) => {

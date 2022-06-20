@@ -70,22 +70,22 @@ const RightHeader = ({user}) => {
         localStorage.removeItem('profileURL')
         localStorage.removeItem('token');
         firebase_app.auth().signOut()
-        history.push(`${process.env.PUBLIC_URL}/login`)
+        history.push(`/login`)
     }
 
     const Logout_From_Auth0 = () => {
         localStorage.removeItem("auth0_profile")
         localStorage.setItem("authenticated", false)
-        history.push(`${process.env.PUBLIC_URL}/login`)
+        history.push(`/login`)
         logout()
     }
 
     const RedirectToChats = () => {
-        history.push(`${process.env.PUBLIC_URL}/app/chat-app`)
+        history.push(`/app/chat-app`)
     }
 
     const RedirectToCart = () => {
-        history.push(`${process.env.PUBLIC_URL}/app/ecommerce/cart`)
+        history.push(`/app/ecommerce/cart`)
     }
 
     const UserMenuRedirect = (redirect) => {
@@ -244,8 +244,8 @@ const RightHeader = ({user}) => {
                 </div>
               </li>
               <li>
-                <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/product`}><Button color="primary" className="btn btn-block view-cart">{GoToShopingBag}</Button></Link>
-                <Link to={`${process.env.PUBLIC_URL}/app/ecommerce/checkout`}><Button color="secondary" className="btn-block view-cart mt-2">{CheckOut}</Button></Link>
+                <Link to={`/app/ecommerce/product`}><Button color="primary" className="btn btn-block view-cart">{GoToShopingBag}</Button></Link>
+                <Link to={`/app/ecommerce/checkout`}><Button color="secondary" className="btn-block view-cart mt-2">{CheckOut}</Button></Link>
               </li>
             </ul>
           </li>
@@ -302,7 +302,7 @@ const RightHeader = ({user}) => {
                                 </div>
                             </div>
                             <ul className="profile-dropdown onhover-show-div">
-                                <li onClick={() => UserMenuRedirect(`${process.env.PUBLIC_URL}/my-profile`)}>
+                                <li onClick={() => UserMenuRedirect(`/my-profile`)}>
                                     <User/><span>{t('my_account')} </span></li>
                                 <li onClick={() => {
                                     dispatch(fetchAuthKeyReset());

@@ -1,11 +1,20 @@
-import React, { Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Breadcrumb from '../breadcrumb'
-import {Container,Row,Col,Card,CardBody,Media,Button} from 'reactstrap'
+import {Button, Card, CardBody, Col, Container, Media, Row} from 'reactstrap'
 import JobFilter from './job-filter';
 import one from '../../assets/images/job-search/1.jpg';
 import two from '../../assets/images/job-search/6.jpg';
-import {Link}  from 'react-router-dom'
-import {CreativeUnitedStates,JobDescription,Qualifications,AgencyExperience,Perks,Share,SimilarJobs,SeniorUXDesigner} from "../../constant";
+import {Link} from 'react-router-dom'
+import {
+    AgencyExperience,
+    CreativeUnitedStates,
+    JobDescription,
+    Perks,
+    Qualifications,
+    SeniorUXDesigner,
+    Share,
+    SimilarJobs
+} from "../../constant";
 import axios from 'axios'
 
 const JobDetail = (props) => {
@@ -13,7 +22,7 @@ const JobDetail = (props) => {
     const [JobData,setJobData] = useState([])
 
     useEffect(() => {
-        axios.get(`${process.env.PUBLIC_URL}/api/jobSearch.json`).then(res => setJobData(res.data))
+        axios.get(`/api/jobSearch.json`).then(res => setJobData(res.data))
     },[])
     
     return (
@@ -32,7 +41,7 @@ const JobDetail = (props) => {
                                             <h6 className="f-w-600">
                                                 <a href="#javascript">{"Product Designer (UI/UX Designer)"}</a>
                                                 <span className="pull-right">
-                                                    <Link to={`${process.env.PUBLIC_URL}/app/jobSearch/job-apply`}> 
+                                                    <Link to={`/app/jobSearch/job-apply`}> 
                                                     <Button color="primary">{"Apply for this job"}</Button>
                                                     </Link>
                                                 </span>
